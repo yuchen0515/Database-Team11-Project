@@ -1,14 +1,3 @@
-create table Stuff
-(
-    stuff_ID        char(8),
-    record_date     varchar(4),
-    status          varchar(1)
-        check (status in ('Y', 'N', 'A')), 
-        /* Y: Done, N: Not yet, A: Abandon */
-    primary key (stuff_ID),
-    foreign key (record_date) references time_slot(time_slot_id) on delete set null
-)
-
 create table UserData 
 (
     account_ID      char(8),
@@ -18,9 +7,23 @@ create table UserData
     primary key (account_ID)
 )
 
+create table Stuff
+(
+    stuff_ID        char(8),
+    account_ID      char(8),
+    record_date     varchar(4),
+    status          varchar(1)
+        check (status in ('Y', 'N', 'A')), 
+        /* Y: Done, N: Not yet, A: Abandon */
+    primary key (stuff_ID),
+    foreign key (record_date) references time_slot(time_slot_id) on delete set null,
+    foreign key (account_ID) references UserData(account_ID) on delete cascade
+)
+
 create table Event
 (
     event_ID        char(8),
+    account_ID      char(8),
     time            varchar(4),
     buf_time        varchar(50), /* JSON format: hr, min, sec */
     title           varchar(50),
@@ -29,13 +32,14 @@ create table Event
         check (status in ('Y', 'N', 'A')), 
         /* Y: Done, N: Not yet, A: Abandon */
     primary key (event_ID),
-    foreign key (time) references time_slot(time_slot_id) on delete set null
-
+    foreign key (time) references time_slot(time_slot_id) on delete set null,
+    foreign key (account_ID) references UserData(account_ID) on delete cascade
 )
 
 create table Project
 (
     project_ID      char(8),
+    account_ID      char(8),
     deadline        varchar(4),
     importance      numeric(2), /* priority by number */
     title           varchar(50),
@@ -45,7 +49,8 @@ create table Project
         check (status in ('Y', 'N', 'A')), 
         /* Y: Done, N: Not yet, A: Abandon */
     primary key (project_ID),
-    foreign key (deadline) references time_slot(time_slot_id) on delete set null
+    foreign key (deadline) references time_slot(time_slot_id) on delete set null,
+    foreign key (account_ID) references UserData(account_ID) on delete cascade
 )
 
 create table Task
