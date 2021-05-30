@@ -2,8 +2,11 @@ create table Stuff
 (
     stuff_ID        char(8),
     record_date     varchar(4),
-    status          varchar(1),
-    primary key (stuff_ID)
+    status          varchar(1)
+        check (status in ('Y', 'N', 'A')), 
+        /* Y: Done, N: Not yet, A: Abandon */
+    primary key (stuff_ID),
+    foreign key (record_date) references time_slot(time_slot_id) on delete set null
 )
 
 create table UserData 
@@ -11,8 +14,7 @@ create table UserData
     account_ID      char(8),
     password        varchar(15),
     name            varchar(30) not null,
-    preference  
-
+    preference      varchar(500), /* JSON format */
     primary key (account_ID)
 )
 
@@ -20,23 +22,30 @@ create table Event
 (
     event_ID        char(8),
     time            varchar(4),
-    buf_time        varchar(4),
+    buf_time        varchar(50), /* JSON format: hr, min, sec */
     title           varchar(50),
     content         varchar(500),
-    status          char(1),
-    primary key (event_ID)
+    status          varchar(1)
+        check (status in ('Y', 'N', 'A')), 
+        /* Y: Done, N: Not yet, A: Abandon */
+    primary key (event_ID),
+    foreign key (time) references time_slot(time_slot_id) on delete set null
+
 )
 
 create table Project
 (
     project_ID      char(8),
     deadline        varchar(4),
-    importance      numeric(2),
+    importance      numeric(2), /* priority by number */
     title           varchar(50),
     tag             varchar(2),
     intro           varchar(200),
-    status          char(1),
-    primary key (project_ID)
+    status          varchar(1)
+        check (status in ('Y', 'N', 'A')), 
+        /* Y: Done, N: Not yet, A: Abandon */
+    primary key (project_ID),
+    foreign key (deadline) references time_slot(time_slot_id) on delete set null
 )
 
 create table Task
@@ -45,10 +54,13 @@ create table Task
     project_ID      char(8),
     destination     varchar(200),
     time_req        varchar(4),
-    status          char(1),
+    status          varchar(1)
+        check (status in ('Y', 'N', 'A')), 
+        /* Y: Done, N: Not yet, A: Abandon */
     highlight       char(1),
     primary key (task_ID),
-    foreign key (project_ID) references Project(project_ID) on delete cascade
+    foreign key (project_ID) references Project(project_ID) on delete cascade,
+    foreign key (time_req) references time_slot(time_slot_id) on delete set null
 ) 
 
 create table time_slot
