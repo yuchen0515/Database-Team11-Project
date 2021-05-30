@@ -5,7 +5,7 @@ create table UserData
     name            varchar(30) not null,
     preference      varchar(500), /* JSON format */
     primary key (account_ID)
-)
+) ENGINE=INNODB;
 
 create table Stuff
 (
@@ -18,7 +18,8 @@ create table Stuff
     primary key (stuff_ID),
     foreign key (record_date) references time_slot(time_slot_id) on delete set null,
     foreign key (account_ID) references UserData(account_ID) on delete cascade
-)
+) ENGINE=INNODB;
+
 
 create table Event
 (
@@ -34,7 +35,7 @@ create table Event
     primary key (event_ID),
     foreign key (time) references time_slot(time_slot_id) on delete set null,
     foreign key (account_ID) references UserData(account_ID) on delete cascade
-)
+) ENGINE=INNODB;
 
 create table Project
 (
@@ -51,7 +52,7 @@ create table Project
     primary key (project_ID),
     foreign key (deadline) references time_slot(time_slot_id) on delete set null,
     foreign key (account_ID) references UserData(account_ID) on delete cascade
-)
+) ENGINE=INNODB;
 
 create table Task
 (
@@ -66,7 +67,7 @@ create table Task
     primary key (task_ID),
     foreign key (project_ID) references Project(project_ID) on delete cascade,
     foreign key (time_req) references time_slot(time_slot_id) on delete set null
-) 
+)  ENGINE=INNODB;
 
 create table time_slot
 (
@@ -82,4 +83,4 @@ create table time_slot
     end_hr			numeric(2) check (end_hr >= 0 and end_hr < 24),
     end_min		    numeric(2) check (end_min >= 0 and end_min < 60),
     primary key (time_slot_id, start_year, start_month, start_day, start_hr, start_min)
-) 
+)  ENGINE=INNODB;
