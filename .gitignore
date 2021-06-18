@@ -43,3 +43,5 @@
 *.pdb
 
 test/
+
+*.env
