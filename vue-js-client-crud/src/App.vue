@@ -17,24 +17,27 @@
       <v-btn
         v-for="item in items"
         :key="item.name"
-        exact
         text
         :to="item.path"
-        mr="10"
+        class="mx-2"
       >
         {{item.name}}
       </v-btn>
       <!-- <v-divider></v-divider> -->
       <v-spacer></v-spacer>
-      <v-btn>Login</v-btn>
+      <v-btn
+        text
+        :key="'Login'"
+        :to="'/Login'"
+      >Login</v-btn>
     </v-app-bar>
 
     <!-- 內容區塊 -->
-    <v-content>
+    <v-main>
       <v-container fluid>
         <router-view></router-view>
       </v-container>
-    </v-content>
+    </v-main>
 
     <!-- footer -->
     <v-footer app class="justify-center"></v-footer>
