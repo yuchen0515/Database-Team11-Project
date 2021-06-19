@@ -39,7 +39,9 @@ class Stuff {
             res += ("\'" +     record_date_start_time          + "\',"  );
             res += ("\'" +     record_date_end_date            + "\',"  );
             res += ("\'" +     record_date_end_time            + "\',"  );
-            res += ("\'" +     to_string(status)               + "\'"  );
+            res += "\'";
+            res += status;
+            res += "\'";
             res += ");";
             std::cout << res;  
         }
@@ -68,7 +70,9 @@ class Event {
             res += ("\'" +     buf_time                 + "\',"  );
             res += ("\'" +     title                    + "\',"  );
             res += ("\'" +     content                    + "\',"  );
-            res += ("\'" +     to_string(status)               + "\'"  );
+            res += "\'";
+            res += status;
+            res += "\'";
             res += ");";
             std::cout << res;  
         }
@@ -103,7 +107,11 @@ class Project {
             res += ("\'" +     title                    + "\',"  );
             res += ("\'" +     tag                    + "\',"  );
             res += ("\'" +     intro                    + "\',"  );
-            res += ("\'" +     to_string(status)               + "\'"  );
+
+            res += "\'";
+            res += status;
+            res += "\'";
+
             res += ");";
             std::cout << res;  
         }
@@ -137,7 +145,10 @@ class Task {
             res += ("\'" +     time_req_end_date            + "\',"  );
             res += ("\'" +     time_req_end_time            + "\',"  );
 
-            res += ("\'" +     to_string(status)               + "\',"  );
+            res += "\'";
+            res += status;
+            res += "\',";
+
             res += ("\'" +     to_string(highlight)               + "\'"  );
             res += ");";
             std::cout << res;  
