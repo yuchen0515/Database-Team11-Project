@@ -42,6 +42,6 @@
 *.idb
 *.pdb
 
-test/
 
 *.env
+*.ini
