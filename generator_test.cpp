@@ -6,7 +6,6 @@
 #include <random>
 #include <sstream>
 #include <chrono>
-#include <nlohmann/json.hpp>
 
 #define NAME_LEN 128
 
