@@ -14,6 +14,7 @@
         class="mx-4"
         vertical
       ></v-divider>
+      <template v-if="isLogged">
       <v-btn
         v-for="item in items"
         :key="item.name"
@@ -23,6 +24,7 @@
       >
         {{item.name}}
       </v-btn>
+      </template>
       <!-- <v-divider></v-divider> -->
       <v-spacer></v-spacer>
       <v-btn
@@ -46,6 +48,7 @@
 </template>
 
 <script>
+  // import Cookies from 'js-cookie'
   export default {
     data() {
       return {
@@ -66,12 +69,24 @@
           {
             path: '/Calendar',
             name: 'Calendar',
-          },
-          {
-            path: '/about',
-            name: 'About',
           }
-        ]
+        ],
+      }
+    },
+    computed: {
+      isLogged: function() {
+        // const info = Cookies.get('login')
+        // const token = JSON.parse(info).token
+        return true
+        // if (info) {
+        //   if (token.length > 0 || token === undefined) {
+        //     return true
+        //   } else {
+        //     return false
+        //   }
+        // } else {
+        //   return false
+        // }
       }
     }
   }

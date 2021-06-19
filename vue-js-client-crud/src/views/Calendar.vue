@@ -208,6 +208,7 @@
             start: first,
             end: second,
             color: this.colors[this.rnd(0, this.colors.length - 1)],
+            details: "1234",
             timed: !allDay,
           })
         }
