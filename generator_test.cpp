@@ -58,7 +58,7 @@ class Stuff {
 class Event {
     public:
         void print() {
-            std::string res = "INSERT INTO Stuff VALUES (";
+            std::string res = "INSERT INTO Event VALUES (";
             res += ("\'" +     event_ID                     + "\',"  );
             res += ("\'" +     account_ID                      + "\',"  );
             res += ("\'" +     time_start_date          + "\',"  );
@@ -90,7 +90,7 @@ class Event {
 class Project {
     public:
         void print() {
-            std::string res = "INSERT INTO Stuff VALUES (";
+            std::string res = "INSERT INTO Project VALUES (";
             res += ("\'" +     project_ID   + "\',"  );
             res += ("\'" +     account_ID                      + "\',"  );
 
@@ -127,7 +127,7 @@ class Project {
 class Task {
     public:
         void print() {
-            std::string res = "INSERT INTO Stuff VALUES (";
+            std::string res = "INSERT INTO Task VALUES (";
             res += ("\'" +     task_ID                      + "\',"  );
             res += ("\'" +     project_ID   + "\',"  );
             res += ("\'" +     destination  + "\',"  );
