@@ -37,10 +37,13 @@ create table Event
     */
     time_start_date DATE,
     time_start_time TIME,
-    time_end_date DATE,
-    time_end_time TIME,
+    time_end_date   DATE,
+    time_end_time   TIME,
 
-    buf_time        varchar(50), /* JSON format: hr, min, sec */
+    /*
+    buf_time        varchar(50),
+    */
+    buf_time        TIME,
     title           varchar(50),
     content         varchar(500),
     status          varchar(1)
