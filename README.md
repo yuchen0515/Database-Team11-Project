@@ -20,6 +20,7 @@
     * 資料庫(DDL, sqlite & mysql, etc.)
     * others...
 
+* [筆記](https://hackmd.io/@mathlin/BJdNeuoo_)
 
 * 自備檔案
     - ./node-js/conf.ini
