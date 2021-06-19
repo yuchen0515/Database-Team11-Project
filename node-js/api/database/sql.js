@@ -5,8 +5,6 @@ var ini = require('ini')
 
 var config = ini.parse(fs.readFileSync('./conf.ini', 'utf-8'));
 
-//console.log(config.server.host, config.server.user, config.server.password, config.server.port);
-
 var conn = mysql.createConnection({
     host: config.server.host,
     user: config.server.user,
@@ -18,7 +16,7 @@ var conn = mysql.createConnection({
 
 
 conn.connect(function (err) {
-    //if (err) throw err;
+    if (err) throw err;
     console.log("connect success!")
 });
 conn.query('SELECT 12 + 34 AS result', function (err, rows, fields) {

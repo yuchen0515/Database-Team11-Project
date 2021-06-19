@@ -81,9 +81,5 @@ create table Task
         /* Y: Done, N: Not yet, A: Abandon */
     highlight       char(1),
     primary key (task_ID),
-    foreign key (project_ID) references Project(project_ID) on delete cascade,
-<<<<<<< HEAD
+    foreign key (project_ID) references Project(project_ID) on delete cascade
 )  ENGINE=INNODB;
-=======
-)  ENGINE=INNODB;
->>>>>>> 959f8b13167ec8d5de099a4d108c7f13187d3dda
