@@ -11,7 +11,14 @@ create table Stuff
 (
     stuff_ID        char(8),
     account_ID      char(8),
+    /*
     record_date     varchar(4),
+    */
+    record_date_start_date DATE,
+    record_date_start_time TIME,
+    record_date_end_date DATE,
+    record_date_end_time TIME,
+
     status          varchar(1)
         check (status in ('Y', 'N', 'A')), 
         /* Y: Done, N: Not yet, A: Abandon */
@@ -25,7 +32,14 @@ create table Event
 (
     event_ID        char(8),
     account_ID      char(8),
+    /*
     time            varchar(4),
+    */
+    time_start_date DATE,
+    time_start_time TIME,
+    time_end_date DATE,
+    time_end_time TIME,
+
     buf_time        varchar(50), /* JSON format: hr, min, sec */
     title           varchar(50),
     content         varchar(500),
@@ -41,7 +55,13 @@ create table Project
 (
     project_ID      char(8),
     account_ID      char(8),
+    /*
     deadline        varchar(4),
+    */
+    deadline_start_date DATE,
+    deadline_start_time TIME,
+    deadline_end_date DATE,
+    deadline_end_time TIME,
     importance      numeric(2), /* priority by number */
     title           varchar(50),
     tag             varchar(2),
@@ -59,7 +79,14 @@ create table Task
     task_ID         char(8),
     project_ID      char(8),
     destination     varchar(200),
+    /*
     time_req        varchar(4),
+    */
+    time_req_start_date DATE,
+    time_req_start_time TIME,
+    time_req_end_date DATE,
+    time_req_end_time TIME,
+
     status          varchar(1)
         check (status in ('Y', 'N', 'A')), 
         /* Y: Done, N: Not yet, A: Abandon */
@@ -69,6 +96,7 @@ create table Task
     foreign key (time_req) references time_slot(time_slot_id) on delete set null
 )  ENGINE=INNODB;
 
+/*
 create table time_slot
 (
     time_slot_id    varchar(4),
@@ -84,3 +112,4 @@ create table time_slot
     end_min		    numeric(2) check (end_min >= 0 and end_min < 60),
     primary key (time_slot_id, start_year, start_month, start_day, start_hr, start_min)
 )  ENGINE=INNODB;
+*/
