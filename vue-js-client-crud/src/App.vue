@@ -14,27 +14,33 @@
         class="mx-4"
         vertical
       ></v-divider>
+      <template>
+      <!-- <template v-if="username"> -->
       <v-btn
         v-for="item in items"
         :key="item.name"
-        exact
         text
         :to="item.path"
-        mr="10"
+        class="mx-2"
       >
         {{item.name}}
       </v-btn>
+      </template>
       <!-- <v-divider></v-divider> -->
       <v-spacer></v-spacer>
-      <v-btn>Login</v-btn>
+      <v-btn
+        text
+        :key="'Login'"
+        :to="'/Login'"
+      >Login</v-btn>
     </v-app-bar>
 
     <!-- 內容區塊 -->
-    <v-content>
+    <v-main>
       <v-container fluid>
         <router-view></router-view>
       </v-container>
-    </v-content>
+    </v-main>
 
     <!-- footer -->
     <v-footer app class="justify-center"></v-footer>
@@ -43,6 +49,8 @@
 </template>
 
 <script>
+  // import Cookies from 'js-cookie'
+  import {mapGetters, mapState} from "vuex";
   export default {
     data() {
       return {
@@ -63,13 +71,18 @@
           {
             path: '/Calendar',
             name: 'Calendar',
-          },
-          {
-            path: '/about',
-            name: 'About',
           }
-        ]
+        ],
       }
+    },
+    computed: {
+      ...mapState([
+        // 需要的state在這邊
+        "username"
+      ]),
+      ...mapGetters([
+        "isLoggedIn"
+      ])
     }
   }
 </script>
