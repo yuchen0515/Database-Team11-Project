@@ -6,6 +6,9 @@ exports.register = function (req, res) {
     var password = req.query.password;
     var name = req.query.name;
 
+    console.log("get username: " + user);
+    console.log("get password: " + password);
+
     var hash = crypto.createHash('md5').update(password).digest('hex');
     var register = "INSERT INTO UserData (account_ID, password, name, preference) VALUES ('"
         + user + "','" + hash + "','" + name + "','');";
