@@ -12,14 +12,16 @@
         @click:append="showpass = !showpass"
     ></v-text-field>
     <v-btn color="success" @click="handleLogin">Login</v-btn>
+    <v-btn color="success" @click="Login({username: loginForm.username, password: loginForm.password})">newLogin</v-btn>
     <v-btn color="warning" @click="removeCookie">Remove Cookie</v-btn>
-    <v-btn color="error">Register</v-btn>
+    <v-btn color="error" @click="Register({username: loginForm.username, password: loginForm.password})">Register</v-btn>
     </div>
 </template>
 
 <script>
     // 引入js-cookie
     import Cookies from 'js-cookie'
+    import {mapState, mapActions} from "vuex";
     // import VueSession from 'vue-session'
 
     // var options = {
@@ -36,6 +38,11 @@
                     token: ''
                 }
             }
+        },
+        computed: {
+            ...mapState([
+                "username"
+            ])
         },
         // methods: {
         //     // login: function () {
@@ -55,6 +62,10 @@
         //     // }
         // },
         methods: {
+            ...mapActions([
+                "Login",
+                "Register"
+            ]),
             handleLogin() {
                 const token = 'asds32adsavrAS3Fadf5567' // token本身就是加密過的字串，隨意
                 let username = this.loginForm.username

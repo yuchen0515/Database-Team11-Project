@@ -14,8 +14,8 @@
         class="mx-4"
         vertical
       ></v-divider>
-      <template>
-      <!-- <template v-if="username"> -->
+      <!-- <template> -->
+      <template v-if="username">
       <v-btn
         v-for="item in items"
         :key="item.name"
@@ -28,13 +28,20 @@
       </template>
       <!-- <v-divider></v-divider> -->
       <v-spacer></v-spacer>
-      <!-- <v-text
+      <v-text
         v-if="username"
       >
         {{username}}
-      </v-text> -->
+      </v-text>
       <v-btn
         text
+        v-if="username"
+        :key="'Logout'"
+        @click="Logout"
+      >Logout</v-btn>
+      <v-btn
+        text
+        v-else
         :key="'Login'"
         :to="'/Login'"
       >Login</v-btn>
@@ -55,7 +62,7 @@
 
 <script>
   // import Cookies from 'js-cookie'
-  import {mapGetters, mapState} from "vuex";
+  import {mapGetters, mapState, mapActions} from "vuex";
   export default {
     data() {
       return {
@@ -87,6 +94,11 @@
       ]),
       ...mapGetters([
         "isLoggedIn"
+      ])
+    },
+    method: {
+      ...mapActions([
+        "Logout"
       ])
     }
   }
