@@ -5,20 +5,21 @@ exports.loadEvent = function (req, res) {
     var end_date = req.query.end;
     var user = req.query.username;
 
-    console.log("load_event call");
-    var sql = "SELECT * FROM Event WHERE time_start_date BETWEEN " + start_date +
-        " AND " + end_date + " AND time_end_date BETWEEN " + start_date + " AND " + end_date + " AND account_ID = '" + user + "'";
+    var sql = "SELECT account_ID, CONCAT(left(time_start_date,10),'T',time_start_time) as start, CONCAT(left(time_end_date,10),'T',time_end_time) as end, content,0 as timed FROM Event WHERE time_start_date BETWEEN '" + start_date +
+        "' AND '" + end_date + "' AND time_end_date BETWEEN '" + start_date + "' AND '" + end_date + "' AND account_ID = '" + user + "';";
+    console.log(sql);
     conn.query(sql, function (err, rows, fields) {
         if (err) {
             console.log("unknow error");
             res.status(404).json({ status: 404 });
         }
         else if (rows.length == 0) {
+            console.log("no match event");
             res.status(404).json({ status: 404 });
         }
         else {
             res.status(200).json({ status: 200, events: rows });
-            console.log(rows);
+            //console.log(rows);
         }
     });
 }
