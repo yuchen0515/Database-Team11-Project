@@ -27,3 +27,19 @@ exports.addStuff = function (req, res) {
 exports.loadStuff = function (req, res) {
     var test;
 };
+exports.deleteStuff = function (req, res) {
+    var stuff_ID = req.query.stuff_ID;
+
+    var deleteStuff = "DELETE FROM stuff WHERE stuff_ID = " + stuff_ID;
+
+    conn.query(deleteStuff, function (err, result) {
+        if (err) {
+            console.log("err deleteStuff no " + stuff_ID + " in stuff");
+            res.status(403).json({ status: 403 });
+        }
+        else {
+            console.log("deleteStuff succeeded");
+            res.status(200).json({ status: 200 });
+        }
+    })
+};
