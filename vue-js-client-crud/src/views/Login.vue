@@ -40,9 +40,12 @@
                 }
             }
         },
+        mounted() {
+            this.$store.dispatch('Login');
 
+        },
         computed: {
-            ...mapState(["username", "stat"])
+            ...mapState(["stat", "username"])
         },
         // methods: {
         //     // login: function () {
@@ -62,6 +65,10 @@
         //     // }
         // },
         methods: {
+            //Reload() {
+            //    this.Login(loginForm.username, loginForm.passward);
+
+            //},
 
             ...mapActions(["Login"]),
             handleLogin() {
