@@ -12,7 +12,7 @@
         @click:append="showpass = !showpass"
     ></v-text-field>
     <v-btn color="success" @click="handleLogin">Login</v-btn>
-    <v-btn color="success" @click="Login(loginForm.username, loginForm.password)">newLogin</v-btn>
+    <v-btn color="success" @click="Login({username: loginForm.username, password: loginForm.password})">newLogin</v-btn>
     <v-btn color="warning" @click="removeCookie">Remove Cookie</v-btn>
     <div>{{username || "not login"}}</div>
     <div>{{stat}}</div>
@@ -65,10 +65,10 @@
         //     // }
         // },
         methods: {
-            //Reload() {
-            //    this.Login(loginForm.username, loginForm.passward);
+            Reload() {
+                this.Login(this.loginForm.username, this.loginForm.passward);
 
-            //},
+            },
 
             ...mapActions(["Login"]),
             handleLogin() {

@@ -14,40 +14,47 @@ export default new Vuex.Store({
     },
     
     actions: {
-        Login({commit}, username, password) {
-            return new Promise((resolve, reject) => {
+        Login({commit}, data) {
+            //return new Promise((resolve, reject) => {
                 var URL = 'http://localhost:3000/api/login';
                 URL += '?username=';
-                URL += username;
-                URL += ',password=';
-                URL += password;
+                URL += data.username;
+                URL += '&password=';
+                URL += data.password;
+                //var URL = 'http://localhost:3000/api/login?username=user&password=password'
                 console.log(URL);
+                //console.log(data.username);
+                //console.log(data.password);
 
-                axios({url: URL, method: 'POST'})
+                return axios({url: URL, method: 'POST'})
                     .then(res => {
-                        const stat = res.status
-                        const username = res.username
+                        //const stat = res.data.status
+                        //const username = res.data.username
+                        console.log(res);
 
-                        if (stat === '200') commit('auth_success', username)
-                        if (stat === '404') commit('auth_userNotExist')
-                        if (stat === '406') commit('auth_errorPassword')
-                        resolve(res)
-
+                        //if (stat === '200'){
+                        //    commit('auth_success', username)
+                        //}
+                        //if (stat === '404'){
+                        //    commit('auth_userNotExist')
+                        //}
+                        //if (stat === '406') commit('auth_errorPassword')
+                        //resolve(res)
                     })
                     .catch(err => {
+                        console.log('test');
                         commit('auth_userNotExist')
-                        reject(err)
+                        //reject(err)
                     })
-
-            })
+            //})
         },
-        Register({commit}, username, passward) {
+        Register({commit}, data) {
             return new Promise((resolve, reject) => {
                 var URL = 'http://localhost:3000/api/register';
                 URL += '?username=';
-                URL += username;
+                URL += data.username;
                 URL += ',passward';
-                URL += passward;
+                URL += data.passward;
 
                 axios({url: URL, method: 'POST'})
                     .then(res => {
@@ -83,7 +90,7 @@ export default new Vuex.Store({
         }
     },
 
-    mutation: {
+    mutations: {
         auth_success(state, username) {
             state.stat = '200'
             state.username = username
@@ -106,4 +113,4 @@ export default new Vuex.Store({
         isLoggedIn: state => state.stat == '200',
         authStatus: state => state.stat
     }
-})
+});
