@@ -27,6 +27,7 @@ exports.addEvent = function (req, res) {
     var startTime = req.query.startTime;
     var endDate = req.query.endDate;
     var endTime = req.query.endTime;
+    var user = req.query.username;
 
     var delete_stuff = "DELETE FROM Stuff WHERE stuff_ID = '" + id + "'";
     conn.query(delete_stuff, function (err, result) {
@@ -36,7 +37,7 @@ exports.addEvent = function (req, res) {
     });
 
     var addevent = "INSERT INTO event(account_ID, time_start_date, time_start_time,time_end_date,time_end_time, buf_time, title, content, status) VALUE('" +
-        testuser + "','" + startDate + "','" + startTime + "','" + endDate + "','" + endTime + "','00:30:00','" + title + "','" + content + "','N');";
+        user + "','" + startDate + "','" + startTime + "','" + endDate + "','" + endTime + "','00:30:00','" + title + "','" + content + "','N');";
     conn.query(addevent, function (err, result) {
         if (err) {
             console.log("AddEvent " + title + " failed");
