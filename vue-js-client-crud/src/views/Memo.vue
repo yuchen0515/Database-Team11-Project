@@ -492,7 +492,7 @@
                                         <v-btn
                                             color="blue darken-1"
                                             text
-                                            @click="consoleData(event_data)"
+                                            @click="AddEvent(event_data)"
                                         >
                                             Save
                                         </v-btn>
@@ -560,6 +560,8 @@
 </template>
 
 <script>
+    import {mapActions} from "vuex";
+
 export default {
     data () {
         return{
@@ -620,6 +622,10 @@ export default {
         }
     },
     methods: {
+        ...mapActions([
+                "AddEvent"
+            ]),
+
         loadProjectData (item) {
             this.project_data.id = item.id;
             this.project_data.title = item.title;

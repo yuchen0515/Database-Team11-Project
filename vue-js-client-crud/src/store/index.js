@@ -80,10 +80,12 @@ const store = new Vuex.Store({
                 })
 
         },
-        AddEvent({commit}, data) {
+        AddEvent({commit, getters}, data) {
+            console.log(getters.username)
             axios({
-                url: 'http://localhost:3000/api/event/',
+                url: 'http://localhost:3000/api/event',
                 params: {
+                    username:   getters.username,
                     id:         data.id,
                     title:      data.title,
                     content:    data.context,
@@ -138,11 +140,12 @@ const store = new Vuex.Store({
             state.addEventStat = stat
         }
     },
-
     getters: {
         isLoggedIn: state => state.stat == 200,
-        authStatus: state => state.stat
-    }
+        authStatus: state => state.stat,
+        username: state => state.username
+    },
+
 });
 
 export default store;
