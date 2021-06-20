@@ -1,19 +1,20 @@
-var session = require('express-session');
+var conn = require('./api/database/sql.js').conn;
+/*var session = require('express-session');
 var MySQLStore = require('express-mysql-session')(session);
 var sessionStore = new MySQLStore(
-    connectionConfig
-);
+    conn
+);*/
 
 var express = require('express')
     , app = express();
 var login = require('./api/model/login');
 var event = require('./api/model/event');
-
+/*
 app.use(session({
     store: sessionStore,
     resave: false,
     saveUninitialized: true,
-}));
+}));*/
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
