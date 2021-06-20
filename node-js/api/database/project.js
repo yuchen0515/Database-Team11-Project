@@ -21,5 +21,25 @@ exports.addproject = function (req, res) {
             console.log("addproject success");
             res.status(200).json({ status: 200 });
         }
-    })
-}
+    });
+};
+exports.loadproject = function (req, res) {
+    var user = req.query.username;
+    var tag = req.query.tag;
+    var array = new Array();
+    var array = tag.split(" ");
+
+    var loadproject = "SELECT * FROM project WHERE account_ID = '" + user + "';";
+
+    conn.query(loadproject, function (err, rows, fields) {
+        if (err) {
+            console.log("addproject err");
+            res.status(404).json({ status: 404 });
+        }
+        else if (rows.length == 0) {
+            console.log("addproject empty");
+            res.status(403).json({ status: 403 });
+        }
+    });
+
+};
