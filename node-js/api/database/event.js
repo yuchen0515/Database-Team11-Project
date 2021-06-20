@@ -10,6 +10,12 @@ exports.loadEvent = function (req, res) {
         " AND " + end_date + " AND time_end_date BETWEEN " + start_date + " AND " + end_date + " AND account_ID = '" + account_ID + "'";
     conn.query(sql, function (err, rows, fields) {
         //if (err) throw err;
-        console.log(rows);
+        if (rows.length == 0) {
+            res.status(404).json({ status: 404 });
+        }
+        else {
+            state.event = rows;
+            console.log(rows);
+        }
     });
 }
