@@ -33,6 +33,16 @@ app.use('/api/event', event);
 app.use('/api/register', register);
 app.use('./api/stuff', stuff);
 
+app.route('/api/*')
+    .get(function (req, res) {
+        console.log("get error url");
+        res.status(403).json({ status: 403 });
+    })
+    .post(function (req, res) {
+        console.log("post error url");
+        res.status(403).json({ status: 403 });
+    });
+
 var sever = app.listen(3000, function () {
     console.log('listening on port 3000');
 });

@@ -13,7 +13,11 @@ exports.login = function (req, res) {
     var hash = crypto.createHash('md5').update(password).digest('hex');
 
     conn.query(login, function (err, rows, fields) {
-        if (!rows.length) {
+        if (err) {
+            console.log("err login post");
+            res.status(404).json({ status: 404 });
+        }
+        else if (!rows.length) {
             res.status(404).json({ status: 404 });
             console.log("err 404");
         }
