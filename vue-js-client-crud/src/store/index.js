@@ -84,14 +84,24 @@ const store = new Vuex.Store({
             axios({
                 url: 'http://localhost:3000/api/event/',
                 params: {
-                    id: data.id,
-                    title: data.title,
-                    content: data.context,
-                    startDate: data.startDate,
-                    startTime: data.startTime,
-                    endDate: data.endDate,
-                    endTime: data.endTime
+                    id:         data.id,
+                    title:      data.title,
+                    content:    data.context,
+                    startDate:  data.startDate,
+                    startTime:  data.startTime,
+                    endDate:    data.endDate,
+                    endTime:    data.endTime
                 },
+                //params: {
+                //    username:   this.username,
+                //    id:         '1',
+                //    title:      'ts',
+                //    content:    'set',
+                //    startDate:  '2021-06-20',
+                //    startTime:  '22:54:55',
+                //    endDate:    '2021-06-21',
+                //    endTime:    '00:00:00'
+                //},
                 method: 'POST',
                 responseType: 'json',
                 responseEncoding: 'utf8',
