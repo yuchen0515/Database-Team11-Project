@@ -25,7 +25,8 @@ exports.addStuff = function (req, res) {
 
 };
 exports.loadStuff = function (req, res) {
-    var test;
+    var user = req.query.username;
+    var test = "SELECT title, content, stuff_ID FROM stuff WHERE account_ID = '" + user + "' ORDER BY 'left(record_date_date,10)' ASC, 'record_date_time' ASC";
 };
 exports.deleteStuff = function (req, res) {
     var stuff_ID = req.query.stuff_ID;
