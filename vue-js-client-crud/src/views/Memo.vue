@@ -18,7 +18,14 @@
                 >
                 </v-textarea>
                 <v-card-actions>
-                    <v-btn color="success">text</v-btn>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        color="success"
+                        fab
+                        outlined
+                    >
+                        <v-icon>mdi-plus</v-icon>
+                    </v-btn>
                 </v-card-actions>
             </v-card>
         </v-col>
@@ -75,85 +82,133 @@
                                         text
                                         v-bind="attrs"
                                         v-on="on"
+                                        @click="loadProjectData(item)"
                                         >
                                         To Project
                                         </v-btn>
                                     </template>
                                     <v-card>
                                         <v-card-title>
-                                        <div>{{item.title}}</div>
-                                        <span class="text-h5">Not finish</span>
+                                        <span class="text-h5">Add new project</span>
                                         </v-card-title>
                                         <v-card-text>
-                                        <v-container>
-                                            <v-row>
-                                            <v-col
-                                                cols="12"
-                                                sm="6"
-                                                md="4"
+                                            <v-form
+                                                ref="form"
+                                                lazy-validation
                                             >
-                                                <v-text-field
-                                                label="Legal first name*"
-                                                required
-                                                ></v-text-field>
-                                            </v-col>
-                                            <v-col
-                                                cols="12"
-                                                sm="6"
-                                                md="4"
-                                            >
-                                                <v-text-field
-                                                label="Legal middle name"
-                                                hint="example of helper text only on focus"
-                                                ></v-text-field>
-                                            </v-col>
-                                            <v-col
-                                                cols="12"
-                                                sm="6"
-                                                md="4"
-                                            >
-                                                <v-text-field
-                                                label="Legal last name*"
-                                                hint="example of persistent helper text"
-                                                persistent-hint
-                                                required
-                                                ></v-text-field>
-                                            </v-col>
-                                            <v-col cols="12">
-                                                <v-text-field
-                                                label="Email*"
-                                                required
-                                                ></v-text-field>
-                                            </v-col>
-                                            <v-col cols="12">
-                                                <v-text-field
-                                                label="Password*"
-                                                type="password"
-                                                required
-                                                ></v-text-field>
-                                            </v-col>
-                                            <v-col
-                                                cols="12"
-                                                sm="6"
-                                            >
-                                                <v-select
-                                                :items="['0-17', '18-29', '30-54', '54+']"
-                                                label="Age*"
-                                                required
-                                                ></v-select>
-                                            </v-col>
-                                            <v-col
-                                                cols="12"
-                                                sm="6"
-                                            >
-                                                <v-autocomplete
-                                                :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
-                                                label="Interests"
-                                                multiple
-                                                ></v-autocomplete>
-                                            </v-col>
-                                            </v-row>
-                                        </v-container>
+                                                <v-container>
+                                                    <v-row>
+                                                        <v-col
+                                                            cols="12"
+                                                        >
+                                                            <v-text-field
+                                                                v-model="project_data['title']"
+                                                                label="Title*"
+                                                                :rules="titleRules"
+                                                                dense
+                                                                required
+                                                            ></v-text-field>
+                                                        </v-col>
+                                                        <v-col
+                                                            cols="12"
+                                                        >
+                                                            <v-textarea
+                                                                v-model="project_data['intro']"
+                                                                label="Intro"
+                                                                dense
+                                                            ></v-textarea>
+                                                        </v-col>       
+                                                        <v-col
+                                                            cols="12"
+                                                        >
+                                                            <v-slider
+                                                                label="Importance"
+                                                                :tick-labels="importance"
+                                                                :value="1"
+                                                                min="0"
+                                                                max="2"
+                                                                tick-size="4"
+                                                            >
+                                                            </v-slider>
+                                                        </v-col>                                     
+                                                        <v-col
+                                                            cols="9"
+                                                        >
+                                                            <v-text-field
+                                                                label="Deadline Date*"
+                                                                prepend-inner-icon="mdi-calendar"
+                                                                v-model="project_data['deadlineDate']"
+                                                                dense
+                                                                required
+                                                            ></v-text-field>
+                                                        </v-col>
+                                                        <v-col
+                                                            cols="3"
+                                                        >
+                                                            <v-menu
+                                                            offset-y
+                                                            :close-on-content-click="false"
+                                                            >
+                                                                <template v-slot:activator="{ on, attrs }">
+                                                                    <v-btn
+                                                                    color="primary"
+                                                                    v-bind="attrs"
+                                                                    v-on="on"
+                                                                    >
+                                                                    Select Date
+                                                                    </v-btn>
+                                                                </template>
+
+                                                                <v-card>
+                                                                    <v-date-picker
+                                                                        v-model="project_data['deadlineDate']"
+                                                                        elevation="15"
+                                                                        :picker-date.sync="pickerDate"
+                                                                    ></v-date-picker>
+                                                                </v-card>
+                                                            </v-menu>
+                                                        </v-col>
+                                                        <v-col
+                                                            cols="9"
+                                                        >
+                                                            <v-text-field
+                                                                label="Deadline Time*"
+                                                                prepend-inner-icon="mdi-clock-time-five-outline"
+                                                                v-model="project_data['deadlineTime']"
+                                                                dense
+                                                                required
+                                                            ></v-text-field>
+                                                        </v-col>
+                                                        <v-col
+                                                            cols="3"
+                                                        >
+                                                            <v-menu
+                                                            offset-y
+                                                            :close-on-content-click="false"
+                                                            >
+                                                                <template v-slot:activator="{ on, attrs }">
+                                                                    <v-btn
+                                                                    color="primary"
+                                                                    v-bind="attrs"
+                                                                    v-on="on"
+                                                                    >
+                                                                    Select Time
+                                                                    </v-btn>
+                                                                </template>
+
+                                                                <v-card>
+                                                                    <v-time-picker
+                                                                        v-model="project_data['deadlineTime']"
+                                                                        elevation="15"
+                                                                        format="24hr"
+                                                                        scrollable
+                                                                    ></v-time-picker>
+                                                                </v-card>
+                                                            </v-menu>
+                                                        </v-col>
+                                                    </v-row>
+                                                </v-container>
+                                            </v-form>
                                         <small>*indicates required field</small>
                                         </v-card-text>
                                         <v-card-actions>
@@ -420,6 +475,11 @@ export default {
         return{
             dialog_project: false,
             dialog_calendar: false,
+            importance: [
+                'Low',
+                'Medium',
+                'High'
+            ],
             titleRules: [
                 v => !!v || 'Title is required'
             ],
@@ -431,6 +491,10 @@ export default {
             //         title: "To Calendar"
             //     }
             // ],
+            project_data: {
+                title: "",
+                intro: "",
+            },
             event_data: {
                 title: "",
                 content: "",
@@ -456,6 +520,10 @@ export default {
         }
     },
     methods: {
+        loadProjectData (item) {
+            this.project_data.title = item.title;
+            this.project_data.intro = item.content;
+        },
         loadEventData (item) {
             this.event_data.title = item.title;
             this.event_data.content = item.content;
