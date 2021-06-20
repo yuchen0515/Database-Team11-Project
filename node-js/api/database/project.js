@@ -29,17 +29,24 @@ exports.loadproject = function (req, res) {
     var array = new Array();
     var array = tag.split(" ");
 
-    var loadproject = "SELECT * FROM project WHERE account_ID = '" + user + "';";
+    var loadproject = "SELECT * FROM project WHERE account_ID = '" + user + "' and tag like ";
 
-    conn.query(loadproject, function (err, rows, fields) {
-        if (err) {
-            console.log("addproject err");
-            res.status(404).json({ status: 404 });
-        }
-        else if (rows.length == 0) {
-            console.log("addproject empty");
-            res.status(403).json({ status: 403 });
-        }
-    });
+    for (i in array) {
+        loadproject += "'%" + array[i] + "%' ";
+    }
+    loadproject += ";";
 
+    console.log(loadproject);
+    /*
+        conn.query(loadproject, function (err, rows, fields) {
+            if (err) {
+                console.log("addproject err");
+                res.status(404).json({ status: 404 });
+            }
+            else if (rows.length == 0) {
+                console.log("addproject empty");
+                res.status(403).json({ status: 403 });
+            }
+        });
+    */
 };
