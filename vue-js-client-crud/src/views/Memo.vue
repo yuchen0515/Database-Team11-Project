@@ -23,6 +23,7 @@
                         color="success"
                         fab
                         outlined
+                        @click="AddStuff(memo_data)"
                     >
                         <v-icon>mdi-plus</v-icon>
                     </v-btn>
@@ -597,6 +598,13 @@ export default {
                 endTime: new Date().toISOString().substr(11, 5),
             },
             delete_id: "",
+
+            memo_data: {
+                    id: "",
+                    title: "",
+                    content: ""
+            },
+
             memo_items: [
                 {
                     id: "1",
@@ -623,7 +631,8 @@ export default {
     },
     methods: {
         ...mapActions([
-                "AddEvent"
+                "AddEvent",
+                "AddStuff"
             ]),
 
         loadProjectData (item) {

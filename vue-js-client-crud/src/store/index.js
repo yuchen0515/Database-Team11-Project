@@ -11,7 +11,8 @@ const store = new Vuex.Store({
     state: {
         stat: 500,
         username: '',
-        addEventStat: ''
+        addEventStat: '',
+        addStuffStat: ''
     },
     
     actions: {
@@ -48,8 +49,9 @@ const store = new Vuex.Store({
             axios({
                 url: 'http://localhost:3000/api/register/',
                 params: {
-                    username: data.username,
-                    password: data.password
+                    username:   data.username,
+                    password:   data.password,
+                    name:       data.username
                 },
                 method: 'POST',
                 responseType: 'json',
@@ -71,7 +73,6 @@ const store = new Vuex.Store({
         },
         Logout({commit}) {
             commit('auth_logout')
-            console.log("hihi")
             axios({url: 'http://localhost:3000/api/logout', method: 'POST'})
                 .then(res => {
 
@@ -81,39 +82,51 @@ const store = new Vuex.Store({
 
         },
         AddEvent({commit, getters}, data) {
-            console.log(getters.username)
+            //console.log(getters.username)
             axios({
                 url: 'http://localhost:3000/api/event',
                 params: {
                     username:   getters.username,
                     id:         data.id,
                     title:      data.title,
-                    content:    data.context,
+                    content:    data.content,
                     startDate:  data.startDate,
                     startTime:  data.startTime,
                     endDate:    data.endDate,
                     endTime:    data.endTime
                 },
-                //params: {
-                //    username:   this.username,
-                //    id:         '1',
-                //    title:      'ts',
-                //    content:    'set',
-                //    startDate:  '2021-06-20',
-                //    startTime:  '22:54:55',
-                //    endDate:    '2021-06-21',
-                //    endTime:    '00:00:00'
-                //},
                 method: 'POST',
                 responseType: 'json',
                 responseEncoding: 'utf8',
-                timeout: 15000})
+                timeout: 5000})
                 .then(res => {
                     const stat = res.status
                     commit('add_event', stat)
                 })
                 .catch(err => {
                     commit('add_event', 404)
+                })
+
+        },
+        AddStuff({commit, getters}, data) {
+            axios({
+                url: 'http://localhost:3000/api/stuff',
+                params: {
+                    username:   getters.username,
+                    id:         data.id,
+                    title:      data.title,
+                    content:    data.content,
+                },
+                method: 'POST',
+                responseType: 'json',
+                responseEncoding: 'utf8',
+                timeout: 5000})
+                .then(res => {
+                    const stat = res.status
+                    commit('add_stuff', stat)
+                })
+                .catch(err => {
+                    commit('add_stuff', 404)
                 })
 
         }
@@ -138,6 +151,9 @@ const store = new Vuex.Store({
         },
         add_event(state, stat) {
             state.addEventStat = stat
+        },
+        add_stuff(state, stat) {
+            state.addStuffStat = stat
         }
     },
     getters: {
