@@ -35,5 +35,16 @@ exports.addEvent = function (req, res) {
         }
     });
 
-    var addevent = "INSERT INTO Events VALUES"
+    var addevent = "INSERT INTO event(account_ID, time_start_date, time_start_time,time_end_date,time_end_time, buf_time, title, content, status) VALUE('" +
+        testuser + "','" + startDate + "','" + startTime + "','" + endDate + "','" + endTime + "','00:30:00','" + title + "','" + content + "','N');";
+    conn.query(addevent, function (err, result) {
+        if (err) {
+            console.log("AddEvent " + title + " failed");
+            res.status(404).json({ status: 404 });
+        }
+        else {
+            console.log("AddEvent " + title + "correct");
+            res.status(200).json({ status: 200 });
+        }
+    })
 };
