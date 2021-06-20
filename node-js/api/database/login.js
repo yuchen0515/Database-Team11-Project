@@ -15,7 +15,7 @@ exports.login = function (req, res) {
         else if (rows[0].account_ID == username && rows[0].password == password) {
             //req.session.user = username_s;
             //req.session.password = password;
-            res.status(200).json({ name: +"'" + rows[0].account_ID + "'" });
+            res.status(200).json({ name: rows[0].account_ID });
         }
         else if (rows[0].account_ID == username && rows[0].password != password) {
             res.status(406).json(null);
