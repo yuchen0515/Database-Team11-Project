@@ -35,7 +35,9 @@ export default new Vuex.Store({
                     if (stat === 404){
                         commit('auth_userNotExist')
                     }
-                    if (stat === 406) commit('auth_errorPassword')
+                    if (stat === 406){
+                        commit('auth_errorPassword')
+                    }
                 })
                 .catch(err => {
                     commit('auth_userNotExist')
