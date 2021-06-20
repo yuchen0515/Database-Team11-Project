@@ -1,7 +1,7 @@
 create table UserData 
 (
-    account_ID      char(8),
-    password        varchar(15),
+    account_ID      char(20),
+    password        varchar(32),
     name            varchar(30) not null,
     preference      varchar(500), /* JSON format */
     primary key (account_ID)
@@ -9,8 +9,8 @@ create table UserData
 
 create table Stuff
 (
-    stuff_ID        char(8),
-    account_ID      char(8),
+    stuff_ID        int(20) NOT NULL AUTO_INCREMENT,
+    account_ID      char(20),
 
     record_date_date DATE,
     record_date_time TIME,
@@ -28,8 +28,8 @@ create table Stuff
 
 create table Event
 (
-    event_ID        char(8),
-    account_ID      char(8),
+    event_ID        int(20) NOT NULL AUTO_INCREMENT,
+    account_ID      char(20),
 
     time_start_date DATE,
     time_start_time TIME,
@@ -48,8 +48,8 @@ create table Event
 
 create table Project
 (
-    project_ID      char(8),
-    account_ID      char(8),
+    project_ID      int(20) NOT NULL AUTO_INCREMENT,
+    account_ID      char(20),
 
     deadline__date DATE,
     deadline_time TIME,
@@ -66,14 +66,12 @@ create table Project
 
 create table Task
 (
-    task_ID         char(8),
-    project_ID      char(8),
+    task_ID         int(20) NOT NULL AUTO_INCREMENT,
+    project_ID      int(20),
     destination     varchar(200),
 
-    time_req_start_date DATE,
-    time_req_start_time TIME,
-    time_req_end_date DATE,
-    time_req_end_time TIME,
+    time_req_date DATE,
+    time_req_time TIME,
 
     status          varchar(1)
         check (status in ('Y', 'N', 'A')), 

@@ -25,7 +25,6 @@ exports.login = function (req, res) {
         }
         else if (rows[0].account_ID == username && rows[0].password != hash) {
             res.status(406).json({ status: 406 });
-            console.log(rows[0].password);
             console.log("err 406");
         }
     });

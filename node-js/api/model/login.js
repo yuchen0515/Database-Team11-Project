@@ -9,7 +9,7 @@ router.post('/login',
 router.post('/logout',
     login.logout
 );
-/*
+/*5f4dcc3b5aa765d61d8327deb882cf99
 router.get('*', function (req, res) {
     res.send('404 not found');
 });
