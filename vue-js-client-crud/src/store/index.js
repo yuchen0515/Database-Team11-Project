@@ -15,15 +15,16 @@ const store = new Vuex.Store({
         loadEventStat: 500,
         addStuffStat: 500,
         removeStuffStat: 500,
-        loadEventData: [
-            //{
-            //    name:       "",
-            //    start:      "",
-            //    end:        "",
-            //    color:      "",
-            //    details:    "",
-            //    timed:      ""
-            //}
+        loadEventData:[
+            {
+                name:       "",
+                start:      "",
+                end:        "",
+                details:    "",
+                timed:      "",
+                color:      "",
+            }
+        ] 
 
             // account_ID => name
             // time_start_time ==> start
@@ -31,7 +32,7 @@ const store = new Vuex.Store({
             // color ==> "Red"
             // details ==> "content"
             // timed ==> "0 or 1" (先隨機)
-        ]
+        
     },
 
     actions: {
@@ -128,13 +129,13 @@ const store = new Vuex.Store({
 
         },
         LoadEvents({commit, getters}, data) {
-            //console.log(getters.username)
+            console.log(getters.username)
             axios({
                 url: 'http://localhost:3000/api/event',
                 params: {
                     username:   getters.username,
-                    start:  data.startDate,
-                    end:    data.endDate,
+                    start:  data.start,
+                    end:    data.end,
                 },
                 method: 'GET',
                 responseType: 'json',
@@ -143,10 +144,11 @@ const store = new Vuex.Store({
                 .then(res => {
                     const stat = res.data.status
                     const events = res.data.events
-                    commit('load_event', stat, events)
+                    commit('load_event', stat)
+                    commit('store_event', res.data.events)
                 })
                 .catch(err => {
-                    commit('load_event', 404, [])
+                    commit('load_event', 404)
                 })
 
         },
@@ -212,8 +214,10 @@ const store = new Vuex.Store({
         add_event(state, stat) {
             state.addEventStat = stat
         },
-        load_event(state, stat, events) {
+        load_event(state, stat) {
             state.loadEventStat = stat
+        },
+        store_event(state, events) {
             state.loadEventData = events
         },
         add_stuff(state, stat) {
@@ -226,7 +230,8 @@ const store = new Vuex.Store({
     getters: {
         isLoggedIn: state => state.stat == 200,
         authStatus: state => state.stat,
-        username: state => state.username
+        username: state => state.username,
+        events: state => state.loadEventData
     },
 
 });
