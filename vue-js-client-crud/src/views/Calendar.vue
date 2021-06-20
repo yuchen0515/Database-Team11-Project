@@ -102,17 +102,9 @@
                     :color="selectedEvent.color"
                     dark
                     >
-                    <v-btn icon>
-                        <v-icon>mdi-pencil</v-icon>
-                    </v-btn>
+                        <v-icon>mdi-calendar-star</v-icon>
                     <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
                     <v-spacer></v-spacer>
-                    <v-btn icon>
-                        <v-icon>mdi-heart</v-icon>
-                    </v-btn>
-                    <v-btn icon>
-                        <v-icon>mdi-dots-vertical</v-icon>
-                    </v-btn>
                     </v-toolbar>
                     <v-card-text>
                     <span v-html="selectedEvent.details"></span>
@@ -120,7 +112,7 @@
                     <v-card-actions>
                     <v-btn
                         text
-                        color="secondary"
+                        color="blue darken-1"
                         @click="selectedOpen = false"
                     >
                         Cancel
