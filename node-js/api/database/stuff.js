@@ -25,7 +25,23 @@ exports.addStuff = function (req, res) {
 
 };
 exports.loadStuff = function (req, res) {
-    var test;
+    var user = req.query.username;
+    var test = "SELECT title, content, stuff_ID FROM stuff WHERE account_ID = '" + user + "' ORDER BY 'left(record_date_date,10)' ASC, 'record_date_time' ASC";
+
+    conn.query(test, function (err, rows, fields) {
+        if (err) {
+            console.log("unknow error");
+            res.status(404).json({ status: 404 });
+        }
+        else if (rows.length == 0) {
+            console.log("no match stuff");
+            res.status(404).json({ status: 404 });
+        }
+        else {
+            res.status(200).json({ status: 200, events: rows });
+            //console.log(rows);
+        }
+    });
 };
 exports.deleteStuff = function (req, res) {
     var stuff_ID = req.query.stuff_ID;
