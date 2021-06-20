@@ -8,6 +8,7 @@ var sessionStore = new MySQLStore(
 var express = require('express')
     , app = express();
 var login = require('./api/model/login')
+    , logout = require('./api/model/logout')
     , event = require('./api/model/event')
     , register = require('./api/model/register')
     , stuff = require('./api/model/stuff')
@@ -30,6 +31,7 @@ app.use(function (req, res, next) {
 });
 
 app.use('/api/login', login);
+app.use('/api/logout', logout);
 app.use('/api/event', event);
 app.use('/api/register', register);
 app.use('/api/stuff', stuff);

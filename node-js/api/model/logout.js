@@ -4,7 +4,7 @@ var router = express.Router();
 var login = require('../database/login')
 
 router.post('/',
-    login.login
+    login.logout
 );
 /*
 router.get('*', function (req, res) {
