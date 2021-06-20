@@ -19,3 +19,33 @@ exports.loadEvent = function (req, res) {
         }
     });
 }
+exports.addEvent = function (req, res) {
+    var id = req.query.id;
+    var title = req.query.title;
+    var content = req.query.content;
+    var startDate = req.query.startDate;
+    var startTime = req.query.startTime;
+    var endDate = req.query.endDate;
+    var endTime = req.query.endTime;
+    var user = req.query.username;
+
+    var delete_stuff = "DELETE FROM Stuff WHERE stuff_ID = '" + id + "'";
+    conn.query(delete_stuff, function (err, result) {
+        if (err) {
+            console.log("Delete stuff " + id + " failed");
+        }
+    });
+
+    var addevent = "INSERT INTO event(account_ID, time_start_date, time_start_time,time_end_date,time_end_time, buf_time, title, content, status) VALUE('" +
+        user + "','" + startDate + "','" + startTime + "','" + endDate + "','" + endTime + "','00:30:00','" + title + "','" + content + "','N');";
+    conn.query(addevent, function (err, result) {
+        if (err) {
+            console.log("AddEvent " + title + " failed");
+            res.status(404).json({ status: 404 });
+        }
+        else {
+            console.log("AddEvent " + title + "correct");
+            res.status(200).json({ status: 200 });
+        }
+    })
+};
