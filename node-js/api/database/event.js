@@ -17,7 +17,7 @@ exports.loadEvent = function (req, res) {
             res.status(404).json({ status: 404 });
         }
         else {
-            state.event = rows;
+            res.status(200).json({ status: 200, events: rows });
             console.log(rows);
         }
     });

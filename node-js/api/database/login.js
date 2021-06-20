@@ -9,15 +9,16 @@ exports.login = function (req, res) {
         console.log("get username: " + username);
         console.log("get password: " + password);
     */
-    var sql = "SELECT * FROM UserData WHERE account_ID = '" + username + "'";
+    var login = "SELECT * FROM UserData WHERE account_ID = '" + username + "'";
     var hash = crypto.createHash('md5').update(password).digest('hex');
 
-    conn.query(sql, function (err, rows, fields) {
-        //res.header("Access-Control-Allow-Origin", "*");
-        //res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-        //res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-
-        if (!rows.length) {
+    conn.query(login, function (err, rows, fields) {
+        if (err) {
+            console.log("err login post");
+            res.status(404).json({ status: 404 });
+        }
+        else if (!rows.length) {
+            res.status(404).json({ status: 404 });
             console.log("err 404");
             res.status(404).json({ status: 404 });
         }
