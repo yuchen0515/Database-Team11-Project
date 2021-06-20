@@ -1,3 +1,4 @@
+//var conn = require('./sql.js').conn;
 var mysql = require('mysql');
 
 var fs = require('fs')
@@ -10,10 +11,11 @@ var conn = mysql.createConnection({
     user: config.server.user,
     password: config.server.password,
     port: config.server.port,
-    //database: 'team11',
+    database: config.server.user,
 });
 
 exports.get_event_by_time = function (req, res, start_date, end_date) {
+    console.log("get_event_by_time call");
     var sql = "SELECT * FROM Event WHERE time_start_date BETWEEN " + start_date +
         " AND " + end_date + " AND time_end_date BETWEEN " + start_date + " AND " + end_date;
     conn.connect(function (err) {
@@ -23,20 +25,5 @@ exports.get_event_by_time = function (req, res, start_date, end_date) {
         //if (err) throw err;
         console.log(rows);
     });
+    conn.end();
 }
-
-var start_date = new Date(2020, 6, 19);
-var end_date = new Date(2021, 6, 19);
-start_date = start_date.toISOString().slice(0, 10);
-end_date = end_date.toISOString().slice(0, 10);
-var sql = "SELECT * FROM Event WHERE time_start_date BETWEEN " + start_date +
-    " AND " + end_date + " AND time_end_date BETWEEN " + start_date + " AND " + end_date;
-conn.connect(function (err) {
-    //if (err) throw err;
-});
-conn.query(sql, function (err, rows, fields) {
-    //if (err) throw err;
-    console.log("do: " + sql);
-    console.log(rows);
-});
-conn.end();
