@@ -7,6 +7,7 @@ import axios from 'axios'
 
 Vue.use(Vuex);
 
+
 export default new Vuex.Store({
     state: {
         stat: '500',
@@ -58,9 +59,9 @@ export default new Vuex.Store({
                     const stat = res.status
                     const username = res.username
 
-                    if (stat === '200') commit('auth_success', username)
+                    if (stat === 200) commit('auth_success', username)
                     // Repet
-                    if (stat === '404') commit('auth_userNotExist')
+                    if (stat === 404) commit('auth_userNotExist')
 
                 })
                 .catch(err => {
