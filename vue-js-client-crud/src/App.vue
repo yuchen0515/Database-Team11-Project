@@ -14,7 +14,8 @@
         class="mx-4"
         vertical
       ></v-divider>
-      <template v-if="isLogged">
+      <template>
+      <!-- <template v-if="username"> -->
       <v-btn
         v-for="item in items"
         :key="item.name"
@@ -49,6 +50,7 @@
 
 <script>
   // import Cookies from 'js-cookie'
+  import {mapGetters, mapState} from "vuex";
   export default {
     data() {
       return {
@@ -74,20 +76,13 @@
       }
     },
     computed: {
-      isLogged: function() {
-        // const info = Cookies.get('login')
-        // const token = JSON.parse(info).token
-        return true
-        // if (info) {
-        //   if (token.length > 0 || token === undefined) {
-        //     return true
-        //   } else {
-        //     return false
-        //   }
-        // } else {
-        //   return false
-        // }
-      }
+      ...mapState([
+        // 需要的state在這邊
+        "username"
+      ]),
+      ...mapGetters([
+        "isLoggedIn"
+      ])
     }
   }
 </script>
