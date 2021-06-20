@@ -3,8 +3,8 @@ var router = express.Router();
 
 var event = require('../database/event')
 
-router.post('/event/get_event_by_time',
-    event.get_event_by_time
+router.get('/event',
+    event.loadEvent
 );
 /*
 router.get('*', function (req, res) {

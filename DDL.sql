@@ -12,10 +12,11 @@ create table Stuff
     stuff_ID        char(8),
     account_ID      char(8),
 
-    record_date_start_date DATE,
-    record_date_start_time TIME,
-    record_date_end_date DATE,
-    record_date_end_time TIME,
+    record_date_date DATE,
+    record_date_time TIME,
+
+    title           varchar(50),
+    content         varchar(500),
 
     status          varchar(1)
         check (status in ('Y', 'N', 'A')), 
@@ -50,13 +51,11 @@ create table Project
     project_ID      char(8),
     account_ID      char(8),
 
-    deadline_start_date DATE,
-    deadline_start_time TIME,
-    deadline_end_date DATE,
-    deadline_end_time TIME,
+    deadline__date DATE,
+    deadline_time TIME,
     importance      numeric(2), /* priority by number */
     title           varchar(50),
-    tag             varchar(2),
+    tag             varchar(50),
     intro           varchar(200),
     status          varchar(1)
         check (status in ('Y', 'N', 'A')), 
