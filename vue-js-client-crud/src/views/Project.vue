@@ -24,7 +24,7 @@
                 <v-card
                     autofill
                     dark
-                    color="indigo"
+                    :color="importanceColor[item.importance]"
                 >
                     <v-card-title>
 
@@ -146,7 +146,7 @@
                         :value=nowProgress(item)
                         height="10"
                         striped
-                        color="deep-orange"
+                        color="amber darken-3"
                     ></v-progress-linear>
                     <v-card
                         light
@@ -232,6 +232,11 @@ export default {
     data () {
         return{
             searchTag: "",
+            importanceColor: [
+                "indigo",
+                "pink darken-4",
+                "red darken-4"
+            ],
             project_items: [
                 {
                     id: "1",
@@ -256,7 +261,7 @@ export default {
                     title: "helloworld2",
                     intro: "start of everything",
                     tag: "hello world begin",
-                    importance: "2",
+                    importance: "1",
                     deadlineDate: "2021-06-30",
                     deadlineTime: "23:55",
                     taskList: [
@@ -283,7 +288,7 @@ export default {
                     title: "helloworld",
                     intro: "start of everything",
                     tag: "hello world begin",
-                    importance: "2",
+                    importance: "0",
                     deadlineDate: "2021-06-30",
                     deadlineTime: "23:55",
                     taskList: [
