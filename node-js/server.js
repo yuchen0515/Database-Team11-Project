@@ -31,7 +31,7 @@ app.use(function (req, res, next) {
 app.use('/api/login', login);
 app.use('/api/event', event);
 app.use('/api/register', register);
-app.use('./api/stuff', stuff);
+app.use('/api/stuff', stuff);
 
 app.route('/api/*')
     .get(function (req, res) {
