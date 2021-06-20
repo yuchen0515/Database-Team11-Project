@@ -28,6 +28,11 @@
       </template>
       <!-- <v-divider></v-divider> -->
       <v-spacer></v-spacer>
+      <!-- <v-text
+        v-if="username"
+      >
+        {{username}}
+      </v-text> -->
       <v-btn
         text
         :key="'Login'"
@@ -65,7 +70,7 @@
             name: 'Memo',
           },
           {
-            path: '/Poject',
+            path: '/Project',
             name: 'Project',
           },
           {

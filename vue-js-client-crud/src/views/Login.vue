@@ -13,6 +13,7 @@
     ></v-text-field>
     <v-btn color="success" @click="handleLogin">Login</v-btn>
     <v-btn color="warning" @click="removeCookie">Remove Cookie</v-btn>
+    <v-btn color="error">Register</v-btn>
     </div>
 </template>
 
