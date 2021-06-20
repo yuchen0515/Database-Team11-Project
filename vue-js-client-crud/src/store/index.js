@@ -7,7 +7,6 @@ import axios from 'axios'
 
 Vue.use(Vuex);
 
-
 const store = new Vuex.Store({
     state: {
         stat: 500,
@@ -71,12 +70,13 @@ const store = new Vuex.Store({
 
         },
         Logout({commit}) {
+            commit('auth_logout')
+            console.log("hihi")
             axios({url: 'http://localhost:3000/api/logout', method: 'POST'})
                 .then(res => {
-                    commit('auth_logout')
+
                 })
                 .catch(err => {
-                    commit('auth_logout')
                 })
 
         },

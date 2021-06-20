@@ -20,7 +20,7 @@ const routes = [
     component: () => import('@/views/Memo.vue')
   },
   {
-    path: '/Poject',
+    path: '/Project',
     name: 'Project',
     meta: {requireAuth: true},
     component: () => import('@/views/Project.vue')

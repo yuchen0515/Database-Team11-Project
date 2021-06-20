@@ -14,7 +14,8 @@
         class="mx-4"
         vertical
       ></v-divider>
-      <template v-if="isLogged">
+      <!-- <template> -->
+      <template v-if="username">
       <v-btn
         v-for="item in items"
         :key="item.name"
@@ -27,8 +28,20 @@
       </template>
       <!-- <v-divider></v-divider> -->
       <v-spacer></v-spacer>
+      <v-text
+        v-if="username"
+      >
+        {{username}}
+      </v-text>
       <v-btn
         text
+        v-if="username"
+        :key="'Logout'"
+        @click="Logout"
+      >Logout</v-btn>
+      <v-btn
+        text
+        v-else
         :key="'Login'"
         :to="'/Login'"
       >Login</v-btn>
@@ -49,6 +62,7 @@
 
 <script>
   // import Cookies from 'js-cookie'
+  import {mapGetters, mapState, mapActions} from "vuex";
   export default {
     data() {
       return {
@@ -63,7 +77,7 @@
             name: 'Memo',
           },
           {
-            path: '/Poject',
+            path: '/Project',
             name: 'Project',
           },
           {
@@ -74,20 +88,18 @@
       }
     },
     computed: {
-      isLogged: function() {
-        // const info = Cookies.get('login')
-        // const token = JSON.parse(info).token
-        return true
-        // if (info) {
-        //   if (token.length > 0 || token === undefined) {
-        //     return true
-        //   } else {
-        //     return false
-        //   }
-        // } else {
-        //   return false
-        // }
-      }
+      ...mapState([
+        // 需要的state在這邊
+        "username"
+      ]),
+      ...mapGetters([
+        "isLoggedIn"
+      ])
+    },
+    methods: {
+      ...mapActions([
+        "Logout"
+      ])
     }
   }
 </script>
