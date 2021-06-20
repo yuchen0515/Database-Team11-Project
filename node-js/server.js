@@ -10,7 +10,8 @@ var express = require('express')
 var login = require('./api/model/login')
     , event = require('./api/model/event')
     , register = require('./api/model/register')
-    , stuff = require('./api/model/stuff');
+    , stuff = require('./api/model/stuff')
+    , project = require('./api/model/project');
 /*
 app.use(session({
     store: sessionStore,
@@ -32,6 +33,7 @@ app.use('/api/login', login);
 app.use('/api/event', event);
 app.use('/api/register', register);
 app.use('/api/stuff', stuff);
+app.use('/api/project', project);
 
 app.route('/api/*')
     .get(function (req, res) {
