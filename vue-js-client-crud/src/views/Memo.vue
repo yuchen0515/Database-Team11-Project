@@ -542,7 +542,7 @@
                                                 <v-btn
                                                     color="error"
                                                     text
-                                                    @click="dialog_delete = false"
+                                                    @click="RemoveStuff(delete_data)"
                                                 >
                                                     Delete
                                                 </v-btn>
@@ -597,10 +597,11 @@ export default {
                 endDate: new Date().toISOString().substr(0, 10),
                 endTime: new Date().toISOString().substr(11, 5),
             },
-            delete_id: "",
+            delete_data: {
+                delete_id: "",
+            },
 
             memo_data: {
-                    id: "",
                     title: "",
                     content: ""
             },
@@ -632,7 +633,8 @@ export default {
     methods: {
         ...mapActions([
                 "AddEvent",
-                "AddStuff"
+                "AddStuff",
+                "RemoveStuff"
             ]),
 
         loadProjectData (item) {

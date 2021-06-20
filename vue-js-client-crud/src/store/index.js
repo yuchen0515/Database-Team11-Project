@@ -11,10 +11,22 @@ const store = new Vuex.Store({
     state: {
         stat: 500,
         username: '',
-        addEventStat: '',
-        addStuffStat: ''
+        addEventStat: 500,
+        loadEventStat: 500,
+        addStuffStat: 500,
+        removeStuffStat: 500,
+        loadEventData: [
+            {
+                name:       "",
+                start:      "",
+                end:        "",
+                color:      "",
+                details:    "",
+                timed:      ""
+            }
+        ]
     },
-    
+
     actions: {
         Login({commit}, data) {
             axios({
@@ -58,8 +70,8 @@ const store = new Vuex.Store({
                 responseEncoding: 'utf8',
                 timeout: 15000})
                 .then(res => {
-                    const stat = res.status
-                    const username = res.username
+                    const stat = res.data.status
+                    const username = res.data.username
 
                     if (stat === 200) commit('auth_success', username)
                     // Repet
@@ -100,7 +112,7 @@ const store = new Vuex.Store({
                 responseEncoding: 'utf8',
                 timeout: 5000})
                 .then(res => {
-                    const stat = res.status
+                    const stat = res.data.status
                     commit('add_event', stat)
                 })
                 .catch(err => {
@@ -108,25 +120,66 @@ const store = new Vuex.Store({
                 })
 
         },
-        AddStuff({commit, getters}, data) {
+        LoadEvent({commit, getters}, data) {
+            //console.log(getters.username)
             axios({
-                url: 'http://localhost:3000/api/stuff',
+                url: 'http://localhost:3000/api/event',
                 params: {
                     username:   getters.username,
-                    id:         data.id,
-                    title:      data.title,
-                    content:    data.content,
+                    start:  data.startDate,
+                    end:    data.endDate,
                 },
                 method: 'POST',
                 responseType: 'json',
                 responseEncoding: 'utf8',
                 timeout: 5000})
                 .then(res => {
-                    const stat = res.status
+                    const stat = res.data.status
+                    const events = res.data.events
+                    commit('load_event', stat, events)
+                })
+                .catch(err => {
+                    commit('load_event', 404, [])
+                })
+
+        },
+        AddStuff({commit, getters}, data) {
+            axios({
+                url: 'http://localhost:3000/api/stuff',
+                params: {
+                    title:      data.title,
+                    content:    data.content,
+                    username:   getters.username,
+                },
+                method: 'POST',
+                responseType: 'json',
+                responseEncoding: 'utf8',
+                timeout: 5000})
+                .then(res => {
+                    const stat = res.data.status
                     commit('add_stuff', stat)
                 })
                 .catch(err => {
                     commit('add_stuff', 404)
+                })
+
+        },
+        RemoveStuff({commit}, data) {
+            axios({
+                url: 'http://localhost:3000/api/stuff',
+                params: {
+                    stuff_ID:      data.delete_id,
+                },
+                method: 'DELETE',
+                responseType: 'json',
+                responseEncoding: 'utf8',
+                timeout: 5000})
+                .then(res => {
+                    const stat = res.data.status
+                    commit('remove_stuff', stat)
+                })
+                .catch(err => {
+                    commit('remove_stuff', 404)
                 })
 
         }
@@ -152,8 +205,15 @@ const store = new Vuex.Store({
         add_event(state, stat) {
             state.addEventStat = stat
         },
+        load_event(state, stat, events) {
+            state.loadEventStat = stat
+            state.loadEventData = events
+        },
         add_stuff(state, stat) {
             state.addStuffStat = stat
+        },
+        remove_stuff(state, stat) {
+            state.removeStuffStat = stat
         }
     },
     getters: {
