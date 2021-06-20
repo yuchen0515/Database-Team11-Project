@@ -14,76 +14,73 @@ export default new Vuex.Store({
     },
     
     actions: {
-        Login({commit}, username, password) {
-            return new Promise((resolve, reject) => {
-                var URL = 'http://localhost:3000/api/login';
-                URL += '?username=';
-                URL += username;
-                URL += ',password=';
-                URL += password;
-                console.log(URL);
+        Login({commit}, data) {
+            axios({
+                url: 'http://localhost:3000/api/login/',
+                params: {
+                    username: data.username,
+                    password: data.password
+                },
+                method: 'POST',
+                responseType: 'json',
+                responseEncoding: 'utf8',
+                timeout: 15000})
+                .then(res => {
+                    const stat = res.data.status
+                    const username = res.data.username
 
-                axios({url: URL, method: 'POST'})
-                    .then(res => {
-                        const stat = res.status
-                        const username = res.username
-
-                        if (stat === '200') commit('auth_success', username)
-                        if (stat === '404') commit('auth_userNotExist')
-                        if (stat === '406') commit('auth_errorPassword')
-                        resolve(res)
-
-                    })
-                    .catch(err => {
+                    if (stat === 200){
+                        commit('auth_success', username)
+                    }
+                    if (stat === 404){
                         commit('auth_userNotExist')
-                        reject(err)
-                    })
-
-            })
+                    }
+                    if (stat === 406){
+                        commit('auth_errorPassword')
+                    }
+                })
+                .catch(err => {
+                    commit('auth_userNotExist')
+                })
         },
-        Register({commit}, username, passward) {
-            return new Promise((resolve, reject) => {
-                var URL = 'http://localhost:3000/api/register';
-                URL += '?username=';
-                URL += username;
-                URL += ',passward';
-                URL += passward;
+        Register({commit}, data) {
+            axios({
+                url: 'http://localhost:3000/api/register/',
+                params: {
+                    username: data.username,
+                    password: data.password
+                },
+                method: 'POST',
+                responseType: 'json',
+                responseEncoding: 'utf8',
+                timeout: 15000})
+                .then(res => {
+                    const stat = res.status
+                    const username = res.username
 
-                axios({url: URL, method: 'POST'})
-                    .then(res => {
-                        const stat = res.status
-                        const username = res.username
+                    if (stat === '200') commit('auth_success', username)
+                    // Repet
+                    if (stat === '404') commit('auth_userNotExist')
 
-                        if (stat === '200') commit('auth_success', username)
-                        // Repet
-                        if (stat === '404') commit('auth_userNotExist')
-                        resolve(res)
+                })
+                .catch(err => {
+                    commit('auth_userNotExist')
+                })
 
-                    })
-                    .catch(err => {
-                        commit('auth_userNotExist')
-                        reject(err)
-                    })
-
-            })
         },
         Logout({commit}) {
-            return new Promise((resolve, reject) => {
-                axios({url: 'http://localhost:3000/api/logout', method: 'POST'})
-                    .then(res => {
-                        commit('auth_logout')
-                        resolve(res)
-                    })
-                    .catch(err => {
-                        commit('auth_logout')
-                        reject(err)
-                    })
+            axios({url: 'http://localhost:3000/api/logout', method: 'POST'})
+                .then(res => {
+                    commit('auth_logout')
+                })
+                .catch(err => {
+                    commit('auth_logout')
+                })
 
-            })
         }
     },
 
-    mutation: {
+    mutations: {
         auth_success(state, username) {
             state.stat = '200'
             state.username = username
@@ -106,4 +103,4 @@ export default new Vuex.Store({
         isLoggedIn: state => state.stat == '200',
         authStatus: state => state.stat
     }
-})
+});

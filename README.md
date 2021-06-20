@@ -19,3 +19,15 @@
     * 後端(bash testing, server, etc.)
     * 資料庫(DDL, sqlite & mysql, etc.)
     * others...
+
+* [筆記](https://hackmd.io/@mathlin/BJdNeuoo_)
+
+* 自備檔案
+    - ./node-js/conf.ini
+```ini
+[server]
+host='your host ip'(XXX.XXX.XXX.XXX)
+user='your user name' (teamXX)
+password='your password'
+port=XXXX
+```
