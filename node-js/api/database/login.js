@@ -5,10 +5,10 @@ exports.login = function (req, res) {
 
     var username = req.query.username;
     var password = req.query.password;
-    /*
-        console.log("get username: " + username);
-        console.log("get password: " + password);
-    */
+
+    console.log("get username: " + username);
+    console.log("get password: " + password);
+
     var login = "SELECT * FROM UserData WHERE account_ID = '" + username + "'";
     var hash = crypto.createHash('md5').update(password).digest('hex');
 
