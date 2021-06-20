@@ -39,7 +39,9 @@ class Stuff {
             res += ("\'" +     record_date_start_time          + "\',"  );
             res += ("\'" +     record_date_end_date            + "\',"  );
             res += ("\'" +     record_date_end_time            + "\',"  );
-            res += ("\'" +     to_string(status)               + "\'"  );
+            res += "\'";
+            res += status;
+            res += "\'";
             res += ");";
             std::cout << res;  
         }
@@ -58,7 +60,7 @@ class Stuff {
 class Event {
     public:
         void print() {
-            std::string res = "INSERT INTO Stuff VALUES (";
+            std::string res = "INSERT INTO Event VALUES (";
             res += ("\'" +     event_ID                     + "\',"  );
             res += ("\'" +     account_ID                      + "\',"  );
             res += ("\'" +     time_start_date          + "\',"  );
@@ -68,7 +70,9 @@ class Event {
             res += ("\'" +     buf_time                 + "\',"  );
             res += ("\'" +     title                    + "\',"  );
             res += ("\'" +     content                    + "\',"  );
-            res += ("\'" +     to_string(status)               + "\'"  );
+            res += "\'";
+            res += status;
+            res += "\'";
             res += ");";
             std::cout << res;  
         }
@@ -90,7 +94,7 @@ class Event {
 class Project {
     public:
         void print() {
-            std::string res = "INSERT INTO Stuff VALUES (";
+            std::string res = "INSERT INTO Project VALUES (";
             res += ("\'" +     project_ID   + "\',"  );
             res += ("\'" +     account_ID                      + "\',"  );
 
@@ -103,7 +107,11 @@ class Project {
             res += ("\'" +     title                    + "\',"  );
             res += ("\'" +     tag                    + "\',"  );
             res += ("\'" +     intro                    + "\',"  );
-            res += ("\'" +     to_string(status)               + "\'"  );
+
+            res += "\'";
+            res += status;
+            res += "\'";
+
             res += ");";
             std::cout << res;  
         }
@@ -127,7 +135,7 @@ class Project {
 class Task {
     public:
         void print() {
-            std::string res = "INSERT INTO Stuff VALUES (";
+            std::string res = "INSERT INTO Task VALUES (";
             res += ("\'" +     task_ID                      + "\',"  );
             res += ("\'" +     project_ID   + "\',"  );
             res += ("\'" +     destination  + "\',"  );
@@ -137,7 +145,10 @@ class Task {
             res += ("\'" +     time_req_end_date            + "\',"  );
             res += ("\'" +     time_req_end_time            + "\',"  );
 
-            res += ("\'" +     to_string(status)               + "\',"  );
+            res += "\'";
+            res += status;
+            res += "\',";
+
             res += ("\'" +     to_string(highlight)               + "\'"  );
             res += ");";
             std::cout << res;  
@@ -247,10 +258,24 @@ Stuff gen_ran_Stuff() {
     TEMP.stuff_ID = gen_ran_string(8, 1);
     TEMP.account_ID = gen_ran_string(8, 1);
 
-    TEMP.record_date_start_date = gen_ran_date();
+    auto date_fir = gen_ran_date();
+    auto date_sec = gen_ran_date();
+
+    TEMP.record_date_start_date = (date_fir < date_sec) ? date_fir : date_sec;
+    TEMP.record_date_end_date = (date_fir > date_sec) ? date_fir : date_sec;
+
+    auto time_fir = gen_ran_time();
+    auto time_sec = gen_ran_time();
+
     TEMP.record_date_start_time = gen_ran_time();
-    TEMP.record_date_end_date = gen_ran_date();
     TEMP.record_date_end_time = gen_ran_time();
+
+    if (date_fir == date_sec) {
+        TEMP.record_date_start_time = (time_fir < time_sec) ? time_fir : time_sec;
+        TEMP.record_date_end_time = (time_fir > time_sec) ? time_fir : time_sec;
+
+    }
+
     TEMP.status = gen_ran_status();
 
 
@@ -262,10 +287,23 @@ Event gen_ran_Event() {
     TEMP.event_ID = gen_ran_string(8, 1);
     TEMP.account_ID = gen_ran_string(8, 1);
 
-    TEMP.time_start_date = gen_ran_date();
+    auto date_fir = gen_ran_date();
+    auto date_sec = gen_ran_date();
+
+    TEMP.time_start_date = (date_fir < date_sec) ? date_fir : date_sec;
+    TEMP.time_end_date = (date_fir > date_sec) ? date_fir : date_sec;
+
+    auto time_fir = gen_ran_time();
+    auto time_sec = gen_ran_time();
+
     TEMP.time_start_time = gen_ran_time();
-    TEMP.time_end_date = gen_ran_date();
     TEMP.time_end_time = gen_ran_time();
+
+    if (date_fir == date_sec) {
+        TEMP.time_start_time = (time_fir < time_sec) ? time_fir : time_sec;
+        TEMP.time_end_time = (time_fir > time_sec) ? time_fir : time_sec;
+
+    }
 
     TEMP.buf_time = gen_ran_time();
 
@@ -283,10 +321,23 @@ Project gen_ran_Project () {
     TEMP.project_ID = gen_ran_string(8, 1);
     TEMP.account_ID = gen_ran_string(8, 1);
 
-    TEMP.deadline_start_date = gen_ran_date();
+    auto date_fir = gen_ran_date();
+    auto date_sec = gen_ran_date();
+
+    TEMP.deadline_start_date = (date_fir < date_sec) ? date_fir : date_sec;
+    TEMP.deadline_end_date = (date_fir > date_sec) ? date_fir : date_sec;
+
+    auto time_fir = gen_ran_time();
+    auto time_sec = gen_ran_time();
+
     TEMP.deadline_start_time = gen_ran_time();
-    TEMP.deadline_end_date = gen_ran_date();
     TEMP.deadline_end_time = gen_ran_time();
+
+    if (date_fir == date_sec) {
+        TEMP.deadline_start_time = (time_fir < time_sec) ? time_fir : time_sec;
+        TEMP.deadline_end_time = (time_fir > time_sec) ? time_fir : time_sec;
+
+    }
 
     TEMP.importance = rng() % 100;
 
@@ -309,10 +360,23 @@ Task gen_ran_Task() {
     //TEMP.destination = gen_ran_string(rng() % 200 + 1 , 0);
     TEMP.destination = gen_ran_string(rng() % 20 + 1 , 0);
 
-    TEMP.time_req_start_date = gen_ran_date();
+    auto date_fir = gen_ran_date();
+    auto date_sec = gen_ran_date();
+
+    TEMP.time_req_start_date = (date_fir < date_sec) ? date_fir : date_sec;
+    TEMP.time_req_end_date = (date_fir > date_sec) ? date_fir : date_sec;
+
+    auto time_fir = gen_ran_time();
+    auto time_sec = gen_ran_time();
+
     TEMP.time_req_start_time = gen_ran_time();
-    TEMP.time_req_end_date = gen_ran_date();
     TEMP.time_req_end_time = gen_ran_time();
+
+    if (date_fir == date_sec) {
+        TEMP.time_req_start_time = (time_fir < time_sec) ? time_fir : time_sec;
+        TEMP.time_req_end_time = (time_fir > time_sec) ? time_fir : time_sec;
+
+    }
 
     TEMP.status = gen_ran_status();
     TEMP.highlight = gen_ran_string(1 , 0).c_str()[0];
