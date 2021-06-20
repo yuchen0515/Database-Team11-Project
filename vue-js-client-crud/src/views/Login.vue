@@ -11,8 +11,7 @@
         label="Password"
         @click:append="showpass = !showpass"
     ></v-text-field>
-    <v-btn color="success" @click="handleLogin">Login</v-btn>
-    <v-btn color="success" @click="Login({username: loginForm.username, password: loginForm.password})">newLogin</v-btn>
+    <v-btn color="success" @click="Login({username: loginForm.username, password: loginForm.password})">Login</v-btn>
     <v-btn color="warning" @click="removeCookie">Remove Cookie</v-btn>
     <div>{{username || "not login"}}</div>
     <div>{{stat}}</div>

@@ -15,78 +15,66 @@ export default new Vuex.Store({
     
     actions: {
         Login({commit}, data) {
-            //return new Promise((resolve, reject) => {
-                var URL = 'http://localhost:3000/api/login';
-                URL += '?username=';
-                URL += data.username;
-                URL += '&password=';
-                URL += data.password;
-                //var URL = 'http://localhost:3000/api/login?username=user&password=password'
-                console.log(URL);
-                //console.log(data.username);
-                //console.log(data.password);
+            axios({
+                url: 'http://localhost:3000/api/login/',
+                params: {
+                    username: data.username,
+                    password: data.password
+                },
+                method: 'POST',
+                responseType: 'json',
+                responseEncoding: 'utf8',
+                timeout: 15000})
+                .then(res => {
+                    const stat = res.data.status
+                    const username = res.data.username
 
-                return axios({url: URL, method: 'POST'})
-                    .then(res => {
-                        //const stat = res.data.status
-                        //const username = res.data.username
-                        console.log(res);
-
-                        //if (stat === '200'){
-                        //    commit('auth_success', username)
-                        //}
-                        //if (stat === '404'){
-                        //    commit('auth_userNotExist')
-                        //}
-                        //if (stat === '406') commit('auth_errorPassword')
-                        //resolve(res)
-                    })
-                    .catch(err => {
-                        console.log('test');
+                    if (stat === 200){
+                        commit('auth_success', username)
+                    }
+                    if (stat === 404){
                         commit('auth_userNotExist')
-                        //reject(err)
-                    })
-            //})
+                    }
+                    if (stat === 406) commit('auth_errorPassword')
+                })
+                .catch(err => {
+                    commit('auth_userNotExist')
+                })
         },
         Register({commit}, data) {
-            return new Promise((resolve, reject) => {
-                var URL = 'http://localhost:3000/api/register';
-                URL += '?username=';
-                URL += data.username;
-                URL += ',passward';
-                URL += data.passward;
+            axios({
+                url: 'http://localhost:3000/api/register/',
+                params: {
+                    username: data.username,
+                    password: data.password
+                },
+                method: 'POST',
+                responseType: 'json',
+                responseEncoding: 'utf8',
+                timeout: 15000})
+                .then(res => {
+                    const stat = res.status
+                    const username = res.username
 
-                axios({url: URL, method: 'POST'})
-                    .then(res => {
-                        const stat = res.status
-                        const username = res.username
+                    if (stat === '200') commit('auth_success', username)
+                    // Repet
+                    if (stat === '404') commit('auth_userNotExist')
 
-                        if (stat === '200') commit('auth_success', username)
-                        // Repet
-                        if (stat === '404') commit('auth_userNotExist')
-                        resolve(res)
+                })
+                .catch(err => {
+                    commit('auth_userNotExist')
+                })
 
-                    })
-                    .catch(err => {
-                        commit('auth_userNotExist')
-                        reject(err)
-                    })
-
-            })
         },
         Logout({commit}) {
-            return new Promise((resolve, reject) => {
-                axios({url: 'http://localhost:3000/api/logout', method: 'POST'})
-                    .then(res => {
-                        commit('auth_logout')
-                        resolve(res)
-                    })
-                    .catch(err => {
-                        commit('auth_logout')
-                        reject(err)
-                    })
+            axios({url: 'http://localhost:3000/api/logout', method: 'POST'})
+                .then(res => {
+                    commit('auth_logout')
+                })
+                .catch(err => {
+                    commit('auth_logout')
+                })
 
-            })
         }
     },
 
