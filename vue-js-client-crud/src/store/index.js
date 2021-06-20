@@ -8,10 +8,11 @@ import axios from 'axios'
 Vue.use(Vuex);
 
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
     state: {
-        stat: '500',
+        stat: 500,
         username: '',
+        addEventStat: ''
     },
     
     actions: {
@@ -78,30 +79,60 @@ export default new Vuex.Store({
                     commit('auth_logout')
                 })
 
+        },
+        AddEvent({commit}, data) {
+            axios({
+                url: 'http://localhost:3000/api/event/',
+                params: {
+                    id: data.id,
+                    title: data.title,
+                    content: data.context,
+                    startDate: data.startDate,
+                    startTime: data.startTime,
+                    endDate: data.endDate,
+                    endTime: data.endTime
+                },
+                method: 'POST',
+                responseType: 'json',
+                responseEncoding: 'utf8',
+                timeout: 15000})
+                .then(res => {
+                    const stat = res.status
+                    commit('add_event', stat)
+                })
+                .catch(err => {
+                    commit('add_event', 404)
+                })
+
         }
     },
 
     mutations: {
         auth_success(state, username) {
-            state.stat = '200'
+            state.stat = 200
             state.username = username
         },
         auth_userNotExist(state) {
-            state.stat = '404'
+            state.stat = 404
             state.username = null
         },
         auth_errorPassword(state) {
-            state.stat = '406'
+            state.stat = 406
             state.username = null
         },
         auth_logout(state) {
-            state.stat = '500'
+            state.stat = 500
             state.username = null
+        },
+        add_event(state, stat) {
+            state.addEventStat = stat
         }
     },
 
     getters: {
-        isLoggedIn: state => state.stat == '200',
+        isLoggedIn: state => state.stat == 200,
         authStatus: state => state.stat
     }
 });
+
+export default store;
