@@ -9,6 +9,8 @@ router.post('/',
 router.get('/',
     stuff.loadStuff
 );
-
+router.delete('/',
+    stuff.deleteStuff
+);
 
 module.exports = router;

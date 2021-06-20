@@ -41,6 +41,14 @@ app.route('/api/*')
     .post(function (req, res) {
         console.log("post error url");
         res.status(403).json({ status: 403 });
+    })
+    .delete(function (req, res) {
+        console.log("delete error url");
+        res.status(403).json({ status: 403 });
+    })
+    .put(function (req, res) {
+        console.log("put error url");
+        res.status(403).json({ status: 403 });
     });
 
 var sever = app.listen(3000, function () {
