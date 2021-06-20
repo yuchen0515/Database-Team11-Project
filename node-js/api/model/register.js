@@ -1,14 +1,15 @@
 var express = require('express');
 var router = express.Router();
 
-var stuff = require('../database/stuff')
+var register = require('../database/register')
 
 router.post('/',
-    stuff.addStuff
+    register.register
 );
-router.get('/',
-    stuff.loadStuff
+/*
+router.get('/register',
+    register
 );
-
+*/
 
 module.exports = router;

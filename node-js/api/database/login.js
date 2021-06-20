@@ -9,10 +9,10 @@ exports.login = function (req, res) {
         console.log("get username: " + username);
         console.log("get password: " + password);
     */
-    var sql = "SELECT * FROM UserData WHERE account_ID = '" + username + "'";
+    var login = "SELECT * FROM UserData WHERE account_ID = '" + username + "'";
     var hash = crypto.createHash('md5').update(password).digest('hex');
 
-    conn.query(sql, function (err, rows, fields) {
+    conn.query(login, function (err, rows, fields) {
         if (!rows.length) {
             res.status(404).json({ status: 404 });
             console.log("err 404");
