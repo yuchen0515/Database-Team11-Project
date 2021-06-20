@@ -56,7 +56,7 @@ create table Project
     deadline_end_time TIME,
     importance      numeric(2), /* priority by number */
     title           varchar(50),
-    tag             varchar(2),
+    tag             varchar(50),
     intro           varchar(200),
     status          varchar(1)
         check (status in ('Y', 'N', 'A')), 
