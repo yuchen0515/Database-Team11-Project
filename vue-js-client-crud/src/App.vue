@@ -34,14 +34,14 @@
         {{username}}
       </v-text>
       <v-btn
-        text
         v-if="username"
+        outlined
         :key="'Logout'"
         @click="Logout"
       >Logout</v-btn>
       <v-btn
-        text
         v-else
+        outlined
         :key="'Login'"
         :to="'/Login'"
       >Login</v-btn>

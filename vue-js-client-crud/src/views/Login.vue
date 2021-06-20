@@ -11,9 +11,9 @@
         label="Password"
         @click:append="showpass = !showpass"
     ></v-text-field>
-    <v-btn color="success" @click="handleLogin">Login</v-btn>
-    <v-btn color="success" @click="Login({username: loginForm.username, password: loginForm.password})">newLogin</v-btn>
-    <v-btn color="warning" @click="removeCookie">Remove Cookie</v-btn>
+    <!-- <v-btn color="success" @click="handleLogin">Login</v-btn> -->
+    <v-btn color="success" @click="Login({username: loginForm.username, password: loginForm.password})">Login</v-btn>
+    <!-- <v-btn color="warning" @click="removeCookie">Remove Cookie</v-btn> -->
     <v-btn color="error" @click="Register({username: loginForm.username, password: loginForm.password})">Register</v-btn>
 
     </div>
@@ -21,7 +21,7 @@
 
 <script>
     // 引入js-cookie
-    import Cookies from 'js-cookie'
+    // import Cookies from 'js-cookie'
     import {mapState, mapActions} from "vuex";
     // import VueSession from 'vue-session'
 
@@ -67,30 +67,30 @@
                 "Login",
                 "Register"
             ]),
-            handleLogin() {
-                const token = 'asds32adsavrAS3Fadf5567' // token本身就是加密過的字串，隨意
-                let username = this.loginForm.username
-                let password = this.loginForm.password
-                // 帳號密碼需驗證不能為空
-                if (username !== '' && password !== '') {
-                    this.loginForm.token = token
-                } else {
-                    alert('帳號密碼不能為空')
-                }
+            // handleLogin() {
+            //     const token = 'asds32adsavrAS3Fadf5567' // token本身就是加密過的字串，隨意
+            //     let username = this.loginForm.username
+            //     let password = this.loginForm.password
+            //     // 帳號密碼需驗證不能為空
+            //     if (username !== '' && password !== '') {
+            //         this.loginForm.token = token
+            //     } else {
+            //         alert('帳號密碼不能為空')
+            //     }
                 
-                Cookies.set('login', JSON.stringify(this.loginForm), { expires: 1 })
-                console.log(this.loginForm)
+            //     Cookies.set('login', JSON.stringify(this.loginForm), { expires: 1 })
+            //     console.log(this.loginForm)
                 
-                // cookie當中有token被設置才能改變路由
-                if (Cookies.get('login') && this.loginForm.token) {
-                    this.$router.push({name: 'Dashboard'})
-                }
-            },
+            //     // cookie當中有token被設置才能改變路由
+            //     if (Cookies.get('login') && this.loginForm.token) {
+            //         this.$router.push({name: 'Dashboard'})
+            //     }
+            // },
             
-            // 將Cookies清除的測試用button事件
-            removeCookie() {
-                Cookies.remove('login')
-            }
+            // // 將Cookies清除的測試用button事件
+            // removeCookie() {
+            //     Cookies.remove('login')
+            // }
         }
     }
 </script>
