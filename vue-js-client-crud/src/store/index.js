@@ -16,14 +16,21 @@ const store = new Vuex.Store({
         addStuffStat: 500,
         removeStuffStat: 500,
         loadEventData: [
-            {
-                name:       "",
-                start:      "",
-                end:        "",
-                color:      "",
-                details:    "",
-                timed:      ""
-            }
+            //{
+            //    name:       "",
+            //    start:      "",
+            //    end:        "",
+            //    color:      "",
+            //    details:    "",
+            //    timed:      ""
+            //}
+
+            // account_ID => name
+            // time_start_time ==> start
+            // time_end_time ==> end
+            // color ==> "Red"
+            // details ==> "content"
+            // timed ==> "0 or 1" (先隨機)
         ]
     },
 
@@ -120,7 +127,7 @@ const store = new Vuex.Store({
                 })
 
         },
-        LoadEvent({commit, getters}, data) {
+        LoadEvents({commit, getters}, data) {
             //console.log(getters.username)
             axios({
                 url: 'http://localhost:3000/api/event',
@@ -129,7 +136,7 @@ const store = new Vuex.Store({
                     start:  data.startDate,
                     end:    data.endDate,
                 },
-                method: 'POST',
+                method: 'GET',
                 responseType: 'json',
                 responseEncoding: 'utf8',
                 timeout: 5000})
