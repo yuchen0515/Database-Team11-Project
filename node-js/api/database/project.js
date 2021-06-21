@@ -59,7 +59,7 @@ exports.loadproject = function (req, res) {
         loadproject += " GROUP BY p.project_ID;";
     }
 
-    console.log(loadproject);
+    //console.log(loadproject);
 
     conn.query(loadproject, async function (err, rows, fields) {
         if (err) {
