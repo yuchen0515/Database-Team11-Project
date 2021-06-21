@@ -46,7 +46,7 @@ exports.loadproject = function (req, res) {
     for (i in array) {
         if (array[i] != '') {
             check = 1;
-            loadproject += "tag like '%" + array[i] + "%' or ";
+            loadproject += "tag like \'%" + array[i] + "%\' or ";
         }
     }
     if (check == 1) {
