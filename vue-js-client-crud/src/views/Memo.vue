@@ -70,7 +70,6 @@
                             </template>
                             <v-list>
                                 <v-list-item
-                                    :key="To_Project"
                                 >
                                     <v-dialog
                                     v-model="dialog_project"
@@ -176,7 +175,7 @@
                                                                     <v-date-picker
                                                                         v-model="project_data['deadlineDate']"
                                                                         elevation="15"
-                                                                        :picker-date.sync="pickerDate"
+                                                                        
                                                                     ></v-date-picker>
                                                                 </v-card>
                                                             </v-menu>
@@ -275,7 +274,6 @@
                                     <!-- <v-list-item-title>{{choice.choice}}</v-list-item-title> -->
                                 </v-list-item>
                                 <v-list-item
-                                    :key="To_Calendar"
                                 >
                                     <v-dialog
                                     v-model="dialog_calendar"
@@ -356,7 +354,6 @@
                                                                     <v-date-picker
                                                                         v-model="event_data['startDate']"
                                                                         elevation="15"
-                                                                        :picker-date.sync="pickerDate"
                                                                     ></v-date-picker>
                                                                 </v-card>
                                                             </v-menu>
@@ -431,7 +428,6 @@
                                                                     <v-date-picker
                                                                         v-model="event_data['endDate']"
                                                                         elevation="15"
-                                                                        :picker-date.sync="pickerDate"
                                                                     ></v-date-picker>
                                                                 </v-card>
                                                             </v-menu>
@@ -503,7 +499,6 @@
                                     <!-- <v-list-item-title>{{choice.choice}}</v-list-item-title> -->
                                 </v-list-item>
                                 <v-list-item
-                                    :key="deleteStuff"
                                 >
                                     <v-dialog
                                         v-model="dialog_delete"
