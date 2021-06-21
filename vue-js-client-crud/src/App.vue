@@ -8,7 +8,7 @@
       :collapse="!collapseOnScroll"
     >
       <!-- <v-app-bar-nav-icon @click.stop="collapseOnScroll = !collapseOnScroll"></v-app-bar-nav-icon> -->
-      <v-toolbar-title :key="title" :to="Home">GTD system</v-toolbar-title>
+      <v-toolbar-title>GTD system</v-toolbar-title>
       <!-- <v-divider></v-divider> -->
       <v-divider
         class="mx-4"
@@ -37,6 +37,7 @@
         v-if="username"
         outlined
         :key="'Logout'"
+        :to="'/Login'"
         @click="Logout"
       >Logout</v-btn>
       <v-btn
