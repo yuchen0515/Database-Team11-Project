@@ -11,15 +11,24 @@ exports.addproject = function (req, res) {
 
     var addproject = "INSERT INTO project (account_ID, deadline_date, deadline_time, importance, title, tag, intro, status) VALUES ('"
         + user + "'," + deadline_date + "," + deadline_time + ",'" + importance + "','" + title + "','" + tag + "','" + intro + "','N');";
-    console.log(addproject);
+    //console.log(addproject);
     conn.query(addproject, function (err, result) {
         if (err) {
             console.log("err 404: user-" + user + " addproject failed");
             res.status(404).json({ status: 404 });
         }
         else {
-            console.log("ok 200: user-" + user + " addproject successed");
-            res.status(200).json({ status: 200 });
+            var project_ID = "SELECT LAST_INSERT_ID() as id;"
+            conn.query(project_ID, function (err, rows, fields) {
+                if (err) {
+                    console.log("err 404: user-" + user + " addproject failed can't find project_ID");
+                    res.status(404).json({ status: 404 });
+                }
+                else {
+                    console.log("ok 200: user-" + user + " addproject successed");
+                    res.status(200).json({ status: 200, id: rows[0].id });
+                }
+            });
         }
     });
 };
@@ -54,4 +63,21 @@ exports.loadproject = function (req, res) {
         }
     });
 
+};
+exports.finishedproject = function (req, res) {
+    var id = req.query.id;
+    var user = req.query.username;
+
+    var finished = "UPDATE project SET status = 'Y' WHERE project_ID = " + id + ";";
+
+    conn.query(finished, function (err, result) {
+        if (err) {
+            console.log("err 404: user-" + user + " finishedproject-" + id + " failed");
+            res.status(404).json({ status: 404 });
+        }
+        else {
+            console.log("ok 200: user-" + user + " finishedproject-" + id + " successed");
+            res.status(200).json({ status: 200 });
+        }
+    });
 };
