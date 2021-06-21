@@ -7,8 +7,7 @@ import axios from 'axios'
 
 Vue.use(Vuex);
 
-const store = new Vuex.Store({
-    state: {
+const store = new Vuex.Store({ state: {
         stat: 500,
         username: '',
         addEventStat: 500,
