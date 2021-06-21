@@ -14,27 +14,27 @@ exports.login = function (req, res) {
 
     conn.query(login, function (err, rows, fields) {
         if (err) {
-            console.log("err login post");
+            console.log("err 404: login failed-unknown err");
             res.status(404).json({ status: 404 });
         }
         else if (!rows.length) {
             res.status(404).json({ status: 404 });
-            console.log("err 404");
+            console.log("err 404: login failed no user-" + username);
         }
         else if (rows[0].account_ID == username && rows[0].password == hash) {
             //req.session.account_ID = username;
             //req.session.password = password;
             res.status(200).json({ username: username, status: 200 });
-            console.log("correct 200");
+            console.log("ok 200: login successed");
         }
         else if (rows[0].account_ID == username && rows[0].password != hash) {
             res.status(406).json({ status: 406 });
-            console.log("err 406");
+            console.log("err 406: user-" + username + " wrong password");
         }
     });
 };
 exports.logout = function (req, res) {
-    console.log("logout");
+    console.log("ok 200: logout");
     res.status(200).json({ status: 200 });
     //req.session.destory();
 };

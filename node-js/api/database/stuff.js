@@ -14,11 +14,11 @@ exports.addStuff = function (req, res) {
 
     conn.query(addstuff, function (err, result) {
         if (err) {
-            console.log("addstuff failed");
+            console.log("err 404: " + user + " addstuff failed");
             res.status(404).json({ status: 404 });
         }
         else {
-            console.log("addstuff succeeded");
+            console.log("ok 200: " + user + " addstuff successed");
             res.status(200).json({ status: 200 });
         }
     })
@@ -30,16 +30,16 @@ exports.loadStuff = function (req, res) {
 
     conn.query(test, function (err, rows, fields) {
         if (err) {
-            console.log("unknow error");
+            console.log("err 404: " + user + " loadstuff unknow error");
             res.status(404).json({ status: 404 });
         }
         else if (rows.length == 0) {
-            console.log("no match stuff");
+            console.log("err 404: " + user + " loadstuff no match stuff");
             res.status(404).json({ status: 404 });
         }
         else {
+            console.log("ok 200: " + user + " loadstuff successed");
             res.status(200).json({ status: 200, events: rows });
-            //console.log(rows);
         }
     });
 };
@@ -50,11 +50,11 @@ exports.deleteStuff = function (req, res) {
 
     conn.query(deleteStuff, function (err, result) {
         if (err) {
-            console.log("err deleteStuff no " + stuff_ID + " in stuff");
+            console.log("err 403: deleteStuff no " + stuff_ID + " in stuff");
             res.status(403).json({ status: 403 });
         }
         else {
-            console.log("deleteStuff succeeded");
+            console.log("ok 200: deleteStuff " + stuff_ID + " successded");
             res.status(200).json({ status: 200 });
         }
     })

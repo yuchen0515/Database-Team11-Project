@@ -14,11 +14,11 @@ exports.addproject = function (req, res) {
     console.log(addproject);
     conn.query(addproject, function (err, result) {
         if (err) {
-            console.log("addproject err");
+            console.log("err 404: user-" + user + " addproject failed");
             res.status(404).json({ status: 404 });
         }
         else {
-            console.log("addproject success");
+            console.log("ok 200: user-" + user + " addproject successed");
             res.status(200).json({ status: 200 });
         }
     });
@@ -32,7 +32,7 @@ exports.loadproject = function (req, res) {
     var loadproject = "SELECT * FROM project WHERE account_ID = '" + user + "' and tag like ";
 
     for (i in array) {
-        loadproject += "'%" + array[i] + "%' ";
+        loadproject += "'%" + array[i] + "%' or";
     }
     loadproject += ";";
 
