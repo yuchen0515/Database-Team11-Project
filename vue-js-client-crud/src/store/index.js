@@ -313,7 +313,6 @@ const store = new Vuex.Store({ state: {
                     commit('store_projects', real_event)
                     console.log("store project")
                     commit('load_projects', stat)
-                    // console.log(state.loadProjectData)
                     // console.log(res.data.events)
                 })
                 .catch(err => {

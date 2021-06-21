@@ -29,7 +29,6 @@
                     :color="importanceColor[item.importance]"
                 >
                     <v-card-title>
-
                         <v-container>
                             <v-row
                                 :justify="center"
@@ -102,7 +101,7 @@
                                                     Importance: High
                                                 </div>
                                                 
-                                                <div>Deadline: {{item.deadlineDate}} {{item.deadlineTime}}</div>
+                                                <div>Deadline: {{item.deadline_date}} {{item.deadline_time}}</div>
                                                 <div
                                                     v-for="(task, index) in item.taskList"
                                                     :key="task.title"
@@ -124,7 +123,7 @@
                                 <v-col
                                     cols="3"
                                 >
-                                    <!-- {{item.deadlineDate}} -->
+                                    <!-- {{item.deadline_date}} -->
                                     <v-chip
                                         color="error"
                                         large
@@ -190,7 +189,7 @@
                                             justify="center"
                                         >
                                         <div class="body-1">
-                                            {{item.taskList[item.highlighted].destination}}
+                                            {{item.taskList[item.highlight].destination}}
                                         </div>
                                         </v-row>
                                     </v-sheet>
@@ -217,6 +216,8 @@
                                         block
                                     >
                                         Project Finished
+
+                                        @click="FinishProject(item.id)"
                                     </v-btn>
                                 </v-col>
                             </v-row>
@@ -249,8 +250,8 @@ export default {
                     intro: "start of everything",
                     tag: "hello world begin",
                     importance: "2",
-                    deadlineDate: "2021-06-21",
-                    deadlineTime: "23:55",
+                    deadline_date: "2021-06-21",
+                    deadline_time: "23:55",
                     taskList: [
                         {
                             destination: 'hello'
@@ -259,7 +260,7 @@ export default {
                             destination: 'world'
                         }
                     ],
-                    highlighted: "0",
+                    highlight: "0",
                 },
                 {
                     id: "2",
@@ -267,8 +268,8 @@ export default {
                     intro: "start of everything",
                     tag: "hello world begin",
                     importance: "1",
-                    deadlineDate: "2021-06-30",
-                    deadlineTime: "23:55",
+                    deadline_date: "2021-06-30",
+                    deadline_time: "23:55",
                     taskList: [
                         {
                             destination: 'hello'
@@ -286,7 +287,7 @@ export default {
                             destination: 'world4'
                         }
                     ],
-                    highlighted: "0",
+                    highlight: "0",
                 },
                 {
                     id: "3",
@@ -294,8 +295,8 @@ export default {
                     intro: "start of everything",
                     tag: "hello world begin",
                     importance: "0",
-                    deadlineDate: "2021-06-30",
-                    deadlineTime: "23:55",
+                    deadline_date: "2021-06-30",
+                    deadline_time: "23:55",
                     taskList: [
                         {
                             destination: 'hello'
@@ -313,7 +314,7 @@ export default {
                             destination: 'world4'
                         }
                     ],
-                    highlighted: "0",
+                    highlight: "0",
                 },
             ]
         }
@@ -326,10 +327,12 @@ export default {
     methods: {
         ...mapActions([
                 "LoadProjects",
+                "FinishProject"
             ]),
 
         leftTime: function(item) {
-            var end = new Date(item.deadlineDate+"T"+item.deadlineTime+":00.000Z");
+            //var end = new Date(item.deadline_date+"T"+item.deadline_time+":00.000Z");
+            var end = new Date(item.deadline_date)
             var now = new Date(+(new Date() - new Date().getTimezoneOffset() * 60000));
             const total = end - now;
             const seconds = Math.floor( (total/1000) % 60 ); 
@@ -350,17 +353,17 @@ export default {
         nowProgress: function(item) {
             if(item.taskList.length == 0)
                 return 100;
-            return item.highlighted / (item.taskList.length - 1) * 100;
+            return item.highlight / (item.taskList.length - 1) * 100;
         },
         addHighlighted: function(item) {
-            if(item.highlighted >= item.taskList.length - 1)
+            if(item.highlight >= item.taskList.length - 1)
                 return;
-            item.highlighted++;
+            item.highlight++;
         },
         subHighlighted: function(item) {
-            if(item.highlighted <= 0)
+            if(item.highlight <= 0)
                 return;
-            item.highlighted--;
+            item.highlight--;
         }
     }
 }
