@@ -259,8 +259,8 @@ const store = new Vuex.Store({ state: {
                     commit('add_project', 404)
                 })
         },
-        AddTask({state, commit, getters}, data) {
-            axios({
+        async AddTask({state, commit, getters}, data) {
+            await axios({
                 url: 'http://localhost:3000/api/task',
                 params: {
                     username:       getters.username,
