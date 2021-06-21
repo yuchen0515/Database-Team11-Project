@@ -120,7 +120,7 @@ exports.addhighlight = function (req, res) {
                 res.status(403).json({ status: 403 });
             }
             else {
-                if (rows[0].highlight < (rows[0].count - 1)) {
+                if (rows[0].highlight < (rows[0].count - 1) && rows[0].highlight >= 0) {
                     var update = "UPDATE project SET highlight = " + rows[0].highlight + " + 1 WHERE project_ID = " + id + ";"
                     conn.query(update, function (err, result) {
                         if (err) {
@@ -134,7 +134,7 @@ exports.addhighlight = function (req, res) {
                     });
                 }
                 else {
-                    console.log("err 403: user-" + user + " addhighlight highlight out of range");
+                    console.log("err 403: user-" + user + " addhighlight highlight out of range 0~" + rows[0].count - 1);
                     res.status(403).json({ status: 403 });
                 }
 
@@ -172,11 +172,11 @@ exports.subhighlight = function (req, res) {
                     });
                 }
                 else {
-                    console.log("err 403: user-" + user + " subhighlight highlight out of range");
+                    console.log("err 403: user-" + user + " subhighlight highlight out of range 0~" + rows[0].count - 1);
                     res.status(403).json({ status: 403 });
                 }
 
             }
         }
-    })
+    });
 };
