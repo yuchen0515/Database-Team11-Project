@@ -533,7 +533,7 @@
                                                 <v-btn
                                                     color="error"
                                                     text
-                                                    @click="RemoveStuff(delete_data)"
+                                                    @click="RemoveStuff(delete_id)"
                                                 >
                                                     Delete
                                                 </v-btn>
@@ -588,7 +588,7 @@ export default {
                 endDate: new Date().toISOString().substr(0, 10),
                 endTime: new Date().toISOString().substr(11, 5),
             },
-delete_id: "",
+            delete_id: "",
 
             memo_data: {
                     title: "",
