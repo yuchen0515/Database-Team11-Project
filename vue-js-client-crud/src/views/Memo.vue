@@ -226,7 +226,7 @@
                                                         >
                                                             <v-text-field
                                                                 :label="'Task '+index"
-                                                                v-model="task.value"
+                                                                v-model="task.destination"
                                                                 dense
                                                             ></v-text-field>
                                                         </v-col>
@@ -655,7 +655,7 @@ export default {
         },
         addNewTask: function () {
             // var index = this.taskList.length.toString();
-            this.project_data.taskList.push({value: ''});
+            this.project_data.taskList.push({destination: ''});
         },
         consoleData: function (data) {
             console.log(data);
@@ -675,19 +675,11 @@ export default {
             console.log(item)
             this.delete_id = item.id;
         },
-        addProject(item) {
-            this.$store.dispatch("AddProject", item);
-            const taskList = item.taskList
-            for (var addItem in taskList) {
-                this.$store.dispatch("AddTask", addItem)
-                    console.log("ok", addItem)
+        async addProject(item) {
+            await this.$store.dispatch("AddProject", item);
+            for (var i = 0 ; i < item.taskList.length; i++) {
+                this.$store.dispatch("AddTask", item.taskList[i])
             }
-
-
-            //for (var i = 0; i < taskLength; i++) {
-            //    await this.$store.dispatch("AddTask", taskList[i])
-            //}
-
         },
         
         validate () {

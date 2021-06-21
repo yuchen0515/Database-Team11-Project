@@ -225,9 +225,7 @@ const store = new Vuex.Store({ state: {
         AddProject({commit, getters, dispatch}, data) {
             const deadlineDate = "\"" + data.deadlineDate + "\""
             const deadlineTime = "\"" + data.deadlineTime + "\""
-            commit('store_projectID', data.id)
             var taskList = data.taskList
-
 
             axios({
                 url: 'http://localhost:3000/api/project',
@@ -248,6 +246,7 @@ const store = new Vuex.Store({ state: {
                 timeout: 5000})
                 .then(res => {
                     const stat = res.data.status
+                    commit('store_projectID', res.data.id)
                     commit('add_project', stat)
                     dispatch('LoadStuffs')
                 })
@@ -256,14 +255,12 @@ const store = new Vuex.Store({ state: {
                 })
         },
         AddTask({state, commit, getters}, data) {
-            console.log(data.destination)
-            console.log(state.id)
             axios({
                 url: 'http://localhost:3000/api/task',
                 params: {
                     username:       getters.username,
-                    destination:    data.destination,
-                    id:             state.id
+                    destination:    data['destination'],
+                    id:             state.storeProjectID
                 },
                 method: 'POST',
                 responseType: 'json',
@@ -275,7 +272,6 @@ const store = new Vuex.Store({ state: {
                 })
                 .catch(err => {
                     commit('add_Task', 404)
-                    console.lod(data.destination)
                 })
 
         }

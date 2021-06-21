@@ -73,11 +73,12 @@
                 "Register"
             ]),
             checkLogin(){
-                if(username){
+                if(this.$store.state.username != null){
                     this.$router.push('/')
                 }
                 else{
-                    loginError="Login failed."
+                    console.log("Login failed")
+                    //var loginError ="Login failed."
                 }
             }
         }

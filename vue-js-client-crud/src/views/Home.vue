@@ -428,115 +428,117 @@
       colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
       names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party'],
       queryEventdata: {
-        start: "\"" + new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + (new Date().getDate())+ "\"",
-        end: "\"" + new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + (new Date().getDate())+ "\"",
-        //start: "\"" + new Date().addDays(1).getFullYear() + '-' + (new Date().addDays(1).getMonth() + 1) + '-' + (new Date().addDays(1).getDate())+ "\"",
-        //end: "\"" + new Date().addDays(1).getFullYear() + '-' + (new Date().addDays(1).getMonth() + 1) + '-' + (new Date().addDays(1).getDate())+ "\"",
+        start: "\"2019-01-01\"",
+        end: "\"2022-07-25\""
+           //    start: "\"" + new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + (new Date().getDate())+ "\"",
+           //end: "\"" + new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + (new Date().getDate())+ "\"",
+           //start: "\"" + new Date().addDays(1).getFullYear() + '-' + (new Date().addDays(1).getMonth() + 1) + '-' + (new Date().addDays(1).getDate())+ "\"",
+           //end: "\"" + new Date().addDays(1).getFullYear() + '-' + (new Date().addDays(1).getMonth() + 1) + '-' + (new Date().addDays(1).getDate())+ "\"",
       },
-      memo_data: {
-        title: "",
-        content: ""
-      }
+memo_data: {
+title: "",
+       content: ""
+           }
 
 
-    }),
-    mounted () {
-      this.$refs.calendar.checkChange()
-    },
-    // beforeCreate: function () {
-    //   if (!this.$store.state.username) {
-    //     this.$router.push('/Login')
-    //   }
-    // },
+          }),
+              mounted () {
+                  this.$refs.calendar.checkChange()
+              },
+              // beforeCreate: function () {
+              //   if (!this.$store.state.username) {
+              //     this.$router.push('/Login')
+              //   }
+              // },
 
-    methods: {
-        ...mapActions([
-            "AddStuff",
-            "LoadEvents"
-        ]),
-      
-      getEventColor () {
-        return "primary"
-      },
-      setToday () {
-        this.focus = ''
-      },
-      prev () {
-        this.$refs.calendar.prev()
-      },
-      next () {
-        this.$refs.calendar.next()
-      },
-      async fetchEvents (data) {
-        await this.$store.dispatch("LoadEvents", data)
-        const events = this.$store.state.loadEventData
-        this.events = events
+methods: {
+             ...mapActions([
+                     "AddStuff",
+                     "LoadEvents"
+             ]),
 
-        /*
-        const events = []
+             getEventColor () {
+                 return "primary"
+             },
+             setToday () {
+                 this.focus = ''
+             },
+             prev () {
+                 this.$refs.calendar.prev()
+             },
+             next () {
+                 this.$refs.calendar.next()
+             },
+             async fetchEvents (data) {
+                 await this.$store.dispatch("LoadEvents", data)
+                     const events = this.$store.state.loadEventData
+                     this.events = events
 
-        const min = new Date(`${start.date}T00:00:00`)
-        const max = new Date(`${end.date}T23:59:59`)
-        const days = (max.getTime() - min.getTime()) / 86400000
-        const eventCount = this.rnd(days, days + 20)
+                     /*
+                        const events = []
 
-        for (let i = 0; i < eventCount; i++) {
-          const allDay = this.rnd(0, 3) === 0
-          const firstTimestamp = this.rnd(min.getTime(), max.getTime())
-          const first = new Date(firstTimestamp - (firstTimestamp % 900000))
-          const secondTimestamp = this.rnd(2, allDay ? 288 : 8) * 900000
-          const second = new Date(first.getTime() + secondTimestamp)
+                        const min = new Date(`${start.date}T00:00:00`)
+                        const max = new Date(`${end.date}T23:59:59`)
+                        const days = (max.getTime() - min.getTime()) / 86400000
+                        const eventCount = this.rnd(days, days + 20)
 
-          events.push({
-            name: this.names[this.rnd(0, this.names.length - 1)],
-            start: first,
-            end: second,
-            color: this.colors[this.rnd(0, this.colors.length - 1)],
-            timed: !allDay,
-          })
-        }
+                        for (let i = 0; i < eventCount; i++) {
+                        const allDay = this.rnd(0, 3) === 0
+                        const firstTimestamp = this.rnd(min.getTime(), max.getTime())
+                        const first = new Date(firstTimestamp - (firstTimestamp % 900000))
+                        const secondTimestamp = this.rnd(2, allDay ? 288 : 8) * 900000
+                        const second = new Date(first.getTime() + secondTimestamp)
 
-        this.events = events
-        */
-      },
-      rnd (a, b) {
-        return Math.floor((b - a + 1) * Math.random()) + a
-      },
-      
-        leftTime: function(item) {
-            var end = new Date(item.deadlineDate+"T"+item.deadlineTime+":00.000Z");
-            var now = new Date(+(new Date() - new Date().getTimezoneOffset() * 60000));
-            const total = end - now;
-            const seconds = Math.floor( (total/1000) % 60 ); 
-            const minutes = Math.floor( (total/1000/60) % 60 ); 
-            const hours = Math.floor( (total/(1000*60*60)) % 24 ); 
-            const days = Math.floor( total/(1000*60*60*24) );
-            if(days > 0){
-                return days+" Days Remaining";
-            }
-            else if(hours > 0){
-                return hours+" Hours Remaining";
-            }
-            else if(minutes > 0){
-                return minutes+" Minutes Remaining";
-            }
-            return seconds+" Seconds Remaining";
-        },
-        nowProgress: function(item) {
-            if(item.taskList.length == 0)
-                return 100;
-            return item.highlighted / (item.taskList.length - 1) * 100;
-        },
-        addHighlighted: function(item) {
-            if(item.highlighted >= item.taskList.length - 1)
-                return;
-            item.highlighted++;
-        },
-        subHighlighted: function(item) {
-            if(item.highlighted <= 0)
-                return;
-            item.highlighted--;
-        }
-    },
+                        events.push({
+                        name: this.names[this.rnd(0, this.names.length - 1)],
+                        start: first,
+                        end: second,
+                        color: this.colors[this.rnd(0, this.colors.length - 1)],
+                        timed: !allDay,
+                        })
+                        }
+
+                        this.events = events
+                      */
+             },
+             rnd (a, b) {
+                 return Math.floor((b - a + 1) * Math.random()) + a
+             },
+
+leftTime: function(item) {
+              var end = new Date(item.deadlineDate+"T"+item.deadlineTime+":00.000Z");
+              var now = new Date(+(new Date() - new Date().getTimezoneOffset() * 60000));
+              const total = end - now;
+              const seconds = Math.floor( (total/1000) % 60 ); 
+              const minutes = Math.floor( (total/1000/60) % 60 ); 
+              const hours = Math.floor( (total/(1000*60*60)) % 24 ); 
+              const days = Math.floor( total/(1000*60*60*24) );
+              if(days > 0){
+                  return days+" Days Remaining";
+              }
+              else if(hours > 0){
+                  return hours+" Hours Remaining";
+              }
+              else if(minutes > 0){
+                  return minutes+" Minutes Remaining";
+              }
+              return seconds+" Seconds Remaining";
+          },
+nowProgress: function(item) {
+                 if(item.taskList.length == 0)
+                     return 100;
+                 return item.highlighted / (item.taskList.length - 1) * 100;
+             },
+addHighlighted: function(item) {
+                    if(item.highlighted >= item.taskList.length - 1)
+                        return;
+                    item.highlighted++;
+                },
+subHighlighted: function(item) {
+                    if(item.highlighted <= 0)
+                        return;
+                    item.highlighted--;
+                }
+         },
   }
 </script>
