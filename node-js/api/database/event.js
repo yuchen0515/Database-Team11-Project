@@ -38,7 +38,7 @@ exports.addEvent = function (req, res) {
     var delete_stuff = "DELETE FROM Stuff WHERE stuff_ID = '" + id + "' and account_id = '" + user + "';";
     conn.query(delete_stuff, function (err, result) {
         if (err) {
-            console.log("err 404: user-" + user + " deletestuff " + id + " failed");
+            console.log("err 404: user-" + user + " addevent-deletestuff " + id + " failed");
             res.status(404).json({ status: 404 });
         }
         else {
