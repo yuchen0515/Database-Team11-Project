@@ -129,7 +129,7 @@
         <v-container>
           <v-row>
             <v-col
-                v-for="item in project_items"
+                v-for="item in loadProjectData"
                 :key="item.title"
                 cols="12"
             >
@@ -339,7 +339,7 @@
 </template>
 
 <script>
-    import {mapActions} from "vuex";
+    import {mapState, mapActions} from "vuex";
 
   export default {
     data: () => ({
@@ -442,6 +442,13 @@ title: "",
 
 
           }),
+computed: {
+              ...mapState([
+                      "loadProjectData"
+              ])
+
+          },
+
               mounted () {
                   this.$refs.calendar.checkChange()
               },

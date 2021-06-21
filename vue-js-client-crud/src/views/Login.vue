@@ -79,6 +79,7 @@
             checkLogin(){
                 if(this.$store.state.username != null){
                     this.$router.push('/')
+                    console.log("Login yes")
                 }
                 else{
                     console.log("Login failed")
