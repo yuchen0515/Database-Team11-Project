@@ -292,6 +292,7 @@ const store = new Vuex.Store({ state: {
                 responseEncoding: 'utf8',
                 timeout: 5000})
                 .then(res => {
+                    console.log("ok")
                     const stat = res.data.status
                     commit('store_projects', res.data.events)
                     commit('load_projects', stat)
@@ -373,7 +374,7 @@ const store = new Vuex.Store({ state: {
             state.loadProjectData = events
         },
         load_projects(state, stat) {
-            state.loadprojectStat = stat
+            state.loadProjectStat = stat
         },
         add_Task(state, stat) {
             state.addTaskStat = stat

@@ -18,7 +18,7 @@
         <v-row
         >
             <v-col
-                v-for="item in project_items"
+                v-for="item in loadProjectData"
                 :key="item.title"
                 cols="6"
             >
