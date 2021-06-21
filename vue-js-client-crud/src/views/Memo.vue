@@ -675,15 +675,18 @@ export default {
             console.log(item)
             this.delete_id = item.id;
         },
-        async addProject(item) {
-            await console.log("check")
-            await this.$store.dispatch("AddProject", item)
+        addProject(item) {
+            this.$store.dispatch("AddProject", item);
             const taskList = item.taskList
-            const taskLength = taskList.length
-
-            for (var i = 0; i < taskLength; i++) {
-                await this.$store.dispatch("AddTask", taskList[i])
+            for (var addItem in taskList) {
+                this.$store.dispatch("AddTask", addItem)
+                    console.log("ok", addItem)
             }
+
+
+            //for (var i = 0; i < taskLength; i++) {
+            //    await this.$store.dispatch("AddTask", taskList[i])
+            //}
 
         },
         
