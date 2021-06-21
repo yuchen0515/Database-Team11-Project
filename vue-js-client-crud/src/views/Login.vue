@@ -15,11 +15,15 @@
     <v-btn color="success" @click="Login({username: loginForm.username, password: loginForm.password}); checkLogin()">Login</v-btn>
     <!-- <v-btn color="warning" @click="removeCookie">Remove Cookie</v-btn> -->
     <v-btn color="error" @click="Register({username: loginForm.username, password: loginForm.password})">Register</v-btn>
-    <v-text
-        color="error"
+    <v-spacer></v-spacer>
+    <v-alert
+        v-if="loginError"
+        type="error"
+      border="left"
+      colored-border
     >
-        {{loginError}}
-    </v-text>
+        Login Failed.
+    </v-alert>
     </div>
 </template>
 
@@ -42,7 +46,7 @@
                     password: '',
                     token: ''
                 },
-                loginError: ""
+                loginError: false
             }
         },
         computed: {
@@ -78,7 +82,7 @@
                 }
                 else{
                     console.log("Login failed")
-                    //var loginError ="Login failed."
+                    this.loginError = true;
                 }
             }
         }
