@@ -36,19 +36,27 @@ exports.loadproject = function (req, res) {
     var user = req.query.username;
     var tag = req.query.tag;
     var array = new Array();
-    var array = tag.split(" ");
+    var array = tag.split(' ');
 
     var loadproject = "SELECT p.project_ID AS id, p.title, p.intro, p.tag, p.importance, p.deadline_date, p.deadline_time, p.highlight , GROUP_CONCAT(destination"
         + ") as taskList FROM project AS p LEFT OUTER JOIN task ON p.project_ID = task.project_ID WHERE account_ID = '"
         + user + "' and (";
 
+    var check = 0;
     for (i in array) {
         if (array[i] != '') {
+            check = 1;
             loadproject += "tag like '%" + array[i] + "%' or ";
         }
     }
-    loadproject = loadproject.slice(0, -4);
-    loadproject += ") GROUP BY p.project_ID;";
+    if (check == 1) {
+        console.log(check);
+        loadproject = loadproject.slice(0, -4);
+        loadproject += ") GROUP BY p.project_ID;";
+    }
+    else {
+        loadproject = loadproject.slice(0, -5);
+    }
 
     console.log(loadproject);
 
