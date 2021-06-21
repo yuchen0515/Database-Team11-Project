@@ -264,7 +264,7 @@
                                         <v-btn
                                             color="blue darken-1"
                                             text
-                                            @click="addProject(project_data)"
+                                            @click="addProject(project_data);dialog_project = false"
                                         >
                                             Save
                                         </v-btn>
@@ -488,7 +488,7 @@
                                         <v-btn
                                             color="blue darken-1"
                                             text
-                                            @click="AddEvent(event_data)"
+                                            @click="AddEvent(event_data);dialog_calendar = false"
                                         >
                                             Save
                                         </v-btn>
@@ -512,7 +512,7 @@
                                             v-on="on"
                                             color="error"
                                             block
-                                            @click="loadDeleteId"
+                                            @click="loadDeleteId(item)"
                                             >
                                             Delete
                                             </v-btn>
@@ -535,7 +535,7 @@
                                                 <v-btn
                                                     color="error"
                                                     text
-                                                    @click="RemoveStuff(delete_id)"
+                                                    @click="RemoveStuff(delete_id);dialog_delete = false"
                                                 >
                                                     Delete
                                                 </v-btn>
