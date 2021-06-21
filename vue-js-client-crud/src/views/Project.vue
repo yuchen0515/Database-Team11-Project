@@ -11,7 +11,7 @@
                     id="tagSearch"
                     prepend-inner-icon="mdi-magnify"
                     v-model="searchTag"
-                    v-on:change="LoadProject({tag: searchTag})"
+                    v-on:change="LoadProjects({tag: searchTag})"
                 ></v-text-field>
             </v-col>
         </v-row>
@@ -325,7 +325,7 @@ export default {
     },
     methods: {
         ...mapActions([
-                "LoadProject",
+                "LoadProjects",
             ]),
 
         leftTime: function(item) {

@@ -18,7 +18,7 @@
                     @click:append="showpass = !showpass"
                 ></v-text-field>
                 <!-- <v-btn color="success" @click="handleLogin">Login</v-btn> -->
-                <v-btn color="success" @click="Login({username: loginForm.username, password: loginForm.password}); checkLogin()">Login</v-btn>
+                <v-btn color="success" @click="checkLogin({username: loginForm.username, password: loginForm.password})">Login</v-btn>
                 <!-- <v-btn color="warning" @click="removeCookie">Remove Cookie</v-btn> -->
                 <v-btn color="error" @click="Register({username: loginForm.username, password: loginForm.password})">Register</v-btn>
                 <v-alert
@@ -85,15 +85,17 @@
                 "Login",
                 "Register"
             ]),
-            checkLogin(){
+            async checkLogin(data){
+                await this.$store.dispatch('Login', data);
                 if(this.$store.state.username != null){
                     this.$router.push('/')
-                    console.log("Login yes")
+                        console.log("Login yes")
                 }
                 else{
                     console.log("Login failed")
-                    this.loginError = true;
+                        this.loginError = true;
                 }
+
             }
         }
     }

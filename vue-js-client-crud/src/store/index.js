@@ -37,8 +37,8 @@ const store = new Vuex.Store({ state: {
 },
 
     actions: {
-        Login({state, commit, dispatch}, data) {
-            axios({
+        async Login({state, commit, dispatch}, data) {
+            await axios({
                 url: 'http://localhost:3000/api/login/',
                 params: {
                     username: data.username,
@@ -225,12 +225,12 @@ const store = new Vuex.Store({ state: {
                     commit('remove_stuff', 404)
                 })
         },
-        AddProject({commit, getters, dispatch}, data) {
+        async AddProject({commit, getters, dispatch}, data) {
             const deadlineDate = "\"" + data.deadlineDate + "\""
             const deadlineTime = "\"" + data.deadlineTime + "\""
             var taskList = data.taskList
 
-            axios({
+            await axios({
                 url: 'http://localhost:3000/api/project',
                 params: {
                     username:       getters.username,
@@ -279,7 +279,7 @@ const store = new Vuex.Store({ state: {
                 })
 
         },
-        LoadProject({commit, getters, dispatch}, data) {
+        LoadProjects({commit, getters, dispatch}, data) {
             axios({
                 url: 'http://localhost:3000/api/project',
                 params: {
