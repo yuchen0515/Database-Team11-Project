@@ -20,6 +20,8 @@ const store = new Vuex.Store({ state: {
         storeProjectID: "",
         removeStuffStat: 500,
         finishProjectStat: 500,
+        add_highlighted_stat: 500,
+        sub_highlighted_stat: 500,
         loadEventData:[
         ],
         loadStuffData:[
@@ -340,7 +342,50 @@ const store = new Vuex.Store({ state: {
                     commit('finish_project_stat', 404)
                 })
 
+        },
+        AddHighlighted({commit, getters, dispatch}, project_id) {
+            axios({
+                url: 'http://localhost:3000/api/project/addhighlight',
+                params: {
+                    username:       getters.username,
+                    id:             project_id,
+                },
+                method: 'PUT',
+                responseType: 'json',
+                responseEncoding: 'utf8',
+                timeout: 5000})
+                .then(res => {
+                    const stat = res.data.status
+                    commit('add_highlighted_stat', stat)
+                    dispatch('LoadProjects', {tag: ""})
+                })
+                .catch(err => {
+                    commit('add_highlighted_stat', 404)
+                })
+
+        },
+        SubHighlighted({commit, getters, dispatch}, project_id) {
+            axios({
+                url: 'http://localhost:3000/api/project/subhighlight',
+                params: {
+                    username:       getters.username,
+                    id:             project_id,
+                },
+                method: 'PUT',
+                responseType: 'json',
+                responseEncoding: 'utf8',
+                timeout: 5000})
+                .then(res => {
+                    const stat = res.data.status
+                    commit('sub_highlighted_stat', stat)
+                    dispatch('LoadProjects', {tag: ""})
+                })
+                .catch(err => {
+                    commit('sub_highlighted_stat', 404)
+                })
+
         }
+
     },
 
     mutations: {
@@ -398,6 +443,12 @@ const store = new Vuex.Store({ state: {
         },
         finish_project_stat(state, stat) {
             state.finishProjectStat = stat
+        },
+        add_highlighted_stat(state, stat) {
+            state.add_highlighted_stat = stat
+        },
+        sub_highlighted_stat(state, stat) {
+            state.sub_highlighted_stat = stat
         }
     },
     getters: {
