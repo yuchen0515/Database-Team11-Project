@@ -37,7 +37,7 @@
                 <v-row>
                     <v-col
                         v-for="item in loadStuffData"
-                        :key="item.title"
+                        :key="item.id"
                         cols="4"
                     >
                         <v-menu
