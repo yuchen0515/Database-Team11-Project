@@ -294,9 +294,29 @@ const store = new Vuex.Store({ state: {
                 .then(res => {
                     console.log("ok")
                     const stat = res.data.status
-                    commit('store_projects', res.data.events)
+                    var events = res.data.events
+                    for (var i = 0 ; i < events.length; i++) {
+                        var string = events[i]['taskList'].substring(1, events[i]['taskList'].length-1)
+                        var taskList = string.split(',')
+                        var taskListJson = [
+                            {
+                                destination : ""
+
+                            }
+                        ]
+
+                        for (var j = 0 ; j < taskList.length; j++) {
+                            const TEMP = JSON.stringify(taskList[j]);
+                            var TEMP2 = TEMP.substring(14, TEMP.length)
+                            TEMP2 = '"{"destination": ' + TEMP2
+                            console.log(TEMP2)
+                            taskListJson.push(JSON.parse(TEMP2))
+                        }
+                        console.log(taskListJson)
+                    }
+                    console.log(events)
+                    commit('store_projects', events)
                     commit('load_projects', stat)
-                    console.log(res.data.events)
                 })
                 .catch(err => {
                     console.log("hi")
