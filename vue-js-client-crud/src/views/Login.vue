@@ -12,10 +12,14 @@
         @click:append="showpass = !showpass"
     ></v-text-field>
     <!-- <v-btn color="success" @click="handleLogin">Login</v-btn> -->
-    <v-btn color="success" @click="Login({username: loginForm.username, password: loginForm.password})">Login</v-btn>
+    <v-btn color="success" @click="Login({username: loginForm.username, password: loginForm.password}); checkLogin()">Login</v-btn>
     <!-- <v-btn color="warning" @click="removeCookie">Remove Cookie</v-btn> -->
     <v-btn color="error" @click="Register({username: loginForm.username, password: loginForm.password})">Register</v-btn>
-
+    <v-text
+        color="error"
+    >
+        {{loginError}}
+    </v-text>
     </div>
 </template>
 
@@ -37,7 +41,8 @@
                     username: '',
                     password: '',
                     token: ''
-                }
+                },
+                loginError: ""
             }
         },
         computed: {
@@ -67,30 +72,14 @@
                 "Login",
                 "Register"
             ]),
-            // handleLogin() {
-            //     const token = 'asds32adsavrAS3Fadf5567' // token本身就是加密過的字串，隨意
-            //     let username = this.loginForm.username
-            //     let password = this.loginForm.password
-            //     // 帳號密碼需驗證不能為空
-            //     if (username !== '' && password !== '') {
-            //         this.loginForm.token = token
-            //     } else {
-            //         alert('帳號密碼不能為空')
-            //     }
-                
-            //     Cookies.set('login', JSON.stringify(this.loginForm), { expires: 1 })
-            //     console.log(this.loginForm)
-                
-            //     // cookie當中有token被設置才能改變路由
-            //     if (Cookies.get('login') && this.loginForm.token) {
-            //         this.$router.push({name: 'Dashboard'})
-            //     }
-            // },
-            
-            // // 將Cookies清除的測試用button事件
-            // removeCookie() {
-            //     Cookies.remove('login')
-            // }
+            checkLogin(){
+                if(username){
+                    this.$router.push('/')
+                }
+                else{
+                    loginError="Login failed."
+                }
+            }
         }
     }
 </script>
