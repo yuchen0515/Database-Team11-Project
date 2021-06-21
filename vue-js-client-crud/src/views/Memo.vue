@@ -12,9 +12,11 @@
                 <v-text-field
                     label="Title"
                     id="new_memo_title"
+                    v-model="memo_data['title']"
                 ></v-text-field> 
                 <v-textarea
                     label="Content"
+                    v-model="memo_data['content']"
                 >
                 </v-textarea>
                 <v-card-actions>
@@ -23,7 +25,7 @@
                         color="success"
                         fab
                         outlined
-                        @click="AddStuff(memo_data)"
+                        @click="AddStuff(memo_data); memo_data['title'] = ''; memo_data['content'] = ''"
                     >
                         <v-icon>mdi-plus</v-icon>
                     </v-btn>
@@ -591,8 +593,8 @@ export default {
             delete_id: "",
 
             memo_data: {
-                    title: "",
-                    content: ""
+                title: "",
+                content: ""
             },
 
             memo_items: [
