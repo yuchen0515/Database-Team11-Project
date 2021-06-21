@@ -125,7 +125,7 @@ const store = new Vuex.Store({ state: {
                 })
 
         },
-        AddEvent({commit, getters}, data) {
+        AddEvent({commit, getters, dispatch}, data) {
             //console.log(getters.username)
             axios({
                 url: 'http://localhost:3000/api/event',
@@ -146,6 +146,10 @@ const store = new Vuex.Store({ state: {
                 .then(res => {
                     const stat = res.data.status
                     commit('add_event', stat)
+                    var start = "\"2019-01-01\""
+                    var end = "\"2022-07-25\""
+
+                    dispatch('LoadEvents', {start: start, end: end})
                 })
                 .catch(err => {
                     commit('add_event', 404)
@@ -220,7 +224,7 @@ const store = new Vuex.Store({ state: {
         AddProject({commit, getters, dispatch}, data) {
             const deadlineDate = "\"" + data.deadlineDate + "\""
             const deadlineTime = "\"" + data.deadlineTime + "\""
-        
+
             axios({
                 url: 'http://localhost:3000/api/project',
                 params: {

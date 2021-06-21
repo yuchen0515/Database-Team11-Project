@@ -11,18 +11,15 @@ exports.loadEvent = function (req, res) {
     //console.log(sql);
     conn.query(sql, function (err, rows, fields) {
         if (err) {
-            console.log("unknow error");
+            console.log("err 404: user-" + user + " loadevent failed");
             res.status(404).json({ status: 404 });
         }
         else if (rows.length == 0) {
-            console.log("no match event");
-            console.log("get username: " + user);
-            console.log("start date: " + start_date);
-            console.log("end date: " + end_date);
+            console.log("err 404: user-" + user + " no match event between " + start_date + " and " + end_date);
             res.status(404).json({ status: 404 });
         }
         else {
-            console.log("match event");
+            console.log("ok 200: user-" + user + " match event successed");
             res.status(200).json({ status: 200, events: rows });
             //console.log(rows);
         }
@@ -38,23 +35,26 @@ exports.addEvent = function (req, res) {
     var endTime = req.query.endTime;
     var user = req.query.username;
 
-    var delete_stuff = "DELETE FROM Stuff WHERE stuff_ID = '" + id + "'";
+    var delete_stuff = "DELETE FROM Stuff WHERE stuff_ID = '" + id + "' and account_id = '" + user + "';";
     conn.query(delete_stuff, function (err, result) {
         if (err) {
-            console.log("Delete stuff " + id + " failed");
-        }
-    });
-
-    var addevent = "INSERT INTO event(account_ID, time_start_date, time_start_time,time_end_date,time_end_time, buf_time, title, content, status) VALUE('" +
-        user + "','" + startDate + "','" + startTime + "','" + endDate + "','" + endTime + "','00:30:00','" + title + "','" + content + "','N');";
-    conn.query(addevent, function (err, result) {
-        if (err) {
-            console.log("AddEvent " + title + " failed");
+            console.log("err 404: user-" + user + " deletestuff " + id + " failed");
             res.status(404).json({ status: 404 });
         }
         else {
-            console.log("AddEvent " + title + " successed");
-            res.status(200).json({ status: 200 });
+            var addevent = "INSERT INTO event(account_ID, time_start_date, time_start_time,time_end_date,time_end_time, buf_time, title, content, status) VALUE('" +
+                user + "','" + startDate + "','" + startTime + "','" + endDate + "','" + endTime + "','00:30:00','" + title + "','" + content + "','N');";
+            conn.query(addevent, function (err, result) {
+                if (err) {
+                    console.log("err 404: user-" + user + " addevent " + title + " failed");
+                    res.status(404).json({ status: 404 });
+                }
+                else {
+                    console.log("ok 200: user-" + user + " addevent " + title + " successed");
+                    res.status(200).json({ status: 200 });
+                }
+            });
         }
-    })
+    });
+
 };

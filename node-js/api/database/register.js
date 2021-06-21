@@ -15,11 +15,11 @@ exports.register = function (req, res) {
 
     conn.query(register, function (err, rows, fields) {
         if (err) {
-            console.log("register failed");
+            console.log("err 404: register " + user + " failed");
             res.status(404).json({ status: 404 });
         }
         else {
-            console.log("register success");
+            console.log("ok 200: register " + user + " successed");
             res.status(200).json({ status: 200 });
         }
     })
