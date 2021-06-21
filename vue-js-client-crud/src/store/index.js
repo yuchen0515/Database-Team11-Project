@@ -295,6 +295,7 @@ const store = new Vuex.Store({ state: {
                     const stat = res.data.status
                     commit('store_projects', res.data.events)
                     commit('load_projects', stat)
+                    console.log(res.data.events)
                 })
                 .catch(err => {
                     console.log("hi")
