@@ -9,5 +9,8 @@ router.post('/',
 router.get('/',
     project.loadproject
 );
+router.put('/',
+    project.finishedproject
+);
 
 module.exports = router;

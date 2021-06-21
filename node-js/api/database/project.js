@@ -55,3 +55,20 @@ exports.loadproject = function (req, res) {
     });
 
 };
+exports.finishedproject = function (req, res) {
+    var id = req.query.id;
+    var user = req.query.username;
+
+    var finished = "UPDATE project SET status = 'Y' WHERE project_ID = " + id + ";";
+
+    conn.query(finished, function (err, result) {
+        if (err) {
+            console.log("err 404: user-" + user + " finishedproject-" + id + " failed");
+            res.status(404).json({ status: 404 });
+        }
+        else {
+            console.log("ok 200: user-" + user + " finishedproject-" + id + " successed");
+            res.status(200).json({ status: 200 });
+        }
+    });
+};
