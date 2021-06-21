@@ -293,6 +293,19 @@ const store = new Vuex.Store({ state: {
                 timeout: 5000})
                 .then(res => {
                     const stat = res.data.status
+                    console.log(res.data.events)
+                    var real_event = res.data.events
+                    for (let item in res.data.events){
+                        console.log("DSSFF")
+                        console.log(real_event[item].taskList)
+                        if(real_event[item].taskList)
+                            real_event[item].taskList.replace('\\', '\\\\*')
+                    }
+                    console.log(real_event)
+                    console.log(JSON.stringify(res.data).replace("\\", "\\\\*"))
+                    // console.log(JSON.parse(real_event))
+                    // res.data.events.taskList = JSON.parse(res.data.events.taskList.replace('\\"', '"'))
+                    console.log("json")
                     commit('store_projects', res.data.events)
                     commit('load_projects', stat)
                     console.log(res.data.events)

@@ -44,9 +44,10 @@ exports.loadproject = function (req, res) {
 
     var check = 0;
     for (i in array) {
-        if (array[i] != '') {
+        if (array[i] != '' && array[i] != '\"\"' && array[i] != "" && array[i] != '\"') {
+            console.log(array[i])
             check = 1;
-            loadproject += "tag like '%" + array[i] + "%' or ";
+            loadproject += "tag like \'%" + array[i] + "%\' or ";
         }
     }
     if (check == 1) {
@@ -77,6 +78,8 @@ exports.loadproject = function (req, res) {
             //console.log(JSON.stringify(rows));
             //console.log(JSON.parse(rows));
             //rows = rows.map(row => (row.package = JSON.parse(row.package), row));
+            // rows = JSON.parse(rows)
+            console.log(rows)
             res.status(200).json({ status: 200, events: rows });
         }
     });
