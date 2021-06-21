@@ -23,7 +23,7 @@
                         color="success"
                         fab
                         outlined
-                        @click="AddStuffs(memo_data)"
+                        @click="AddStuff(memo_data)"
                     >
                         <v-icon>mdi-plus</v-icon>
                     </v-btn>
@@ -36,7 +36,7 @@
             <v-container>
                 <v-row>
                     <v-col
-                        v-for="item in memo_items"
+                        v-for="item in loadStuffData"
                         :key="item.title"
                         cols="4"
                     >
@@ -262,7 +262,7 @@
                                         <v-btn
                                             color="blue darken-1"
                                             text
-                                            @click="AddProject(project_data)"
+                                            @click="addProject(project_data)"
                                         >
                                             Save
                                         </v-btn>
@@ -552,7 +552,7 @@
 </template>
 
 <script>
-    import {mapActions} from "vuex";
+    import {mapState, mapActions} from "vuex";
 
 export default {
     data () {
@@ -621,20 +621,27 @@ export default {
             ]
         }
     },
+    computed: {
+        ...mapState([
+            "loadStuffData"
+        ])
+    },
+
     methods: {
         ...mapActions([
                 "AddEvent",
                 "AddStuff",
                 "RemoveStuff",
                 "LoadStuffs",
-                "AddProject"
+                "AddProject",
+                "AddTask"
             ]),
 
-        async loadStuffs(item) {
-            console.log(this.memo_items)
-            await this.$store.dispatch("LoadStuffs", item)
-            this.memo_items = this.$store.state.loadStuffData
-        },
+        //async loadStuffs(item) {
+        //    console.log(this.memo_items)
+        //    await this.$store.dispatch("LoadStuffs", item)
+        //    this.memo_items = this.$store.state.loadStuffData
+        //},
         loadProjectData (item) {
             this.project_data.id = item.id;
             this.project_data.title = item.title;
@@ -665,6 +672,16 @@ export default {
         },
         loadDeleteId (item) {
             this.delete_id = item.id;
+        },
+        async addProject(item) {
+            await this.$store.dispatch("AddProject", item)
+            const taskList = item.taskList
+            const taskLength = taskList.length
+
+            for (var i = 0; i < taskLength; i++) {
+                await this.$store.dispatch("AddTask", taskList[i])
+            }
+
         },
         
         validate () {

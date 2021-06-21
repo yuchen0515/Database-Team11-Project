@@ -15,6 +15,7 @@ const store = new Vuex.Store({ state: {
         loadStuffStat: 500,
         addStuffStat: 500,
         addProjectStat: 500,
+        addTaskStat: 500,
         removeStuffStat: 500,
         loadEventData:[
         ],
@@ -31,7 +32,7 @@ const store = new Vuex.Store({ state: {
 },
 
     actions: {
-        Login({commit}, data) {
+        Login({state, commit, dispatch}, data) {
             axios({
                 url: 'http://localhost:3000/api/login/',
                 params: {
@@ -48,6 +49,12 @@ const store = new Vuex.Store({ state: {
 
                     if (stat === 200){
                         commit('auth_success', username)
+                        dispatch('LoadStuffs')
+                        var start = "\"2019-01-01\""
+                        var end = "\"2022-07-25\""
+
+                        dispatch('LoadEvents', {start: start, end: end})
+                        console.log("hi", state.loadStuffData)
                     }
                     if (stat === 404){
                         commit('auth_userNotExist')
@@ -93,6 +100,28 @@ const store = new Vuex.Store({ state: {
 
                 })
                 .catch(err => {
+                })
+
+        },
+        LoadStuffs({commit, getters}) {
+            console.log(getters.username)
+            axios({
+                url: 'http://localhost:3000/api/stuff',
+                params: {
+                    username:   getters.username,
+                },
+                method: 'GET',
+                responseType: 'json',
+                responseEncoding: 'utf8',
+                timeout: 5000})
+                .then(res => {
+                    const stat = res.data.status
+                    const events = res.data.events
+                    commit('load_stuff', stat)
+                    commit('store_stuff', res.data.events)
+                })
+                .catch(err => {
+                    commit('load_stuff', 404)
                 })
 
         },
@@ -147,7 +176,7 @@ const store = new Vuex.Store({ state: {
                 })
 
         },
-        AddStuff({commit, getters}, data) {
+        AddStuff({commit, getters, dispatch}, data) {
             axios({
                 url: 'http://localhost:3000/api/stuff',
                 params: {
@@ -162,35 +191,13 @@ const store = new Vuex.Store({ state: {
                 .then(res => {
                     const stat = res.data.status
                     commit('add_stuff', stat)
+                    dispatch('LoadStuffs')
                 })
                 .catch(err => {
                     commit('add_stuff', 404)
                 })
-
         },
-        LoadStuffs({commit, getters}, data) {
-            console.log(getters.username)
-            axios({
-                url: 'http://localhost:3000/api/stuff',
-                params: {
-                    username:   getters.username,
-                },
-                method: 'GET',
-                responseType: 'json',
-                responseEncoding: 'utf8',
-                timeout: 5000})
-                .then(res => {
-                    const stat = res.data.status
-                    const events = res.data.events
-                    commit('load_stuff', stat)
-                    commit('store_stuff', res.data.events)
-                })
-                .catch(err => {
-                    commit('load_stuff', 404)
-                })
-
-        },
-        RemoveStuff({commit}, data) {
+        RemoveStuff({commit, dispatch}, data) {
             axios({
                 url: 'http://localhost:3000/api/stuff',
                 params: {
@@ -203,13 +210,13 @@ const store = new Vuex.Store({ state: {
                 .then(res => {
                     const stat = res.data.status
                     commit('remove_stuff', stat)
+                    dispatch('LoadStuffs')
                 })
                 .catch(err => {
                     commit('remove_stuff', 404)
                 })
-
         },
-        AddProject({commit, getters}, data) {
+        AddProject({commit, getters, dispatch}, data) {
             const deadlineDate = "\"" + data.deadlineDate + "\""
             const deadlineTime = "\"" + data.deadlineTime + "\""
         
@@ -234,10 +241,31 @@ const store = new Vuex.Store({ state: {
                 .then(res => {
                     const stat = res.data.status
                     commit('add_project', stat)
+                    dispatch('LoadStuffs')
                 })
                 .catch(err => {
                     commit('add_project', 404)
                 })
+        },
+        AddTask({commit}, data) {
+            axios({
+                url: 'http://localhost:3000/api/task',
+                params: {
+                    destination:    data.destination
+                },
+                method: 'POST',
+                responseType: 'json',
+                responseEncoding: 'utf8',
+                timeout: 5000})
+                .then(res => {
+                    const stat = res.data.status
+                    commit('add_Task', stat)
+                })
+                .catch(err => {
+                    commit('add_Task', 404)
+                    console.lod(data.destination)
+                })
+
         }
     },
 
@@ -281,6 +309,9 @@ const store = new Vuex.Store({ state: {
         },
         add_project(state, stat) {
             state.addProjectStat = stat
+        },
+        add_Task(state, stat) {
+            state.addTaskStat = stat
         }
     },
     getters: {
