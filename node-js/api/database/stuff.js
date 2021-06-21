@@ -26,7 +26,7 @@ exports.addStuff = function (req, res) {
 };
 exports.loadStuff = function (req, res) {
     var user = req.query.username;
-    var test = "SELECT title, content, stuff_ID FROM stuff WHERE account_ID = '" + user + "' ORDER BY 'left(record_date_date,10)' ASC, 'record_date_time' ASC";
+    var test = "SELECT title, content, stuff_ID as id FROM stuff WHERE account_ID = '" + user + "' ORDER BY 'left(record_date_date,10)' ASC, 'record_date_time' ASC";
 
     conn.query(test, function (err, rows, fields) {
         if (err) {
