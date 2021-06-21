@@ -158,7 +158,7 @@ exports.subhighlight = function (req, res) {
                 res.status(403).json({ status: 403 });
             }
             else {
-                if (rows[0].highlight < (rows[0].count - 1) && rows[0].highlight > 0) {
+                if (rows[0].highlight <= (rows[0].count - 1) && rows[0].highlight > 0) {
                     var update = "UPDATE project SET highlight = " + rows[0].highlight + " - 1 WHERE project_ID = " + id + ";"
                     conn.query(update, function (err, result) {
                         if (err) {
