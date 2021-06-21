@@ -12,27 +12,23 @@ const store = new Vuex.Store({ state: {
         username: '',
         addEventStat: 500,
         loadEventStat: 500,
+        loadStuffStat: 500,
         addStuffStat: 500,
+        addProjectStat: 500,
         removeStuffStat: 500,
         loadEventData:[
-            {
-                name:       "",
-                start:      "",
-                end:        "",
-                details:    "",
-                timed:      "",
-                color:      "",
-            }
-        ] 
+        ],
+        loadStuffData:[
+        ]
 
-            // account_ID => name
-            // time_start_time ==> start
-            // time_end_time ==> end
-            // color ==> "Red"
-            // details ==> "content"
-            // timed ==> "0 or 1" (先隨機)
-        
-    },
+    // account_ID => name
+    // time_start_time ==> start
+    // time_end_time ==> end
+    // color ==> "Red"
+    // details ==> "content"
+    // timed ==> "0 or 1" (先隨機)
+
+},
 
     actions: {
         Login({commit}, data) {
@@ -172,6 +168,28 @@ const store = new Vuex.Store({ state: {
                 })
 
         },
+        LoadStuffs({commit, getters}, data) {
+            console.log(getters.username)
+            axios({
+                url: 'http://localhost:3000/api/stuff',
+                params: {
+                    username:   getters.username,
+                },
+                method: 'GET',
+                responseType: 'json',
+                responseEncoding: 'utf8',
+                timeout: 5000})
+                .then(res => {
+                    const stat = res.data.status
+                    const events = res.data.events
+                    commit('load_stuff', stat)
+                    commit('store_stuff', res.data.events)
+                })
+                .catch(err => {
+                    commit('load_stuff', 404)
+                })
+
+        },
         RemoveStuff({commit}, data) {
             axios({
                 url: 'http://localhost:3000/api/stuff',
@@ -190,6 +208,36 @@ const store = new Vuex.Store({ state: {
                     commit('remove_stuff', 404)
                 })
 
+        },
+        AddProject({commit, getters}, data) {
+            const deadlineDate = "\"" + data.deadlineDate + "\""
+            const deadlineTime = "\"" + data.deadlineTime + "\""
+        
+            axios({
+                url: 'http://localhost:3000/api/project',
+                params: {
+                    username:       getters.username,
+                    id:             data.id,
+                    title:          data.title,
+                    intro:          data.intro,
+                    tag:            data.tag,
+                    importance:     data.importance,
+                    deadline_date:   deadlineDate,
+                    deadline_time:   deadlineTime,
+                    //taskList:       data.taskList,
+                    highlighted:    data.highlighed
+                },
+                method: 'POST',
+                responseType: 'json',
+                responseEncoding: 'utf8',
+                timeout: 5000})
+                .then(res => {
+                    const stat = res.data.status
+                    commit('add_project', stat)
+                })
+                .catch(err => {
+                    commit('add_project', 404)
+                })
         }
     },
 
@@ -219,11 +267,20 @@ const store = new Vuex.Store({ state: {
         store_event(state, events) {
             state.loadEventData = events
         },
+        load_stuff(state, stat) {
+            state.loadstuffStat = stat
+        },
+        store_stuff(state, events) {
+            state.loadStuffData = events
+        },
         add_stuff(state, stat) {
             state.addStuffStat = stat
         },
         remove_stuff(state, stat) {
             state.removeStuffStat = stat
+        },
+        add_project(state, stat) {
+            state.addProjectStat = stat
         }
     },
     getters: {

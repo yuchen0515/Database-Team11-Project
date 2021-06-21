@@ -23,7 +23,7 @@
                         color="success"
                         fab
                         outlined
-                        @click="AddStuff(memo_data)"
+                        @click="AddStuffs(memo_data)"
                     >
                         <v-icon>mdi-plus</v-icon>
                     </v-btn>
@@ -265,7 +265,7 @@
                                         <v-btn
                                             color="blue darken-1"
                                             text
-                                            @click="consoleData(project_data)"
+                                            @click="AddProject(project_data)"
                                         >
                                             Save
                                         </v-btn>
@@ -634,9 +634,16 @@ export default {
         ...mapActions([
                 "AddEvent",
                 "AddStuff",
-                "RemoveStuff"
+                "RemoveStuff",
+                "LoadStuffs",
+                "AddProject"
             ]),
 
+        async loadStuffs(item) {
+            console.log(this.memo_items)
+            await this.$store.dispatch("LoadStuffs", item)
+            this.memo_items = this.$store.state.loadStuffData
+        },
         loadProjectData (item) {
             this.project_data.id = item.id;
             this.project_data.title = item.title;
