@@ -11,6 +11,7 @@
                     id="tagSearch"
                     prepend-inner-icon="mdi-magnify"
                     v-model="searchTag"
+                    v-on:change="LoadProject({tag: searchTag})"
                 ></v-text-field>
             </v-col>
         </v-row>
@@ -105,7 +106,7 @@
                                                     v-for="(task, index) in item.taskList"
                                                     :key="task.title"
                                                 >
-                                                    Task {{index}}: {{task.value}}
+                                                    Task {{index}}: {{task.destination}}
                                                 </div>
                                             </v-card-text>
                                             <v-card-actions class="justify-end">
@@ -188,7 +189,7 @@
                                             justify="center"
                                         >
                                         <div class="body-1">
-                                            {{item.taskList[item.highlighted].value}}
+                                            {{item.taskList[item.highlighted].destination}}
                                         </div>
                                         </v-row>
                                     </v-sheet>
@@ -251,10 +252,10 @@ export default {
                     deadlineTime: "23:55",
                     taskList: [
                         {
-                            value: 'hello'
+                            destination: 'hello'
                         },
                         {
-                            value: 'world'
+                            destination: 'world'
                         }
                     ],
                     highlighted: "0",
@@ -269,19 +270,19 @@ export default {
                     deadlineTime: "23:55",
                     taskList: [
                         {
-                            value: 'hello'
+                            destination: 'hello'
                         },
                         {
-                            value: 'world'
+                            destination: 'world'
                         },
                         {
-                            value: 'world2'
+                            destination: 'world2'
                         },
                         {
-                            value: 'world3'
+                            destination: 'world3'
                         },
                         {
-                            value: 'world4'
+                            destination: 'world4'
                         }
                     ],
                     highlighted: "0",
@@ -296,19 +297,19 @@ export default {
                     deadlineTime: "23:55",
                     taskList: [
                         {
-                            value: 'hello'
+                            destination: 'hello'
                         },
                         {
-                            value: 'world'
+                            destination: 'world'
                         },
                         {
-                            value: 'world2'
+                            destination: 'world2'
                         },
                         {
-                            value: 'world3'
+                            destination: 'world3'
                         },
                         {
-                            value: 'world4'
+                            destination: 'world4'
                         }
                     ],
                     highlighted: "0",
