@@ -36,6 +36,6 @@ exports.login = function (req, res) {
 };
 exports.logout = function (req, res) {
     console.log("logout");
-    res.status(200).json(null);
+    res.status(200).json({ status: 200 });
     //req.session.destory();
 };
