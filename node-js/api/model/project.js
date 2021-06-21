@@ -12,5 +12,11 @@ router.get('/',
 router.put('/',
     project.finishedproject
 );
+router.put('/addhighlight',
+    project.addhighlight
+);
+router.put('/subhighlight',
+    project.subhighlight
+);
 
 module.exports = router;

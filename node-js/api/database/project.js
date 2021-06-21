@@ -104,3 +104,79 @@ exports.finishedproject = function (req, res) {
         }
     });
 };
+exports.addhighlight = function (req, res) {
+    var id = req.query.id;
+    var user = req.query.username;
+
+    var getproject = "SELECT p.highlight as highlight, p.account_ID as account_ID, count(p.project_ID) as count FROM project as p JOIN task ON p.project_ID = task.project_ID WHERE p.project_ID = " + id + " GROUP BY p.project_ID;";
+    conn.query(getproject, function (err, rows, fields) {
+        if (err) {
+            console.log("err 404: addhighlight get project_ID-" + id + " failed");
+            res.status(404).json({ status: 404 });
+        }
+        else {
+            if (rows[0].account_ID != user) {
+                console.log("err 403: addhighlight project-user-" + rows[0].account_ID + " not user-" + user);
+                res.status(403).json({ status: 403 });
+            }
+            else {
+                if (rows[0].highlight < (rows[0].count - 1)) {
+                    var update = "UPDATE project SET highlight = " + rows[0].highlight + " + 1 WHERE project_ID = " + id + ";"
+                    conn.query(update, function (err, result) {
+                        if (err) {
+                            console.log("err 404: user-" + user + " addhighlight-updateproject failed");
+                            res.status(404).json({ status: 404 });
+                        }
+                        else {
+                            console.log("ok 200: user-" + user + " addhighlight-updateproject successed");
+                            res.status(200).json({ status: 200 });
+                        }
+                    });
+                }
+                else {
+                    console.log("err 403: user-" + user + " addhighlight highlight out of range");
+                    res.status(403).json({ status: 403 });
+                }
+
+            }
+        }
+    });
+};
+exports.subhighlight = function (req, res) {
+    var id = req.query.id;
+    var user = req.query.username;
+
+    var getproject = "SELECT p.highlight as highlight, p.account_ID as account_ID, count(p.project_ID) as count FROM project as p JOIN task ON p.project_ID = task.project_ID WHERE p.project_ID = " + id + " GROUP BY p.project_ID;";
+    conn.query(getproject, function (err, rows, fields) {
+        if (err) {
+            console.log("err 404: subhighlight get project_ID-" + id + " failed");
+            res.status(404).json({ status: 404 });
+        }
+        else {
+            if (rows[0].account_ID != user) {
+                console.log("err 403: subhighlight project-user-" + rows[0].account_ID + " not user-" + user);
+                res.status(403).json({ status: 403 });
+            }
+            else {
+                if (rows[0].highlight < (rows[0].count - 1) && rows[0].highlight > 0) {
+                    var update = "UPDATE project SET highlight = " + rows[0].highlight + " - 1 WHERE project_ID = " + id + ";"
+                    conn.query(update, function (err, result) {
+                        if (err) {
+                            console.log("err 404: user-" + user + " subhighlight-updateproject failed");
+                            res.status(404).json({ status: 404 });
+                        }
+                        else {
+                            console.log("ok 200: user-" + user + " subhighlight-updateproject successed");
+                            res.status(200).json({ status: 200 });
+                        }
+                    });
+                }
+                else {
+                    console.log("err 403: user-" + user + " subhighlight highlight out of range");
+                    res.status(403).json({ status: 403 });
+                }
+
+            }
+        }
+    })
+};
