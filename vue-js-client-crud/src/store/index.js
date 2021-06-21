@@ -294,22 +294,25 @@ const store = new Vuex.Store({ state: {
                 .then(res => {
                     const stat = res.data.status
                     console.log(JSON.parse(res.data.events))
-                    // var real_event = res.data.events
-                    // for (let item in res.data.events){
-                    //     console.log("DSSFF")
-                    //     console.log(real_event[item].taskList)
-                    //     if(real_event[item].taskList)
-                    //         real_event[item].taskList.replace('\\', '\\\\')
-                    // }
                     // console.log(real_event)
                     // console.log(JSON.stringify(res.data).replace("\\", "\\\\").replace("\\", "\\\\"))
                     // console.log(JSON.parse(real_event))
                     // res.data.events.taskList = JSON.parse(res.data.events.taskList.replace('\\"', '"'))
                     // console.log("json")
-                    commit('store_projects', JSON.parse(res.data.events))
+                    // var r
+                    var real_event = JSON.parse(res.data.events)
+                    for (let item in real_event){
+                        // console.log("DSSFF")
+                        console.log("prev: " + JSON.stringify(real_event[item].taskList))
+                        if(!real_event[item].taskList)
+                            real_event[item].taskList = [{"destination": "null"}]
+                        console.log("next: " + JSON.stringify(real_event[item].taskList))
+                    }
+                    console.log(real_event)
+                    commit('store_projects', real_event)
                     console.log("store project")
                     commit('load_projects', stat)
-                    console.log(state.loadProjectData)
+                    // console.log(state.loadProjectData)
                     // console.log(res.data.events)
                 })
                 .catch(err => {

@@ -127,7 +127,9 @@
       >
         <!-- Project -->
         <v-container>
-          <v-row>
+          <v-row
+            v-if="loadProjectData.length > 0"
+          >
             <v-col
                 v-for="item in loadProjectData"
                 :key="item.title"
