@@ -41,12 +41,14 @@ exports.loadproject = function (req, res) {
     var loadproject = "SELECT * FROM project WHERE account_ID = '" + user + "' and (";
 
     for (i in array) {
-        loadproject += "tag like '%" + array[i] + "%' or ";
+        if (array[i] != '') {
+            loadproject += "tag like '%" + array[i] + "%' or ";
+        }
     }
     loadproject = loadproject.slice(0, -4);
     loadproject += ");";
 
-    console.log(loadproject);
+    //console.log(loadproject);
 
     conn.query(loadproject, function (err, rows, fields) {
         if (err) {
