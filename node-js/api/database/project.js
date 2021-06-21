@@ -38,7 +38,9 @@ exports.loadproject = function (req, res) {
     var array = new Array();
     var array = tag.split(" ");
 
-    var loadproject = "SELECT * FROM project WHERE account_ID = '" + user + "' and (";
+    var loadproject = "SELECT p.project_ID AS id, p.title, p.intro, p.tag, p.importance, p.deadline_date, p.deadline_time, p.highlight ,GROUP_CONCAT('{destination:\"', destination ,'\""
+        + "}') as taskList FROM project AS p LEFT OUTER JOIN task ON p.project_ID = task.project_ID WHERE account_ID = '"
+        + user + "' and (";
 
     for (i in array) {
         if (array[i] != '') {
@@ -46,11 +48,11 @@ exports.loadproject = function (req, res) {
         }
     }
     loadproject = loadproject.slice(0, -4);
-    loadproject += ");";
+    loadproject += ") GROUP BY p.project_ID;";
 
     //console.log(loadproject);
 
-    conn.query(loadproject, function (err, rows, fields) {
+    conn.query(loadproject, async function (err, rows, fields) {
         if (err) {
             console.log("err 404: user-" + user + " loadproject err");
             res.status(404).json({ status: 404 });
@@ -61,10 +63,10 @@ exports.loadproject = function (req, res) {
         }
         else {
             console.log("ok 200: user-" + user + " loadproject successed");
+            //console.log(rows[0].taskList);
             res.status(200).json({ status: 200, events: rows });
         }
     });
-
 };
 exports.finishedproject = function (req, res) {
     var id = req.query.id;
