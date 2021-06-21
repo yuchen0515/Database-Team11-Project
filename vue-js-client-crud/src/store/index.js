@@ -59,6 +59,7 @@ const store = new Vuex.Store({ state: {
                         var end = "\"2022-07-25\""
 
                         dispatch('LoadEvents', {start: start, end: end})
+                        dispatch('LoadProjects', {tag: ""})
                         console.log("hi", state.loadStuffData)
                     }
                     if (stat === 404){
@@ -131,7 +132,6 @@ const store = new Vuex.Store({ state: {
 
         },
         AddEvent({commit, getters, dispatch}, data) {
-            //console.log(getters.username)
             axios({
                 url: 'http://localhost:3000/api/event',
                 params: {
@@ -159,7 +159,6 @@ const store = new Vuex.Store({ state: {
                 .catch(err => {
                     commit('add_event', 404)
                 })
-
         },
         LoadEvents({commit, getters}, data) {
             console.log(getters.username)
@@ -253,6 +252,7 @@ const store = new Vuex.Store({ state: {
                     commit('store_projectID', res.data.id)
                     commit('add_project', stat)
                     dispatch('LoadStuffs')
+                    dispatch('LoadProjects', {tag: ""})
                 })
                 .catch(err => {
                     commit('add_project', 404)
@@ -280,15 +280,11 @@ const store = new Vuex.Store({ state: {
 
         },
         LoadProject({commit, getters, dispatch}, data) {
-            const deadlineDate = "\"" + data.deadlineDate + "\""
-            const deadlineTime = "\"" + data.deadlineTime + "\""
-            //var taskList = data.taskList
-
             axios({
                 url: 'http://localhost:3000/api/project',
                 params: {
                     username:       getters.username,
-                    tag:             data.tag,
+                    tag:             "\"" + data.tag + "\"",
                 },
                 method: 'GET',
                 responseType: 'json',
