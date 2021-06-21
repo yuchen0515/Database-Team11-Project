@@ -280,7 +280,7 @@ const store = new Vuex.Store({ state: {
                 })
 
         },
-        LoadProjects({commit, getters, dispatch}, data) {
+        LoadProjects({state, commit, getters, dispatch}, data) {
             axios({
                 url: 'http://localhost:3000/api/project',
                 params: {
@@ -294,29 +294,24 @@ const store = new Vuex.Store({ state: {
                 .then(res => {
                     console.log("ok")
                     const stat = res.data.status
-                    var events = res.data.events
-                    for (var i = 0 ; i < events.length; i++) {
-                        var string = events[i]['taskList'].substring(1, events[i]['taskList'].length-1)
-                        var taskList = string.split(',')
-                        var taskListJson = [
-                            {
-                                destination : ""
-
-                            }
-                        ]
-
-                        for (var j = 0 ; j < taskList.length; j++) {
-                            const TEMP = JSON.stringify(taskList[j]);
-                            var TEMP2 = TEMP.substring(14, TEMP.length)
-                            TEMP2 = '"{"destination": ' + TEMP2
-                            console.log(TEMP2)
-                            taskListJson.push(JSON.parse(TEMP2))
-                        }
-                        console.log(taskListJson)
-                    }
-                    console.log(events)
-                    commit('store_projects', events)
+                    console.log(JSON.parse(res.data.events))
+                    // var real_event = res.data.events
+                    // for (let item in res.data.events){
+                    //     console.log("DSSFF")
+                    //     console.log(real_event[item].taskList)
+                    //     if(real_event[item].taskList)
+                    //         real_event[item].taskList.replace('\\', '\\\\')
+                    // }
+                    // console.log(real_event)
+                    // console.log(JSON.stringify(res.data).replace("\\", "\\\\").replace("\\", "\\\\"))
+                    // console.log(JSON.parse(real_event))
+                    // res.data.events.taskList = JSON.parse(res.data.events.taskList.replace('\\"', '"'))
+                    // console.log("json")
+                    commit('store_projects', JSON.parse(res.data.events))
+                    console.log("store project")
                     commit('load_projects', stat)
+                    console.log(state.loadProjectData)
+                    // console.log(res.data.events)
                 })
                 .catch(err => {
                     console.log("hi")

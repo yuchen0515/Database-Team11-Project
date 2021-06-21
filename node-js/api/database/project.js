@@ -38,13 +38,14 @@ exports.loadproject = function (req, res) {
     var array = new Array();
     var array = tag.split(' ');
 
-    var loadproject = "SELECT p.project_ID AS id, p.title, p.intro, p.tag, p.importance, p.deadline_date, p.deadline_time, p.highlight ,  CONCAT('[', GROUP_CONCAT('{destination:" + "\"" + "', destination ,'" + "\""
-        + "}'), ']')  as taskList FROM project AS p LEFT OUTER JOIN task ON p.project_ID = task.project_ID WHERE account_ID = '"
-        + user + "' and (";
+    var loadproject = 'SELECT p.project_ID AS id, p.title, p.intro, p.tag, p.importance, p.deadline_date, p.deadline_time, p.highlight ,  CONCAT(\'[\', GROUP_CONCAT(CONCAT(\'{"destination":"\', destination, \'"}\')), \']\')' //'{destination:" + '"' + "', destination ,'" + '"' + '
+        + " as taskList FROM project AS p LEFT OUTER JOIN task ON p.project_ID = task.project_ID WHERE account_ID = \'"
+        + user + "\' and (";
 
     var check = 0;
     for (i in array) {
-        if (array[i] != '') {
+        if (array[i] != '' && array[i] != '\"\"' && array[i] != "" && array[i] != '\"') {
+            console.log(array[i])
             check = 1;
             loadproject += "tag like \'%" + array[i] + "%\' or ";
         }
@@ -63,6 +64,7 @@ exports.loadproject = function (req, res) {
 
     conn.query(loadproject, async function (err, rows, fields) {
         if (err) {
+            console.log(err)
             console.log("err 404: user-" + user + " loadproject err");
             res.status(404).json({ status: 404 });
         }
@@ -77,7 +79,11 @@ exports.loadproject = function (req, res) {
             //console.log(JSON.stringify(rows));
             //console.log(JSON.parse(rows));
             //rows = rows.map(row => (row.package = JSON.parse(row.package), row));
-            res.status(200).json({ status: 200, events: rows });
+            // rows = JSON.parse(rows)
+            console.log(rows)
+            rows = rows.map(row => (row.taskList = JSON.parse(row.taskList), row))
+            console.log(JSON.stringify(rows))
+            res.status(200).json({ status: 200, events: JSON.stringify(rows) });
         }
     });
 };
