@@ -169,6 +169,7 @@
                                         dark
                                         block
                                         fill-height
+                                        @click="subHighlighted(item); SubHighLighted(item.id)"
                                     >
                                         <v-icon>mdi-chevron-left</v-icon>
                                     </v-btn>
@@ -201,7 +202,7 @@
                                         color="success"
                                         dark
                                         block
-                                        @click="addHighlighted(item)"
+                                        @click="addHighlighted(item); AddHighLighted(item.id)"
                                     >
                                         <v-icon>mdi-chevron-right</v-icon>
                                     </v-btn>
@@ -214,10 +215,10 @@
                                     <v-btn
                                         outlined
                                         block
+                                        @click="FinishProject(item.id)"
                                     >
                                         Project Finished
 
-                                        @click="FinishProject(item.id)"
                                     </v-btn>
                                 </v-col>
                             </v-row>
@@ -327,7 +328,9 @@ export default {
     methods: {
         ...mapActions([
                 "LoadProjects",
-                "FinishProject"
+                "FinishProject",
+                "AddHighlighted",
+                "SubHighlighted"
             ]),
 
         leftTime: function(item) {
