@@ -214,10 +214,10 @@
                                     <v-btn
                                         outlined
                                         block
+                                        @click="FinishProject(item.id)"
                                     >
                                         Project Finished
 
-                                        @click="FinishProject(item.id)"
                                     </v-btn>
                                 </v-col>
                             </v-row>
