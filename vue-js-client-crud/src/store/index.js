@@ -16,6 +16,7 @@ const store = new Vuex.Store({ state: {
         addStuffStat: 500,
         addProjectStat: 500,
         addTaskStat: 500,
+        storeProjectID: "",
         removeStuffStat: 500,
         loadEventData:[
         ],
@@ -224,6 +225,7 @@ const store = new Vuex.Store({ state: {
         AddProject({commit, getters, dispatch}, data) {
             const deadlineDate = "\"" + data.deadlineDate + "\""
             const deadlineTime = "\"" + data.deadlineTime + "\""
+            commit('store_projectID', data.id)
 
             axios({
                 url: 'http://localhost:3000/api/project',
@@ -236,7 +238,6 @@ const store = new Vuex.Store({ state: {
                     importance:     data.importance,
                     deadline_date:   deadlineDate,
                     deadline_time:   deadlineTime,
-                    //taskList:       data.taskList,
                     highlighted:    data.highlighed
                 },
                 method: 'POST',
@@ -252,11 +253,13 @@ const store = new Vuex.Store({ state: {
                     commit('add_project', 404)
                 })
         },
-        AddTask({commit}, data) {
+        AddTask({state, commit, getters}, data) {
             axios({
                 url: 'http://localhost:3000/api/task',
                 params: {
-                    destination:    data.destination
+                    username:       getters.username,
+                    destination:    data.destination,
+                    id:             state.id
                 },
                 method: 'POST',
                 responseType: 'json',
@@ -314,6 +317,9 @@ const store = new Vuex.Store({ state: {
         },
         add_project(state, stat) {
             state.addProjectStat = stat
+        },
+        store_projectID(state, ID) {
+            state.storeProjectID = ID
         },
         add_Task(state, stat) {
             state.addTaskStat = stat

@@ -676,6 +676,7 @@ export default {
             this.delete_id = item.id;
         },
         async addProject(item) {
+            await console.log("check")
             await this.$store.dispatch("AddProject", item)
             const taskList = item.taskList
             const taskLength = taskList.length

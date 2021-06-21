@@ -428,8 +428,10 @@
       colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
       names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party'],
       queryEventdata: {
-        start: "\"" + new Date() + "\"",
-        end: "\"" + new Date() + "\""
+        start: "\"" + new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + (new Date().getDate())+ "\"",
+        end: "\"" + new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + (new Date().getDate())+ "\"",
+        //start: "\"" + new Date().addDays(1).getFullYear() + '-' + (new Date().addDays(1).getMonth() + 1) + '-' + (new Date().addDays(1).getDate())+ "\"",
+        //end: "\"" + new Date().addDays(1).getFullYear() + '-' + (new Date().addDays(1).getMonth() + 1) + '-' + (new Date().addDays(1).getDate())+ "\"",
       },
       memo_data: {
         title: "",
