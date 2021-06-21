@@ -329,7 +329,7 @@ const store = new Vuex.Store({ state: {
                     username:       getters.username,
                     id:             delete_id,
                 },
-                method: 'GET',
+                method: 'PUT',
                 responseType: 'json',
                 responseEncoding: 'utf8',
                 timeout: 5000})
