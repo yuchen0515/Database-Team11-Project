@@ -51,12 +51,13 @@ create table Project
     project_ID      int(20) NOT NULL AUTO_INCREMENT,
     account_ID      char(20),
 
-    deadline__date DATE,
+    deadline_date DATE,
     deadline_time TIME,
     importance      numeric(2), /* priority by number */
     title           varchar(50),
     tag             varchar(50),
     intro           varchar(200),
+    highlight       int(20) DEFAULT 0,
     status          varchar(1)
         check (status in ('Y', 'N', 'A')), 
         /* Y: Done, N: Not yet, A: Abandon */
@@ -76,7 +77,6 @@ create table Task
     status          varchar(1)
         check (status in ('Y', 'N', 'A')), 
         /* Y: Done, N: Not yet, A: Abandon */
-    highlight       char(1),
     primary key (task_ID),
     foreign key (project_ID) references Project(project_ID) on delete cascade
 )  ENGINE=INNODB;
