@@ -201,7 +201,7 @@ const store = new Vuex.Store({ state: {
             axios({
                 url: 'http://localhost:3000/api/stuff',
                 params: {
-                    stuff_ID:      data.delete_id,
+                    stuff_ID:      delete_id,
                 },
                 method: 'DELETE',
                 responseType: 'json',

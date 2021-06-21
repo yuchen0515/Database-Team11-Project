@@ -597,9 +597,7 @@ export default {
                 endDate: new Date().toISOString().substr(0, 10),
                 endTime: new Date().toISOString().substr(11, 5),
             },
-            delete_data: {
-                delete_id: "",
-            },
+delete_id: "",
 
             memo_data: {
                     title: "",
