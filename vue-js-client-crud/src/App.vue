@@ -28,6 +28,10 @@
       </template>
       <!-- <v-divider></v-divider> -->
       <v-spacer></v-spacer>
+      <v-divider
+        class="mx-4"
+        vertical
+      ></v-divider>
       <v-text
         v-if="username"
       >
