@@ -50,12 +50,13 @@ exports.loadproject = function (req, res) {
         }
     }
     if (check == 1) {
-        console.log(check);
+        //console.log(check);
         loadproject = loadproject.slice(0, -4);
         loadproject += ") GROUP BY p.project_ID;";
     }
     else {
         loadproject = loadproject.slice(0, -5);
+        loadproject += " GROUP BY p.project_ID;";
     }
 
     console.log(loadproject);
