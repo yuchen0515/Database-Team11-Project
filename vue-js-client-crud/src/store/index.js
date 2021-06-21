@@ -285,7 +285,7 @@ const store = new Vuex.Store({ state: {
                 url: 'http://localhost:3000/api/project',
                 params: {
                     username:       getters.username,
-                    tag:             "\"" + data.tag + "\"",
+                    tag:            data.tag,
                 },
                 method: 'GET',
                 responseType: 'json',
@@ -297,6 +297,7 @@ const store = new Vuex.Store({ state: {
                     commit('load_projects', stat)
                 })
                 .catch(err => {
+                    console.log("hi")
                     commit('load_projects', 404)
                 })
         },
