@@ -21,7 +21,7 @@ exports.addTask = function (req, res) {
         else {
             var last = "SELECT LAST_INSERT_ID() AS task_ID;";
             conn.query(last, function (err, rows, fields) {
-                var updateproject = "UPDATE project SET highlight = " + rows[0].task_ID + " WHERE project_ID = " + id + ";";
+                var updateproject = "UPDATE project SET highlight = highlight + 1  WHERE project_ID = " + id + ";";
                 //console.log(updateproject);
                 conn.query(updateproject, function (err, result) {
                     if (err) {
