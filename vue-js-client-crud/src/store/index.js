@@ -226,6 +226,8 @@ const store = new Vuex.Store({ state: {
             const deadlineDate = "\"" + data.deadlineDate + "\""
             const deadlineTime = "\"" + data.deadlineTime + "\""
             commit('store_projectID', data.id)
+            var taskList = data.taskList
+
 
             axios({
                 url: 'http://localhost:3000/api/project',
@@ -254,6 +256,8 @@ const store = new Vuex.Store({ state: {
                 })
         },
         AddTask({state, commit, getters}, data) {
+            console.log(data.destination)
+            console.log(state.id)
             axios({
                 url: 'http://localhost:3000/api/task',
                 params: {
