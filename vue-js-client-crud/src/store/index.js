@@ -198,6 +198,7 @@ const store = new Vuex.Store({ state: {
                 })
         },
         RemoveStuff({commit, dispatch}, data) {
+            console.log(data)
             axios({
                 url: 'http://localhost:3000/api/stuff',
                 params: {

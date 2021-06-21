@@ -590,7 +590,7 @@ export default {
                 endDate: new Date().toISOString().substr(0, 10),
                 endTime: new Date().toISOString().substr(11, 5),
             },
-            delete_id: "",
+            delete_id: 0,
 
             memo_data: {
                 title: "",
@@ -671,6 +671,8 @@ export default {
             console.log(new Date().getTimezoneOffset())
         },
         loadDeleteId (item) {
+            console.log("hi")
+            console.log(item)
             this.delete_id = item.id;
         },
         async addProject(item) {
