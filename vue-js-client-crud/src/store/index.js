@@ -19,6 +19,7 @@ const store = new Vuex.Store({ state: {
         addTaskStat: 500,
         storeProjectID: "",
         removeStuffStat: 500,
+        finishProjectStat: 500,
         loadEventData:[
         ],
         loadStuffData:[
@@ -293,12 +294,33 @@ const store = new Vuex.Store({ state: {
                 .then(res => {
                     const stat = res.data.status
                     commit('store_projects', res.data.events)
-                    commit('load_project', stat)
+                    commit('load_projects', stat)
                 })
                 .catch(err => {
-                    commit('load_project', 404)
+                    commit('load_projects', 404)
                 })
         },
+        FinishProject({commit, getters, dispatch}, delete_id) {
+            axios({
+                url: 'http://localhost:3000/api/project',
+                params: {
+                    username:       getters.username,
+                    id:             delete_id,
+                },
+                method: 'GET',
+                responseType: 'json',
+                responseEncoding: 'utf8',
+                timeout: 5000})
+                .then(res => {
+                    const stat = res.data.status
+                    commit('finish_project_stat', stat)
+                    dispatch('LoadProjects', {tag: ""})
+                })
+                .catch(err => {
+                    commit('finish_project_stat', 404)
+                })
+
+        }
     },
 
     mutations: {
@@ -346,13 +368,16 @@ const store = new Vuex.Store({ state: {
             state.storeProjectID = ID
         },
         store_projects(state, events) {
-            state.loadprojectData = events
+            state.loadProjectData = events
         },
         load_projects(state, stat) {
             state.loadprojectStat = stat
         },
         add_Task(state, stat) {
             state.addTaskStat = stat
+        },
+        finish_project_stat(state, stat) {
+            state.finishProjectStat = stat
         }
     },
     getters: {

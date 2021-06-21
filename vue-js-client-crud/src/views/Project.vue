@@ -320,7 +320,6 @@ export default {
     computed: {
         ...mapState([
             "loadProjectData"
-
         ])
     },
     methods: {
