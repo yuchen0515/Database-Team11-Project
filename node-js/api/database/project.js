@@ -45,7 +45,7 @@ exports.loadproject = function (req, res) {
     var check = 0;
     for (i in array) {
         if (array[i] != '' && array[i] != '\"\"' && array[i] != "" && array[i] != '\"') {
-            console.log(array[i])
+            //console.log(array[i])
             check = 1;
             loadproject += "tag like \'%" + array[i] + "%\' or ";
         }
@@ -64,7 +64,7 @@ exports.loadproject = function (req, res) {
 
     conn.query(loadproject, async function (err, rows, fields) {
         if (err) {
-            console.log(err)
+            //console.log(err)
             console.log("err 404: user-" + user + " loadproject err");
             res.status(404).json({ status: 404 });
         }
@@ -80,9 +80,9 @@ exports.loadproject = function (req, res) {
             //console.log(JSON.parse(rows));
             //rows = rows.map(row => (row.package = JSON.parse(row.package), row));
             // rows = JSON.parse(rows)
-            console.log(rows)
+            //console.log(rows)
             rows = rows.map(row => (row.taskList = JSON.parse(row.taskList), row))
-            console.log(JSON.stringify(rows))
+            //console.log(JSON.stringify(rows))
             res.status(200).json({ status: 200, events: JSON.stringify(rows) });
         }
     });
