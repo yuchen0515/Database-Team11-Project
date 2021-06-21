@@ -16,9 +16,11 @@
                   <v-text-field
                       label="Title"
                       id="new_memo_title"
+                      v-model="memo_data['title']"
                   ></v-text-field> 
                   <v-textarea
                       label="Content"
+                      v-model="memo_data['content']"
                   >
                   </v-textarea>
                   <v-card-actions>
@@ -27,6 +29,7 @@
                           color="success"
                           fab
                           outlined
+                          @click="AddStuff(memo_data); memo_data['title'] = ''; memo_data['content'] = ''"
                       >
                           <v-icon>mdi-plus</v-icon>
                       </v-btn>
@@ -87,7 +90,7 @@
                   type="day"
                   :events="events"
                   :event-color="getEventColor"
-                  @change="fetchEvents"
+                  @change="fetchEvents(queryEventdata)"
                 ></v-calendar>
               </v-sheet>
               <!-- <v-sheet
@@ -336,6 +339,8 @@
 </template>
 
 <script>
+    import {mapActions} from "vuex";
+
   export default {
     data: () => ({
       
@@ -422,6 +427,16 @@
       events: [],
       colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
       names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party'],
+      queryEventdata: {
+        start: "\"" + new Date() + "\"",
+        end: "\"" + new Date() + "\""
+      },
+      memo_data: {
+        title: "",
+        content: ""
+      }
+
+
     }),
     mounted () {
       this.$refs.calendar.checkChange()
@@ -433,6 +448,10 @@
     // },
 
     methods: {
+        ...mapActions([
+            "AddStuff",
+            "LoadEvents"
+        ]),
       
       getEventColor () {
         return "primary"
@@ -446,7 +465,12 @@
       next () {
         this.$refs.calendar.next()
       },
-      fetchEvents ({ start, end }) {
+      async fetchEvents (data) {
+        await this.$store.dispatch("LoadEvents", data)
+        const events = this.$store.state.loadEventData
+        this.events = events
+
+        /*
         const events = []
 
         const min = new Date(`${start.date}T00:00:00`)
@@ -471,6 +495,7 @@
         }
 
         this.events = events
+        */
       },
       rnd (a, b) {
         return Math.floor((b - a + 1) * Math.random()) + a
