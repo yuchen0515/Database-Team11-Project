@@ -1,30 +1,39 @@
 <template>
-    <div>
-    <v-text-field
-        v-model="loginForm.username"
-        label="Username"
-    ></v-text-field>
-    <v-text-field
-        v-model="loginForm.password"
-        :append-icon="showpass ? 'mdi-eye' : 'mdi-eye-off'"
-        :type="showpass ? 'text' : 'password'"
-        label="Password"
-        @click:append="showpass = !showpass"
-    ></v-text-field>
-    <!-- <v-btn color="success" @click="handleLogin">Login</v-btn> -->
-    <v-btn color="success" @click="Login({username: loginForm.username, password: loginForm.password}); checkLogin()">Login</v-btn>
-    <!-- <v-btn color="warning" @click="removeCookie">Remove Cookie</v-btn> -->
-    <v-btn color="error" @click="Register({username: loginForm.username, password: loginForm.password})">Register</v-btn>
-    <v-spacer></v-spacer>
-    <v-alert
-        v-if="loginError"
-        type="error"
-      border="left"
-      colored-border
-    >
-        Login Failed.
-    </v-alert>
-    </div>
+    <v-row>
+        <v-spacer></v-spacer>
+        <v-col
+            cols="5"
+        >
+            <v-container>
+                <div>
+                <v-text-field
+                    v-model="loginForm.username"
+                    label="Username"
+                ></v-text-field>
+                <v-text-field
+                    v-model="loginForm.password"
+                    :append-icon="showpass ? 'mdi-eye' : 'mdi-eye-off'"
+                    :type="showpass ? 'text' : 'password'"
+                    label="Password"
+                    @click:append="showpass = !showpass"
+                ></v-text-field>
+                <!-- <v-btn color="success" @click="handleLogin">Login</v-btn> -->
+                <v-btn color="success" @click="Login({username: loginForm.username, password: loginForm.password}); checkLogin()">Login</v-btn>
+                <!-- <v-btn color="warning" @click="removeCookie">Remove Cookie</v-btn> -->
+                <v-btn color="error" @click="Register({username: loginForm.username, password: loginForm.password})">Register</v-btn>
+                <v-alert
+                    v-if="loginError"
+                    type="error"
+                border="left"
+                colored-border
+                >
+                    Login Failed.
+                </v-alert>
+                </div>
+            </v-container>
+        </v-col>
+        <v-spacer></v-spacer>
+    </v-row>
 </template>
 
 <script>
