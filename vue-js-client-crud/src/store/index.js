@@ -13,6 +13,7 @@ const store = new Vuex.Store({ state: {
         addEventStat: 500,
         loadEventStat: 500,
         loadStuffStat: 500,
+        loadProjectStat: 500,
         addStuffStat: 500,
         addProjectStat: 500,
         addTaskStat: 500,
@@ -21,6 +22,9 @@ const store = new Vuex.Store({ state: {
         loadEventData:[
         ],
         loadStuffData:[
+        ],
+        loadProjectData: [
+
         ]
 
     // account_ID => name
@@ -274,7 +278,31 @@ const store = new Vuex.Store({ state: {
                     commit('add_Task', 404)
                 })
 
-        }
+        },
+        LoadProject({commit, getters, dispatch}, data) {
+            const deadlineDate = "\"" + data.deadlineDate + "\""
+            const deadlineTime = "\"" + data.deadlineTime + "\""
+            //var taskList = data.taskList
+
+            axios({
+                url: 'http://localhost:3000/api/project',
+                params: {
+                    username:       getters.username,
+                    tag:             data.tag,
+                },
+                method: 'GET',
+                responseType: 'json',
+                responseEncoding: 'utf8',
+                timeout: 5000})
+                .then(res => {
+                    const stat = res.data.status
+                    commit('store_projects', res.data.events)
+                    commit('load_project', stat)
+                })
+                .catch(err => {
+                    commit('load_project', 404)
+                })
+        },
     },
 
     mutations: {
@@ -320,6 +348,12 @@ const store = new Vuex.Store({ state: {
         },
         store_projectID(state, ID) {
             state.storeProjectID = ID
+        },
+        store_projects(state, events) {
+            state.loadprojectData = events
+        },
+        load_projects(state, stat) {
+            state.loadprojectStat = stat
         },
         add_Task(state, stat) {
             state.addTaskStat = stat

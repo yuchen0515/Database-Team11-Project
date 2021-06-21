@@ -17,7 +17,7 @@
         <v-row
         >
             <v-col
-                v-for="item in project_items"
+                v-for="item in loadProjectData"
                 :key="item.title"
                 cols="6"
             >
@@ -228,6 +228,9 @@
 </template>
 
 <script>
+import {mapState, mapActions} from "vuex";
+
+
 export default {
     data () {
         return{
@@ -314,8 +317,16 @@ export default {
         }
     },
     computed: {
+        ...mapState([
+            "loadProjectData"
+
+        ])
     },
     methods: {
+        ...mapActions([
+                "LoadProject",
+            ]),
+
         leftTime: function(item) {
             var end = new Date(item.deadlineDate+"T"+item.deadlineTime+":00.000Z");
             var now = new Date(+(new Date() - new Date().getTimezoneOffset() * 60000));
