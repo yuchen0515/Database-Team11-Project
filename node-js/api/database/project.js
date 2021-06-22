@@ -9,8 +9,8 @@ exports.addproject = function (req, res) {
     var tag = req.query.tag;
     var intro = req.query.intro;
 
-    var addproject = "INSERT INTO project (account_ID, deadline_date, deadline_time, importance, title, tag, intro, highlight, status) VALUES ('"
-        + user + "'," + deadline_date + "," + deadline_time + ",'" + importance + "','" + title + "','" + tag + "','" + intro + "','0" + "','N');";
+    var addproject = "INSERT INTO project (account_ID, deadline_date, deadline_time, importance, title, tag, intro, status,highlight) VALUES ('"
+        + user + "'," + deadline_date + "," + deadline_time + ",'" + importance + "','" + title + "','" + tag + "','" + intro + "','N',0);";
     //console.log(addproject);
     conn.query(addproject, function (err, result) {
         if (err) {
@@ -38,8 +38,8 @@ exports.loadproject = function (req, res) {
     var array = new Array();
     var array = tag.split(' ');
 
-    var loadproject = 'SELECT p.project_ID AS id, p.title, p.intro, p.tag, p.importance, p.deadline_date, p.deadline_time, p.highlight ,  CONCAT(\'[\', GROUP_CONCAT(CONCAT(\'{"destination":"\', destination, \'"}\')), \']\')' //'{destination:" + '"' + "', destination ,'" + '"' + '
-        + " as taskList FROM project AS p LEFT OUTER JOIN task ON p.project_ID = task.project_ID WHERE account_ID = \'"
+    var loadproject = 'SELECT p.project_ID AS id, p.title, p.intro, p.tag, p.importance, left(p.deadline_date,10) as deadline_date , p.deadline_time, p.highlight ,  CONCAT(\'[\', GROUP_CONCAT(CONCAT(\'{"destination":"\', destination, \'"}\')), \']\')' //'{destination:" + '"' + "', destination ,'" + '"' + '
+        + " as taskList FROM project AS p LEFT OUTER JOIN task ON p.project_ID = task.project_ID WHERE p.status =\'N\' AND account_ID = \'"
         + user + "\' and (";
 
     var check = 0;
@@ -111,6 +111,7 @@ exports.addhighlight = function (req, res) {
     var getproject = "SELECT p.highlight as highlight, p.account_ID as account_ID, count(task.task_ID) as count FROM project as p LEFT OUTER JOIN task ON p.project_ID = task.project_ID WHERE p.project_ID = " + id + " GROUP BY p.project_ID;";
     //console.log(getproject);
     conn.query(getproject, function (err, rows, fields) {
+        //console.log("highlight: " + rows[0].highlight + " len: " + (rows[0].count - 1));
         if (err) {
             console.log("err 404: addhighlight get project_ID-" + id + " failed");
             res.status(404).json({ status: 404 });
@@ -130,7 +131,7 @@ exports.addhighlight = function (req, res) {
                     res.status(403).json({ status: 403 });
                 }
                 else if (rows[0].highlight < (rows[0].count - 1) && rows[0].highlight >= 0) {
-                    var update = "UPDATE project SET highlight = " + rows[0].highlight + " + 1 WHERE project_ID = " + id + ";"
+                    var update = "UPDATE project SET highlight = " + rows[0].highlight + " + 1 WHERE project_ID = " + id + ";";
                     conn.query(update, function (err, result) {
                         if (err) {
                             console.log("err 404: user-" + user + " addhighlight-updateproject failed");
@@ -143,8 +144,23 @@ exports.addhighlight = function (req, res) {
                     });
                 }
                 else {
-                    console.log("err 403: user-" + user + " addhighlight highlight out of range 0~" + (rows[0].count - 1));
-                    res.status(403).json({ status: 403 });
+                    if (rows[0].highlight > (rows[0].count - 1) || rows[0].highlight < 0) {
+                        var update = "UPDATE project SET highlight = 0 WHERE project_ID = " + id + ";";
+                        conn.query(update, function (err, result) {
+                            if (err) {
+                                console.log("err 404: user-" + user + " addhighlight-updateproject-outrange failed");
+                                res.status(404).json({ status: 404 });
+                            }
+                            else {
+                                console.log("err 403: user-" + user + " addhighlight-updateproject-outrange unknown reason change highlight to 0");
+                                res.status(403).json({ status: 403 });
+                            }
+                        });
+                    }
+                    else {
+                        console.log("err 403: user-" + user + " addhighlight highlight out of range 0~" + (rows[0].count - 1));
+                        res.status(403).json({ status: 403 });
+                    }
                 }
 
             }
@@ -157,6 +173,7 @@ exports.subhighlight = function (req, res) {
 
     var getproject = "SELECT p.highlight as highlight, p.account_ID as account_ID, count(task.task_ID) as count FROM project as p LEFT OUTER JOIN task ON p.project_ID = task.project_ID WHERE p.project_ID = " + id + " GROUP BY p.project_ID;";
     conn.query(getproject, function (err, rows, fields) {
+        //console.log("highlight: " + rows[0].highlight + " len: " + (rows[0].count - 1));
         if (err) {
             console.log("err 404: subhighlight get project_ID-" + id + " failed");
             res.status(404).json({ status: 404 });
@@ -176,7 +193,7 @@ exports.subhighlight = function (req, res) {
                     res.status(403).json({ status: 403 });
                 }
                 else if (rows[0].highlight <= (rows[0].count - 1) && rows[0].highlight > 0) {
-                    var update = "UPDATE project SET highlight = " + rows[0].highlight + " - 1 WHERE project_ID = " + id + ";"
+                    var update = "UPDATE project SET highlight = " + rows[0].highlight + " - 1 WHERE project_ID = " + id + ";";
                     conn.query(update, function (err, result) {
                         if (err) {
                             console.log("err 404: user-" + user + " subhighlight-updateproject failed");
@@ -189,8 +206,24 @@ exports.subhighlight = function (req, res) {
                     });
                 }
                 else {
-                    console.log("err 403: user-" + user + " subhighlight highlight out of range 0~" + (rows[0].count - 1));
-                    res.status(403).json({ status: 403 });
+                    if (rows[0].highlight > (rows[0].count - 1) || rows[0].highlight < 0) {
+                        var update = "UPDATE project SET highlight = 0 WHERE project_ID = " + id + ";";
+                        conn.query(update, function (err, result) {
+                            //console.log(update);
+                            if (err) {
+                                console.log("err 404: user-" + user + " subhighlight-updateproject-outrange failed");
+                                res.status(404).json({ status: 404 });
+                            }
+                            else {
+                                console.log("err 403: user-" + user + " subhighlight-updateproject-outrange unknown reason change highlight to 0");
+                                res.status(403).json({ status: 403 });
+                            }
+                        });
+                    }
+                    else {
+                        console.log("err 403: user-" + user + " subhighlight highlight out of range 0~" + (rows[0].count - 1));
+                        res.status(403).json({ status: 403 });
+                    }
                 }
 
             }
