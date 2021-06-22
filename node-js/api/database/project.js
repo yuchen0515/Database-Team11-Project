@@ -39,7 +39,7 @@ exports.loadproject = function (req, res) {
     var array = tag.split(' ');
 
     var loadproject = 'SELECT p.project_ID AS id, p.title, p.intro, p.tag, p.importance, left(p.deadline_date,10) as deadline_date , p.deadline_time, p.highlight ,  CONCAT(\'[\', GROUP_CONCAT(CONCAT(\'{"destination":"\', destination, \'"}\')), \']\')' //'{destination:" + '"' + "', destination ,'" + '"' + '
-        + " as taskList FROM project AS p LEFT OUTER JOIN task ON p.project_ID = task.project_ID WHERE account_ID = \'"
+        + " as taskList FROM project AS p LEFT OUTER JOIN task ON p.project_ID = task.project_ID WHERE p.status =\'N\' AND account_ID = \'"
         + user + "\' and (";
 
     var check = 0;

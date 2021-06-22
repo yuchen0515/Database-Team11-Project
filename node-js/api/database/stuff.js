@@ -46,8 +46,7 @@ exports.loadStuff = function (req, res) {
 exports.deleteStuff = function (req, res) {
     var stuff_ID = req.query.stuff_ID;
 
-    var deleteStuff = "DELETE FROM stuff WHERE stuff_ID = " + stuff_ID;
-
+    var deleteStuff = "UPDATE stuff SET status = \'A\' WHERE stuff_ID = " + stuff_ID + ";";
     conn.query(deleteStuff, function (err, result) {
         if (err) {
             console.log("err 403: deleteStuff no " + stuff_ID + " in stuff");
