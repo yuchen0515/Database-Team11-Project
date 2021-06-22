@@ -65,9 +65,7 @@ router.beforeEach(async(to, from, next) => {
   console.log('to: ', to)
   console.log('from: ', from)
   
-  // if(to.meta.reloadProject){
-  //   store.actions.loadProject()
-  // }
+  document.title = to.name
 
   if (to.meta.requireAuth) {
     if(store.state.username){
