@@ -152,7 +152,7 @@ exports.addhighlight = function (req, res) {
                                 res.status(404).json({ status: 404 });
                             }
                             else {
-                                console.log("err 403: user-" + user + " addhighlight-updateproject-outrange successed");
+                                console.log("err 403: user-" + user + " addhighlight-updateproject-outrange unknown reason change highlight to " + (rows[0].count - 1));
                                 res.status(403).json({ status: 403 });
                             }
                         });
@@ -215,7 +215,7 @@ exports.subhighlight = function (req, res) {
                                 res.status(404).json({ status: 404 });
                             }
                             else {
-                                console.log("err 403: user-" + user + " subhighlight-updateproject-outrange successed");
+                                console.log("err 403: user-" + user + " subhighlight-updateproject-outrange unknown reason change highlight to " + (rows[0].count - 1));
                                 res.status(403).json({ status: 403 });
                             }
                         });
