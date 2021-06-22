@@ -279,7 +279,7 @@
                                         dark
                                         block
                                         fill-height
-                                        @click="subHighlighted(item); SubHighlighted(item.id)"
+                                        @click="SubHighlighted(item.id)"
                                     >
                                         <v-icon>mdi-chevron-left</v-icon>
                                     </v-btn>
@@ -466,7 +466,8 @@ methods: {
                      "AddStuff",
                      "LoadEvents",
                      "AddHighlighted",
-                     "SubHighlighted"
+                     "SubHighlighted",
+                     "LoadProjects"
              ]),
 
              getEventColor () {

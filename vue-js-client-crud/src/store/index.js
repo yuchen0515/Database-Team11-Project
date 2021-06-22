@@ -10,6 +10,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({ state: {
         stat: 500,
         username: '',
+        searchTag: "",
         addEventStat: 500,
         loadEventStat: 500,
         loadStuffStat: 500,
@@ -40,7 +41,7 @@ const store = new Vuex.Store({ state: {
 },
 
     actions: {
-        async Login({state, commit, dispatch}, data) {
+        async Login({state, commit, dispatch, getters}, data) {
             await axios({
                 url: 'http://localhost:3000/api/login/',
                 params: {
@@ -62,7 +63,7 @@ const store = new Vuex.Store({ state: {
                         var end = "\"2022-07-25\""
 
                         dispatch('LoadEvents', {start: start, end: end})
-                        dispatch('LoadProjects', {tag: ""})
+                        dispatch('LoadProjects', {tag: getters.searchTag})
                         console.log("hi", state.loadStuffData)
                     }
                     if (stat === 404){
@@ -255,7 +256,7 @@ const store = new Vuex.Store({ state: {
                     commit('store_projectID', res.data.id)
                     commit('add_project', stat)
                     dispatch('LoadStuffs')
-                    dispatch('LoadProjects', {tag: ""})
+                    dispatch('LoadProjects', {tag: getters.searchTag})
                 })
                 .catch(err => {
                     commit('add_project', 404)
@@ -312,6 +313,7 @@ const store = new Vuex.Store({ state: {
                         console.log("next: " + JSON.stringify(real_event[item].taskList))
                     }
                     console.log(real_event)
+                    commit('save_tag', data.tag)
                     commit('store_projects', real_event)
                     console.log("store project")
                     commit('load_projects', stat)
@@ -336,7 +338,7 @@ const store = new Vuex.Store({ state: {
                 .then(res => {
                     const stat = res.data.status
                     commit('finish_project_stat', stat)
-                    dispatch('LoadProjects', {tag: ""})
+                    dispatch('LoadProjects', {tag: getters.searchTag})
                 })
                 .catch(err => {
                     commit('finish_project_stat', 404)
@@ -357,7 +359,7 @@ const store = new Vuex.Store({ state: {
                 .then(res => {
                     const stat = res.data.status
                     commit('add_highlighted_stat', stat)
-                    dispatch('LoadProjects', {tag: ""})
+                    dispatch('LoadProjects', {tag: getters.searchTag})
                 })
                 .catch(err => {
                     commit('add_highlighted_stat', 404)
@@ -379,7 +381,7 @@ const store = new Vuex.Store({ state: {
                 .then(res => {
                     const stat = res.data.status
                     commit('sub_highlighted_stat', stat)
-                    dispatch('LoadProjects', {tag: ""})
+                    dispatch('LoadProjects', {tag: getters.searchTag})
                 })
                 .catch(err => {
                     commit('sub_highlighted_stat', 404)
@@ -450,13 +452,17 @@ const store = new Vuex.Store({ state: {
         },
         sub_highlighted_stat(state, stat) {
             state.sub_highlighted_stat = stat
+        },
+        save_tag(state, tag) {
+            state.searchTag = tag
         }
     },
     getters: {
         isLoggedIn: state => state.stat == 200,
         authStatus: state => state.stat,
         username: state => state.username,
-        events: state => state.loadEventData
+        events: state => state.loadEventData,
+        searchTag: state => state.searchTag
     },
 
 });
