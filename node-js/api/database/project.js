@@ -117,7 +117,7 @@ exports.addhighlight = function (req, res) {
         }
         else {
             if (rows[0].count == 0) {
-                console.log("err 403: addhighlight project-" + id + " has no other tasks");
+                console.log("err 403: addhighlight project-" + id + " has no any tasks");
                 res.status(403).json({ status: 403 });
             }
             else if (rows[0].account_ID != user) {
