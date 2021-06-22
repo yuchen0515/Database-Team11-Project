@@ -4,7 +4,7 @@ var MySQLStore = require('express-mysql-session')(session);
 var sessionStore = new MySQLStore(
     conn
 );*/
-
+const port = process.env.PORT || 3000
 var express = require('express')
     , app = express();
 var login = require('./api/model/login')
@@ -57,6 +57,6 @@ app.route('/api/*')
         res.status(403).json({ status: 403 });
     });
 
-var sever = app.listen(3000, function () {
+var sever = app.listen(port, function () {
     console.log('listening on port 3000');
 });
