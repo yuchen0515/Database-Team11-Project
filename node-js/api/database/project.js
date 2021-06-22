@@ -145,14 +145,14 @@ exports.addhighlight = function (req, res) {
                 }
                 else {
                     if (rows[0].highlight > (rows[0].count - 1) || rows[0].highlight < 0) {
-                        var update = "UPDATE project SET highlight = " + (rows[0].count - 1) + " WHERE project_ID = " + id + ";";
+                        var update = "UPDATE project SET highlight = 0 WHERE project_ID = " + id + ";";
                         conn.query(update, function (err, result) {
                             if (err) {
                                 console.log("err 404: user-" + user + " addhighlight-updateproject-outrange failed");
                                 res.status(404).json({ status: 404 });
                             }
                             else {
-                                console.log("err 403: user-" + user + " addhighlight-updateproject-outrange unknown reason change highlight to " + (rows[0].count - 1));
+                                console.log("err 403: user-" + user + " addhighlight-updateproject-outrange unknown reason change highlight to 0");
                                 res.status(403).json({ status: 403 });
                             }
                         });
@@ -207,7 +207,7 @@ exports.subhighlight = function (req, res) {
                 }
                 else {
                     if (rows[0].highlight > (rows[0].count - 1) || rows[0].highlight < 0) {
-                        var update = "UPDATE project SET highlight = " + (rows[0].count - 1) + " WHERE project_ID = " + id + ";";
+                        var update = "UPDATE project SET highlight = 0 WHERE project_ID = " + id + ";";
                         conn.query(update, function (err, result) {
                             //console.log(update);
                             if (err) {
@@ -215,7 +215,7 @@ exports.subhighlight = function (req, res) {
                                 res.status(404).json({ status: 404 });
                             }
                             else {
-                                console.log("err 403: user-" + user + " subhighlight-updateproject-outrange unknown reason change highlight to " + (rows[0].count - 1));
+                                console.log("err 403: user-" + user + " subhighlight-updateproject-outrange unknown reason change highlight to 0");
                                 res.status(403).json({ status: 403 });
                             }
                         });
