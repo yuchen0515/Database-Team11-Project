@@ -282,8 +282,8 @@ const store = new Vuex.Store({ state: {
                 })
 
         },
-        LoadProjects({state, commit, getters, dispatch}, data) {
-            axios({
+        async LoadProjects({state, commit, getters, dispatch}, data) {
+            await axios({
                 url: 'http://localhost:3000/api/project',
                 params: {
                     username:       getters.username,
