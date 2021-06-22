@@ -15,8 +15,8 @@ exports.loadEvent = function (req, res) {
             res.status(404).json({ status: 404 });
         }
         else if (rows.length == 0) {
-            console.log("err 404: user-" + user + " no match event between " + start_date + " and " + end_date);
-            res.status(404).json({ status: 404 });
+            console.log("ok 200: user-" + user + " no match event between " + start_date + " and " + end_date);
+            res.status(200).json({ status: 200, events: "[]" });
         }
         else {
             console.log("ok 200: user-" + user + " match event successed");

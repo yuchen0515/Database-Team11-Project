@@ -69,20 +69,12 @@ exports.loadproject = function (req, res) {
             res.status(404).json({ status: 404 });
         }
         else if (rows.length == 0) {
-            console.log("err 403: user-" + user + " loadproject empty");
-            res.status(403).json({ status: 403 });
+            console.log("ok 200: user-" + user + " loadproject empty");
+            res.status(200).json({ status: 200, events: "[]" });
         }
         else {
-            //results = results.map(row => (row.package = JSON.parse(row.package), row));
-            //rows = rows.map(row => (row.package = JSON.parse(row.package), row));
             console.log("ok 200: user-" + user + " loadproject successed");
-            //console.log(JSON.stringify(rows));
-            //console.log(JSON.parse(rows));
-            //rows = rows.map(row => (row.package = JSON.parse(row.package), row));
-            // rows = JSON.parse(rows)
-            //console.log(rows)
             rows = rows.map(row => (row.taskList = JSON.parse(row.taskList), row))
-            //console.log(JSON.stringify(rows))
             res.status(200).json({ status: 200, events: JSON.stringify(rows) });
         }
     });

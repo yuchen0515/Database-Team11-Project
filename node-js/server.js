@@ -1,10 +1,8 @@
 var conn = require('./api/database/sql.js').conn;
-/*var session = require('express-session');
-var MySQLStore = require('express-mysql-session')(session);
-var sessionStore = new MySQLStore(
-    conn
-);*/
+//var session = require('session');
 
+
+const port = process.env.PORT || 3000
 var express = require('express')
     , app = express();
 var login = require('./api/model/login')
@@ -30,6 +28,11 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
+/*
+app.use(session({
+    secret: 'testinginiarwg',
+    cookie: { maxAge: 60 * 1000 * 30 }
+}));*/
 
 app.use('/api/login', login);
 app.use('/api/logout', logout);
@@ -57,6 +60,6 @@ app.route('/api/*')
         res.status(403).json({ status: 403 });
     });
 
-var sever = app.listen(3000, function () {
+var sever = app.listen(port, function () {
     console.log('listening on port 3000');
 });
