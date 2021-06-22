@@ -1,8 +1,6 @@
 var conn = require('./api/database/sql.js').conn;
 //var session = require('session');
 
-
-const port = process.env.PORT || 3000
 var express = require('express')
     , app = express();
 var login = require('./api/model/login')
@@ -60,6 +58,6 @@ app.route('/api/*')
         res.status(403).json({ status: 403 });
     });
 
-var sever = app.listen(port, function () {
+var sever = app.listen('3000', "140.122.184.121", function () {
     console.log('listening on port 3000');
 });
