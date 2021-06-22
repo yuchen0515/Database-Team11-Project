@@ -1,6 +1,8 @@
 var conn = require('./api/database/sql.js').conn;
 //var session = require('session');
 
+
+const port = process.env.PORT || 3000
 var express = require('express')
     , app = express();
 var login = require('./api/model/login')
@@ -14,7 +16,7 @@ var login = require('./api/model/login')
 app.use(session({
     store: sessionStore,
     resave: false,
-saveUninitialized: true,
+    saveUninitialized: true,
 }));*/
 
 app.use(express.urlencoded({ extended: true }));
@@ -58,6 +60,6 @@ app.route('/api/*')
         res.status(403).json({ status: 403 });
     });
 
-var sever = app.listen('3000', "140.122.184.121", function () {
+var sever = app.listen(port, function () {
     console.log('listening on port 3000');
 });

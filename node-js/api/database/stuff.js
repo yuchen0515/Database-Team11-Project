@@ -34,8 +34,8 @@ exports.loadStuff = function (req, res) {
             res.status(404).json({ status: 404 });
         }
         else if (rows.length == 0) {
-            console.log("err 403: " + user + " loadstuff no match stuff");
-            res.status(404).json({ status: 404, events: "[]" });
+            console.log("ok 200: " + user + " loadstuff no match stuff");
+            res.status(200).json({ status: 200, events: "[]" });
         }
         else {
             console.log("ok 200: " + user + " loadstuff successed");
