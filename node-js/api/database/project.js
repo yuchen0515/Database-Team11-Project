@@ -9,8 +9,8 @@ exports.addproject = function (req, res) {
     var tag = req.query.tag;
     var intro = req.query.intro;
 
-    var addproject = "INSERT INTO project (account_ID, deadline_date, deadline_time, importance, title, tag, intro, status) VALUES ('"
-        + user + "'," + deadline_date + "," + deadline_time + ",'" + importance + "','" + title + "','" + tag + "','" + intro + "','N');";
+    var addproject = "INSERT INTO project (account_ID, deadline_date, deadline_time, importance, title, tag, intro, status,highlight) VALUES ('"
+        + user + "'," + deadline_date + "," + deadline_time + ",'" + importance + "','" + title + "','" + tag + "','" + intro + "','N',0);";
     //console.log(addproject);
     conn.query(addproject, function (err, result) {
         if (err) {
