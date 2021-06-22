@@ -19,21 +19,8 @@ exports.addTask = function (req, res) {
             res.status(404).json({ status: 404 });
         }
         else {
-            var last = "SELECT LAST_INSERT_ID() AS task_ID;";
-            conn.query(last, function (err, rows, fields) {
-                var updateproject = "UPDATE project SET highlight = highlight + 1  WHERE project_ID = " + id + ";";
-                //console.log(updateproject);
-                conn.query(updateproject, function (err, result) {
-                    if (err) {
-                        console.log("err 404: addtask-updateproject-" + id + " failed");
-                        res.status(404).json({ status: 404 });
-                    }
-                    else {
-                        console.log("ok 200: user-" + username + " addtask " + id + " successed");
-                        res.status(200).json({ status: 200 });
-                    }
-                });
-            });
+            console.log("ok 200: user-" + username + " addtask " + id + " successed");
+            res.status(200).json({ status: 200 });
         }
     });
 };
