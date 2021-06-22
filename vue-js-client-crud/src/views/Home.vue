@@ -454,6 +454,8 @@ computed: {
 
               mounted () {
                   this.$refs.calendar.checkChange()
+                //   this.$store.dispatch("loadProject", "")
+                //   this.$store.loadProject()
               },
               // beforeCreate: function () {
               //   if (!this.$store.state.username) {
@@ -518,14 +520,18 @@ methods: {
                  return Math.floor((b - a + 1) * Math.random()) + a
              },
 
-leftTime: function(item) {
-              var end = new Date(item.deadline_date+"T"+item.deadline_time+":00.000Z");
+        leftTime: function(item) {
+            //   var end = new Date(item.deadline_date+"T"+item.deadline_time+":00.000Z");
+            var end = new Date(item.deadline_date)
               var now = new Date(+(new Date() - new Date().getTimezoneOffset() * 60000));
               const total = end - now;
               const seconds = Math.floor( (total/1000) % 60 ); 
               const minutes = Math.floor( (total/1000/60) % 60 ); 
               const hours = Math.floor( (total/(1000*60*60)) % 24 ); 
               const days = Math.floor( total/(1000*60*60*24) );
+            if(total < 0){
+                return "Out of Time";
+            }
               if(days > 0){
                   return days+" Days Remaining";
               }
@@ -553,5 +559,8 @@ subHighlighted: function(item) {
                     item.highlight--;
                 }
          },
+    // beforeCreate() {
+    //     this.$store.loadProject("");
+    // }
   }
 </script>

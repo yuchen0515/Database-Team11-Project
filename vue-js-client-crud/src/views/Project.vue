@@ -342,6 +342,9 @@ export default {
             const minutes = Math.floor( (total/1000/60) % 60 ); 
             const hours = Math.floor( (total/(1000*60*60)) % 24 ); 
             const days = Math.floor( total/(1000*60*60*24) );
+            if(total < 0){
+                return "Out of Time";
+            }
             if(days > 0){
                 return days+" Days Remaining";
             }
