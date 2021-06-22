@@ -361,6 +361,7 @@ const store = new Vuex.Store({ state: {
                 })
                 .catch(err => {
                     commit('add_highlighted_stat', 404)
+                    console.log("fail to add highlighted")
                 })
 
         },

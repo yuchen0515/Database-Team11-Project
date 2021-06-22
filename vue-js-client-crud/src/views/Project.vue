@@ -169,7 +169,7 @@
                                         dark
                                         block
                                         fill-height
-                                        @click="subHighlighted(item); SubHighLighted(item.id)"
+                                        @click="subHighlighted(item); SubHighlighted(item.id)"
                                     >
                                         <v-icon>mdi-chevron-left</v-icon>
                                     </v-btn>
@@ -202,7 +202,7 @@
                                         color="success"
                                         dark
                                         block
-                                        @click="addHighlighted(item); AddHighLighted(item.id)"
+                                        @click="addHighlighted(item); AddHighlighted(item.id)"
                                     >
                                         <v-icon>mdi-chevron-right</v-icon>
                                     </v-btn>
