@@ -6,8 +6,9 @@ exports.addStuff = function (req, res) {
     var user = req.query.username;
     var time = new Date();
 
-    var record_date = time.getFullYear() + "-" + time.getMonth() + 1 + "-" + time.getDate();
+    var record_date = time.getFullYear() + "-" + (time.getMonth() + 1) + "-" + time.getDate();
     var record_time = time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds();
+    console.log(record_date + " " + record_time);
 
     var addstuff = "INSERT INTO stuff(account_ID,record_date_date,record_date_time,title,content,status) VALUES('"
         + user + "','" + record_date + "','" + record_time + "','" + title + "','" + content + "','N');"
@@ -26,7 +27,7 @@ exports.addStuff = function (req, res) {
 };
 exports.loadStuff = function (req, res) {
     var user = req.query.username;
-    var test = "SELECT title, content, stuff_ID as id FROM stuff WHERE status =\'N\' AND account_ID = '" + user + "' ORDER BY 'left(record_date_date,10)' ASC, 'record_date_time' ASC";
+    var test = "SELECT title, content, stuff_ID as id FROM stuff WHERE status =\'N\' AND account_ID = \'" + user + "\' ORDER BY \'left(record_date_date,10)\' ASC, \'record_date_time\' ASC";
 
     conn.query(test, function (err, rows, fields) {
         if (err) {
