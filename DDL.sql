@@ -3,7 +3,7 @@ create table UserData
     account_ID      char(20),
     password        varchar(32),
     name            varchar(30) not null,
-    preference      varchar(500), /* JSON format */
+    preference      varchar(500), /* JSON format */ /* Unused*/
     primary key (account_ID)
 ) ENGINE=INNODB;
 
@@ -36,7 +36,7 @@ create table Event
     time_end_date   DATE,
     time_end_time   TIME,
 
-    buf_time        TIME,
+    buf_time        TIME, /* Unused*/
     title           varchar(50),
     content         varchar(500),
     status          varchar(1)
@@ -71,8 +71,8 @@ create table Task
     project_ID      int(20),
     destination     varchar(200),
 
-    time_req_date DATE,
-    time_req_time TIME,
+    time_req_date DATE, /* Unused*/
+    time_req_time TIME, /* Unused*/
 
     status          varchar(1)
         check (status in ('Y', 'N', 'A')), 
