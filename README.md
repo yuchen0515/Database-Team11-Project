@@ -8,17 +8,12 @@
 |40744020s|李冠樺|
 |40847013s|王瑞渝|
 |40771131h|林育辰|
-|40547022s|許欣平|
-
-
-* Report 2 - [Feedback](https://drive.google.com/file/d/1Q5EHm9JkMBbTohz_-akQ7VvpN0nU7mrM/view)
 
 
 * 分工
-    * 前端(vue.js, 網頁, ...)
-    * 後端(bash testing, server, etc.)
-    * 資料庫(DDL, sqlite & mysql, etc.)
-    * others...
+    * 前端(vue.js)
+    * 串接(axios, vuex, testing)
+    * 後端(nodejs, database)
 
 * [筆記](https://hackmd.io/@mathlin/BJdNeuoo_)
 
